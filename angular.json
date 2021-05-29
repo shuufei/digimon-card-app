@@ -51,7 +51,11 @@
               "apps/deck-construction-desktop-app/src/favicon.ico",
               "apps/deck-construction-desktop-app/src/assets"
             ],
-            "styles": ["apps/deck-construction-desktop-app/src/styles.scss"],
+            "styles": [
+              "apps/deck-construction-desktop-app/src/styles.scss",
+              "node_modules/@taiga-ui/core/styles/taiga-ui-global.less",
+              "node_modules/@taiga-ui/core/styles/taiga-ui-theme.less"
+            ],
             "scripts": []
           },
           "configurations": {
