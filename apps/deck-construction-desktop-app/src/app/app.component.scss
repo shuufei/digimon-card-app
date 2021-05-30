@@ -1,6 +1,6 @@
 :host {
   display: block;
-  padding: 12px 32px;
+  padding: 0 32px;
   margin: 0 auto;
 }
 
@@ -20,8 +20,17 @@
   line-height: 1;
 }
 
-.header {
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 12px 24px;
+  background-color: #fff;
 }

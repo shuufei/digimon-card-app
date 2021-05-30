@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GLOBAL_RX_STATE, GlobalState } from './global-state';
@@ -12,7 +12,9 @@ import * as _ from 'lodash';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
+  @ViewChild('header') header?: ElementRef;
+  @ViewChild('main') main?: ElementRef;
   title = 'deck-construction-desktop-app';
 
   private readonly bt01Cards$ = this.apiService.listCardInfo('BT01');
@@ -57,7 +59,7 @@ export class AppComponent implements OnInit {
       const filtered = cards.filter((card) => {
         const isColorMatch = filterValues.colorList.includes(card.color);
         const isCardTypeMatch = filterValues.cardTypeList.includes(card.cardtype);
-        const isLvMatch = filterValues.lvList.includes(card.lv);
+        const isLvMatch = card.lv != null ? filterValues.lvList.includes(card.lv) : true;
         return isColorMatch && isCardTypeMatch && isLvMatch;
       });
       return _.orderBy(filtered, ['cardtype', 'lv', 'color'], ['desc']);
@@ -76,6 +78,17 @@ export class AppComponent implements OnInit {
         cardTypeList: Object.values(CARD_TYPE),
         lvList: Object.values(LV),
       };
+    });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      console.log('after view init', this.header, this.main);
+      if (this.header == null || this.main == null) {
+        return;
+      }
+      const headerHeight = (this.header.nativeElement as HTMLElement).getBoundingClientRect().height;
+      (this.main.nativeElement as HTMLElement).style.paddingTop = `${headerHeight + 12}px`;
     });
   }
 }

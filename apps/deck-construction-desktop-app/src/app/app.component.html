@@ -1,15 +1,17 @@
-<ng-container *ngIf="filteredCards$ | async as cards">
-  <div class="header">
-    <digimon-card-app-logo class="logo"></digimon-card-app-logo>
-    <digimon-card-app-filter-and-sort></digimon-card-app-filter-and-sort>
-  </div>
-  <p>{{ cards.length }}</p>
-  <div class="card-list">
-    <ng-container *ngFor="let card of cards">
-      <digimon-card-app-card
-        class="card"
-        [src]="card.imgSrc"
-      ></digimon-card-app-card>
-    </ng-container>
-  </div>
-</ng-container>
+<header #header class="mat-elevation-z2">
+  <digimon-card-app-logo class="logo"></digimon-card-app-logo>
+  <digimon-card-app-filter-and-sort></digimon-card-app-filter-and-sort>
+</header>
+<main #main>
+  <ng-container *ngIf="filteredCards$ | async as cards">
+    <p>count: {{ cards.length }}</p>
+    <div class="card-list">
+      <ng-container *ngFor="let card of cards">
+        <digimon-card-app-card
+          class="card"
+          [src]="card.imgSrc"
+        ></digimon-card-app-card>
+      </ng-container>
+    </div>
+  </ng-container>
+</main>
