@@ -1,0 +1,31 @@
+:host {
+  display: block;
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background-color: #ffffff;
+  z-index: 10;
+  padding: 12px 12px 0;
+}
+
+.deck-panel-header {
+  display: flex;
+  align-items: center;
+
+  h3 {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+  }
+}
+
+.deck-panel-content {
+  margin-top: 12px;
+}
+
+.create-btn {
+  display: block;
+  width: 100%;
+}

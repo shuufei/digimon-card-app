@@ -1,6 +1,5 @@
 :host {
-  display: block;
-  padding: 0 32px 24px;
+  display: flex;
   margin: 0 auto;
 }
 
@@ -25,7 +24,7 @@ header {
   justify-content: space-between;
   align-items: center;
 
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   width: 100%;
@@ -33,4 +32,8 @@ header {
 
   padding: 12px 24px;
   background-color: #fff;
+}
+
+main {
+  padding: 12px 32px 24px;
 }

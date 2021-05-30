@@ -44,7 +44,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
-import {RxState} from '@rx-angular/state'
+import {RxState} from '@rx-angular/state';
+import { DeckPanelComponent } from './components/deck-panel/deck-panel.component'
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import {RxState} from '@rx-angular/state'
     LogoComponent,
     FilterAndSortComponent,
     FilterDialogComponent,
+    DeckPanelComponent,
   ],
   imports: [
     BrowserModule,

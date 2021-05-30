@@ -20,11 +20,11 @@ type State = Record<string, never>;
   selector: 'digimon-card-app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [RxState]
+  providers: [RxState],
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('header') header?: ElementRef;
-  @ViewChild('main') main?: ElementRef;
+  @ViewChild('cardList') cardList?: ElementRef;
+  @ViewChild('deckPanel', { read: ElementRef }) deckPanel?: ElementRef;
   title = 'deck-construction-desktop-app';
 
   private readonly LS_KEY_FILTER_CONDITION = 'filter_condition';
@@ -44,7 +44,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         const isCategoryMatch = filterValues.categoryList.includes(
           card.category
         );
-        const isIncludeParallelMatch = card.parallel !== undefined ? filterValues.includeParallel : true;
+        const isIncludeParallelMatch =
+          card.parallel !== undefined ? filterValues.includeParallel : true;
         return (
           isColorMatch &&
           isCardTypeMatch &&
@@ -59,14 +60,19 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private readonly parsistenceFilterConditionHandler$ = this.filter$.pipe(
     tap((filter) => {
-      window.localStorage.setItem(this.LS_KEY_FILTER_CONDITION, JSON.stringify(filter));
+      window.localStorage.setItem(
+        this.LS_KEY_FILTER_CONDITION,
+        JSON.stringify(filter)
+      );
     })
   );
+
+  isOpenDeckPanel = true;
 
   constructor(
     private readonly apiService: ApiService,
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
-    private readonly state: RxState<State>,
+    private readonly state: RxState<State>
   ) {}
 
   ngOnInit(): void {
@@ -77,16 +83,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    setTimeout(() => {
-      if (this.header == null || this.main == null) {
-        return;
-      }
-      const headerHeight = (this.header
-        .nativeElement as HTMLElement).getBoundingClientRect().height;
-      (this.main.nativeElement as HTMLElement).style.paddingTop = `${
-        headerHeight + 12
-      }px`;
-    });
+    if (this.cardList == null || this.deckPanel == null) {
+      return;
+    }
+    const deckPanelWidth = (this.deckPanel
+      .nativeElement as HTMLElement).getBoundingClientRect().width;
+    (this.cardList
+      .nativeElement as HTMLElement).style.paddingRight = `${deckPanelWidth}px`;
   }
 
   private getDefaultFilterCondition() {
@@ -98,7 +101,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         lvList: Object.values(LV),
         categoryList: Object.values(CATEGORY),
         includeParallel: true,
-      }
+      };
     }
     return JSON.parse(condition) as GlobalState['filter'];
   }
