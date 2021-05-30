@@ -1,1 +1,10 @@
-<button class="filter-button">filter</button>
+<form [formGroup]="filter">
+  <mat-form-field appearance="fill">
+    <mat-label>color</mat-label>
+    <mat-select [formControlName]="'color'" multiple>
+      <mat-option *ngFor="let color of colorList" [value]="color">{{
+        color
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>

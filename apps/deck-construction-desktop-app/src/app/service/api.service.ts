@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Color } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -32,7 +33,7 @@ export type ApiResponseCardInfo = {
   cardtype: string;
   parallel?: string;
   name: string;
-  color: string;
+  color: Color;
   form: string;
   attribute: string;
   type: string;

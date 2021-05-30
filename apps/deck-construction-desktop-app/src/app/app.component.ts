@@ -1,14 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { GLOBAL_RX_STATE, GlobalState } from './global-state';
 import { ApiService } from './service/api.service';
+import { RxState } from '@rx-angular/state';
+import { COLOR } from './types';
 
 @Component({
   selector: 'digimon-card-app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'deck-construction-desktop-app';
 
   private readonly bt01Cards$ = this.apiService.listCardInfo('BT01');
@@ -47,5 +50,26 @@ export class AppComponent {
     })
   );
 
-  constructor(private readonly apiService: ApiService) {}
+  private readonly filter$ = this.globalState.select('filter');
+  readonly filteredCards$ = combineLatest([this.cards$, this.filter$]).pipe(
+    map(([cards, filterValues]) => {
+      return cards.filter((card) => {
+        const isColorMatch = filterValues.colorList.includes(card.color);
+        return isColorMatch;
+      });
+    })
+  );
+
+  constructor(
+    private readonly apiService: ApiService,
+    @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>
+  ) {}
+
+  ngOnInit(): void {
+    this.globalState.set('filter', () => {
+      return {
+        colorList: Object.values(COLOR)
+      };
+    });
+  }
 }

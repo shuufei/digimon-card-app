@@ -1,0 +1,11 @@
+<p>Filter</p>
+<form [formGroup]="filter">
+  <mat-form-field appearance="outline">
+    <mat-label>Color</mat-label>
+    <mat-select [formControlName]="'color'" multiple>
+      <mat-option *ngFor="let color of colorList" [value]="color">{{
+        color
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
