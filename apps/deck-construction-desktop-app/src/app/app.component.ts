@@ -5,6 +5,7 @@ import { GLOBAL_RX_STATE, GlobalState } from './global-state';
 import { ApiService } from './service/api.service';
 import { RxState } from '@rx-angular/state';
 import { COLOR } from './types';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'digimon-card-app-root',
@@ -53,10 +54,11 @@ export class AppComponent implements OnInit {
   private readonly filter$ = this.globalState.select('filter');
   readonly filteredCards$ = combineLatest([this.cards$, this.filter$]).pipe(
     map(([cards, filterValues]) => {
-      return cards.filter((card) => {
+      const filtered = cards.filter((card) => {
         const isColorMatch = filterValues.colorList.includes(card.color);
         return isColorMatch;
       });
+      return _.orderBy(filtered, ['cardtype', 'lv', 'color'], ['desc']);
     })
   );
 
@@ -68,7 +70,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.globalState.set('filter', () => {
       return {
-        colorList: Object.values(COLOR)
+        colorList: Object.values(COLOR),
       };
     });
   }
