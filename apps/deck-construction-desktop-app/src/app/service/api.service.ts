@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Color, COLOR } from '../types';
+import { CardType, Color, COLOR, Lv } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -50,9 +50,9 @@ export type ApiResponseColor = 'red' | 'blue' | 'green' | 'yellow' | 'black' | '
 
 export type ApiResponseCardInfo = {
   no: string;
-  lv: string;
+  lv: Lv;
   rarity: string;
-  cardtype: string;
+  cardtype: CardType;
   parallel?: string;
   name: string;
   color: ApiResponseColor;

@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { GLOBAL_RX_STATE, GlobalState } from './global-state';
 import { ApiService } from './service/api.service';
 import { RxState } from '@rx-angular/state';
-import { COLOR } from './types';
+import { COLOR, CARD_TYPE, LV } from './types';
 import * as _ from 'lodash';
 
 @Component({
@@ -56,7 +56,9 @@ export class AppComponent implements OnInit {
     map(([cards, filterValues]) => {
       const filtered = cards.filter((card) => {
         const isColorMatch = filterValues.colorList.includes(card.color);
-        return isColorMatch;
+        const isCardTypeMatch = filterValues.cardTypeList.includes(card.cardtype);
+        const isLvMatch = filterValues.lvList.includes(card.lv);
+        return isColorMatch && isCardTypeMatch && isLvMatch;
       });
       return _.orderBy(filtered, ['cardtype', 'lv', 'color'], ['desc']);
     })
@@ -71,6 +73,8 @@ export class AppComponent implements OnInit {
     this.globalState.set('filter', () => {
       return {
         colorList: Object.values(COLOR),
+        cardTypeList: Object.values(CARD_TYPE),
+        lvList: Object.values(LV),
       };
     });
   }

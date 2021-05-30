@@ -1,9 +1,27 @@
 <form [formGroup]="filter">
   <mat-form-field appearance="fill">
-    <mat-label>color</mat-label>
+    <mat-label>Color</mat-label>
     <mat-select [formControlName]="'color'" multiple>
       <mat-option *ngFor="let color of colorList" [value]="color">{{
         color
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>CardType</mat-label>
+    <mat-select [formControlName]="'cardtype'" multiple>
+      <mat-option *ngFor="let cardtype of cardTypeList" [value]="cardtype">{{
+        cardtype
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Lv</mat-label>
+    <mat-select [formControlName]="'lv'" multiple>
+      <mat-option *ngFor="let lv of lvList" [value]="lv">{{
+        lv
       }}</mat-option>
     </mat-select>
   </mat-form-field>

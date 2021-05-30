@@ -1,9 +1,11 @@
 import { InjectionToken } from '@angular/core';
-import { Color } from './types';
+import { CardType, Color, Lv } from './types';
 
 export type GlobalState = {
   filter: {
     colorList: Color[];
+    cardTypeList: CardType[];
+    lvList: Lv[];
   };
 };
 

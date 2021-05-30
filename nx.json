@@ -25,6 +25,9 @@
     "deck-construction-desktop-app-e2e": {
       "tags": [],
       "implicitDependencies": ["deck-construction-desktop-app"]
+    },
+    "rest-api": {
+      "tags": []
     }
   }
 }
