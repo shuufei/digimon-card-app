@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { GLOBAL_RX_STATE, GlobalState } from '../../global-state';
 import { RxState } from '@rx-angular/state';
 import { tap } from 'rxjs/operators';
-import { COLOR, CARD_TYPE, LV } from '../../types';
+import { COLOR, CARD_TYPE, LV, CATEGORY } from '../../types';
 
 @Component({
   selector: 'digimon-card-app-filter-and-sort',
@@ -14,6 +14,7 @@ export class FilterAndSortComponent implements OnInit {
   colorList = Object.keys(COLOR);
   cardTypeList = Object.keys(CARD_TYPE);
   lvList = Object.keys(LV);
+  categoryList = Object.keys(CATEGORY);
   readonly filter;
 
   constructor(
@@ -24,6 +25,8 @@ export class FilterAndSortComponent implements OnInit {
       color: [],
       cardtype: [],
       lv: [],
+      category: [],
+      includeParallel: []
     });
   }
 
@@ -35,7 +38,9 @@ export class FilterAndSortComponent implements OnInit {
             return {
               colorList: values.color,
               cardTypeList: values.cardtype,
-              lvList: values.lv
+              lvList: values.lv,
+              categoryList: values.category,
+              includeParallel: values.includeParallel
             };
           });
         })
@@ -47,7 +52,9 @@ export class FilterAndSortComponent implements OnInit {
           {
             color: values.colorList,
             cardtype: values.cardTypeList,
-            lv: values.lvList
+            lv: values.lvList,
+            category: values.categoryList,
+            includeParallel: values.includeParallel
           },
           {
             emitEvent: false,

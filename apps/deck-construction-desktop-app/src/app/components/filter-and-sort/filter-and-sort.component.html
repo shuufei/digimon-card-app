@@ -25,4 +25,17 @@
       }}</mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Category</mat-label>
+    <mat-select [formControlName]="'category'" multiple>
+      <mat-option *ngFor="let category of categoryList" [value]="category">{{
+        category
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <section class="parallel-filter">
+    <mat-checkbox [formControlName]="'includeParallel'">parallel</mat-checkbox>
+  </section>
 </form>

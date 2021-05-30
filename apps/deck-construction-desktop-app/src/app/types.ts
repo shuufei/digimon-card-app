@@ -30,3 +30,22 @@ export const LV = {
 } as const;
 
 export type Lv = keyof typeof LV;
+
+export const CATEGORY = {
+  'BT01': 'BT01',
+  'BT02': 'BT02',
+  'BT03': 'BT03',
+  'BT04': 'BT04',
+  'BT05': 'BT05',
+  'BT06': 'BT06',
+  'ST01': 'ST01',
+  'ST02': 'ST02',
+  'ST03': 'ST03',
+  'ST04': 'ST04',
+  'ST05': 'ST05',
+  'ST06': 'ST06',
+  'ST07': 'ST07',
+  'ST08': 'ST08',
+} as const;
+
+export type Category = keyof typeof CATEGORY;

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CardType, Color, COLOR, Lv } from '../types';
+import { CardType, Color, COLOR, Lv, Category } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,44 @@ export class ApiService {
 
   constructor(private readonly http: HttpClient) {}
 
-  listCardInfo(category: string): Observable<CardInfo[]> {
+  listAllCardInfo(): Observable<CardInfo[]> {
+    const bt01Cards$ = this.listCardInfoByCategory('BT01');
+    const bt02Cards$ = this.listCardInfoByCategory('BT02');
+    const bt03Cards$ = this.listCardInfoByCategory('BT03');
+    const bt04Cards$ = this.listCardInfoByCategory('BT04');
+    const bt05Cards$ = this.listCardInfoByCategory('BT05');
+    const bt06Cards$ = this.listCardInfoByCategory('BT06');
+    const st01Cards$ = this.listCardInfoByCategory('ST01');
+    const st02Cards$ = this.listCardInfoByCategory('ST02');
+    const st03Cards$ = this.listCardInfoByCategory('ST03');
+    const st04Cards$ = this.listCardInfoByCategory('ST04');
+    const st05Cards$ = this.listCardInfoByCategory('ST05');
+    const st06Cards$ = this.listCardInfoByCategory('ST06');
+    const st07Cards$ = this.listCardInfoByCategory('ST07');
+    const st08Cards$ = this.listCardInfoByCategory('ST08');
+    return combineLatest([
+      bt01Cards$,
+      bt02Cards$,
+      bt03Cards$,
+      bt04Cards$,
+      bt05Cards$,
+      bt06Cards$,
+      st01Cards$,
+      st02Cards$,
+      st03Cards$,
+      st04Cards$,
+      st05Cards$,
+      st06Cards$,
+      st07Cards$,
+      st08Cards$,
+    ]).pipe(
+      map((response) => {
+        return response.flat();
+      })
+    );
+  }
+
+  private listCardInfoByCategory(category: Category): Observable<CardInfo[]> {
     return this.http.get<ApiResponse>(`${this.ASSETS_ENDPOINT}/cardInfo/${category}.json`).pipe(
       map(res => {
         return res.cardInfoList.map(v => ({
@@ -75,6 +112,6 @@ export type ApiResponse = {
 
 export type CardInfo = Omit<ApiResponseCardInfo, 'color'> & {
   imgSrc: string;
-  category: string;
+  category: Category;
   color: Color;
 }
