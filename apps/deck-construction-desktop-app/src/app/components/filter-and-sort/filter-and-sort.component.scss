@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.filter-button {
+  padding: 8px 12px;
+  border-radius: 3px;
+  background-color: #101010;
+  color: #fff;
+  &:hover {
+    box-shadow: 0 0 0 1px #101010;
+  }
+  &:active {
+    background-color: #505050;
+  }
+}
