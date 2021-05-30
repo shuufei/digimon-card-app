@@ -22,9 +22,7 @@ type State = Record<string, never>;
   styleUrls: ['./app.component.scss'],
   providers: [RxState],
 })
-export class AppComponent implements OnInit, AfterViewInit {
-  @ViewChild('cardList') cardList?: ElementRef;
-  @ViewChild('deckPanel', { read: ElementRef }) deckPanel?: ElementRef;
+export class AppComponent implements OnInit {
   title = 'deck-construction-desktop-app';
 
   private readonly LS_KEY_FILTER_CONDITION = 'filter_condition';
@@ -80,16 +78,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.globalState.set('filter', () => {
       return this.getDefaultFilterCondition();
     });
-  }
-
-  ngAfterViewInit() {
-    if (this.cardList == null || this.deckPanel == null) {
-      return;
-    }
-    const deckPanelWidth = (this.deckPanel
-      .nativeElement as HTMLElement).getBoundingClientRect().width;
-    (this.cardList
-      .nativeElement as HTMLElement).style.paddingRight = `${deckPanelWidth}px`;
   }
 
   private getDefaultFilterCondition() {
