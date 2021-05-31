@@ -9,6 +9,8 @@
   background-color: #ffffff;
   z-index: 10;
   padding: 12px 12px 0;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
 .deck-panel-header {

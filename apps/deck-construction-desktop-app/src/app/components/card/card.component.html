@@ -1,4 +1,12 @@
-<img
-  class="card-img"
-  [src]="src"
-/>
+<digimon-card-app-card-img [src]="src"></digimon-card-app-card-img>
+<ng-container *ngIf="gs$ | async as gs">
+  <ng-container *ngIf="gs.selectedDeckId">
+    <button
+      mat-stroked-button
+      class="add-btn width-full"
+      (click)="onAdd$.next(no)"
+    >
+      ADD
+    </button>
+  </ng-container>
+</ng-container>

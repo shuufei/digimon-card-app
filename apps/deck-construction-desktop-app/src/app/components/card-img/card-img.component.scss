@@ -1,0 +1,13 @@
+:host {
+  display: block;
+}
+
+.card-img {
+  width: 120px;
+  &.m {
+    width: 120px;
+  }
+  &.s {
+    width: 80px;
+  }
+}

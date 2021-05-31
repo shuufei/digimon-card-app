@@ -11,7 +11,7 @@
 }
 
 .card {
-  padding: 4px 8px;
+  padding: 8px 8px;
 }
 
 .logo {
@@ -29,6 +29,7 @@ header {
   left: 0;
   width: 100%;
   box-sizing: border-box;
+  z-index: 10;
 
   padding: 12px 24px;
   background-color: #fff;

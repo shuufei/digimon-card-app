@@ -1,3 +1,42 @@
 :host {
   display: block;
 }
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 32px;
+  margin-top: 12px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 4px;
+  align-items: center;
+}
+
+.card-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count-btn {
+  padding: 3px;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #101010;
+  border: #ccc 1px solid;
+  height: 22px;
+  width: 22px;
+  .mat-icon {
+    height: 14px;
+    width: 14px;
+    font-size: 14px;
+  }
+}
+
+.card-count {
+  margin: 0 6px;
+}

@@ -46,7 +46,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
 import {RxState} from '@rx-angular/state';
 import { DeckPanelComponent } from './components/deck-panel/deck-panel.component';
-import { DeckDetailComponent } from './components/deck-detail/deck-detail.component'
+import { DeckDetailComponent } from './components/deck-detail/deck-detail.component';
+import { CardImgComponent } from './components/card-img/card-img.component'
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { DeckDetailComponent } from './components/deck-detail/deck-detail.compon
     FilterDialogComponent,
     DeckPanelComponent,
     DeckDetailComponent,
+    CardImgComponent,
   ],
   imports: [
     BrowserModule,

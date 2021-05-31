@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { combineLatest } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { GLOBAL_RX_STATE, GlobalState } from './global-state';
 import { ApiService } from './service/api.service';
 import { RxState } from '@rx-angular/state';
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
   private readonly LS_KEY_FILTER_CONDITION = 'filter_condition';
   private readonly LS_KEY_DECK_LIST = 'deck_list';
 
-  readonly cards$ = this.apiService.listAllCardInfo();
+  readonly cards$ = this.globalState.select('cardInfoList');
 
   private readonly filter$ = this.globalState.select('filter');
   readonly filteredCards$ = combineLatest([this.cards$, this.filter$]).pipe(
@@ -86,6 +86,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.fetchCardData();
     this.state.hold(this.parsistenceFilterConditionHandler$);
     this.state.hold(this.parsistanceDeckListHandler$);
     this.globalState.set(() => ({
@@ -115,5 +116,17 @@ export class AppComponent implements OnInit {
   private getCurrentDeckList() {
     const deckList = window.localStorage.getItem(this.LS_KEY_DECK_LIST);
     return ((deckList && JSON.parse(deckList)) ?? []) as Deck[];
+  }
+
+  private fetchCardData() {
+    this.apiService
+      .listAllCardInfo()
+      .pipe(
+        take(1),
+        tap((cards) => {
+          this.globalState.set('cardInfoList', () => cards);
+        })
+      )
+      .subscribe();
   }
 }

@@ -1,4 +1,28 @@
 <mat-form-field appearance="fill" class="width-full" floatLabel="always">
   <mat-label>Deck Title</mat-label>
-  <input type="text" matInput [formControl]="titleForm">
+  <input type="text" matInput [formControl]="titleForm" />
 </mat-form-field>
+
+<div class="card-list">
+  <ng-container *ngFor="let card of deckCards$ | async">
+    <div class="card">
+      <digimon-card-app-card-img
+        [src]="card.cardInfo.imgSrc"
+        [size]="'s'"
+      ></digimon-card-app-card-img>
+      <div class="card-count">
+        <button class="count-btn" (click)="removeCard$.next(card.cardInfo.no)">
+          <mat-icon aria-hidden="false" aria-label="minus" class="clickable"
+            >remove</mat-icon
+          >
+        </button>
+        <p class="card-count">{{ card.count }}</p>
+        <button class="count-btn" (click)="addCard$.next(card.cardInfo.no)">
+          <mat-icon aria-hidden="false" aria-label="plus" class="clickable"
+            >add</mat-icon
+          >
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>
