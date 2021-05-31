@@ -11,27 +11,27 @@ import { CardInfo } from '../../types';
 })
 export class CardComponent implements OnInit {
   @Input() src = '';
-  @Input() no!: CardInfo['no'];
+  @Input() imgFileName!: CardInfo['imgFileName'];
 
   readonly gs$ = this.globalState.select();
 
-  readonly onAdd$ = new Subject<CardInfo['no']>();
+  readonly onAdd$ = new Subject<CardInfo['imgFileName']>();
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
   ) {}
 
   ngOnInit() {
-    if (this.no == null) {
-      throw new Error('no is required!!! in card.component')
+    if (this.imgFileName == null) {
+      throw new Error('imgFileName is required!!! in card.component')
     }
-    this.globalState.connect('deckList', this.onAdd$, (state, no) => {
+    this.globalState.connect('deckList', this.onAdd$, (state, imgFileName) => {
       const selectDeck = state.deckList.find(v => v.id === state.selectedDeckId);
       return selectDeck == null ? state.deckList : update(
         state.deckList,
         {
           ...selectDeck,
-          cardList: [...selectDeck.cardList, no]
+          cardList: [...selectDeck.cardList, imgFileName]
         },
         'id'
       );

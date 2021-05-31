@@ -28,8 +28,8 @@ export class DeckDetailComponent implements OnInit {
     map(([deck, cardInfoList]) => {
       const groupedCardList = _.groupBy(deck.cardList);
       const deckCardList = Object.keys(groupedCardList).reduce((acc, curr) => {
-        const no = curr;
-        const cardInfo = cardInfoList.find((v) => v.no === no);
+        const imgFileName = curr;
+        const cardInfo = cardInfoList.find((v) => v.imgFileName === imgFileName);
         if (cardInfo == null) {
           return acc;
         }
@@ -43,7 +43,7 @@ export class DeckDetailComponent implements OnInit {
       }, [] as DeckCardList);
       return _.orderBy(
         deckCardList,
-        ['cardInfo.cardtype', 'cardInfo.lv', 'cardInfo.no'],
+        ['cardInfo.cardtype', 'cardInfo.lv', 'cardInfo.imgFileName'],
         ['desc']
       );
     })
@@ -168,8 +168,8 @@ export class DeckDetailComponent implements OnInit {
     })
   );
 
-  readonly addCard$ = new Subject<CardInfo['no']>();
-  readonly removeCard$ = new Subject<CardInfo['no']>();
+  readonly addCard$ = new Subject<CardInfo['imgFileName']>();
+  readonly removeCard$ = new Subject<CardInfo['imgFileName']>();
   readonly deleteDeck$ = new Subject<void>();
 
   private readonly commitDeckTitleHandler$ = this.titleForm.valueChanges.pipe(
@@ -203,7 +203,7 @@ export class DeckDetailComponent implements OnInit {
     })
   );
   private readonly addCardHandler$ = this.addCard$.pipe(
-    tap((no) => {
+    tap((imgFileName) => {
       this.globalState.set('deckList', (state) => {
         const selectedDeck = state.deckList.find(
           (v) => v.id === state.selectedDeckId
@@ -214,7 +214,7 @@ export class DeckDetailComponent implements OnInit {
               state.deckList,
               {
                 ...selectedDeck,
-                cardList: [...selectedDeck.cardList, no],
+                cardList: [...selectedDeck.cardList, imgFileName],
               },
               'id'
             );
@@ -222,13 +222,13 @@ export class DeckDetailComponent implements OnInit {
     })
   );
   private readonly removeCardHandler$ = this.removeCard$.pipe(
-    tap((no) => {
+    tap((imgFileName) => {
       this.globalState.set('deckList', (state) => {
         const selectedDeck = state.deckList.find(
           (v) => v.id === state.selectedDeckId
         );
         if (selectedDeck == null) return state.deckList;
-        const index = selectedDeck?.cardList.findIndex((v) => v === no);
+        const index = selectedDeck?.cardList.findIndex((v) => v === imgFileName);
         if (index === -1) return state.deckList;
         selectedDeck.cardList.splice(index, 1);
         return update(state.deckList, selectedDeck, 'id');

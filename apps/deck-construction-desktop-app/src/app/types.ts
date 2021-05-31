@@ -52,7 +52,7 @@ export type Category = keyof typeof CATEGORY;
 export type Deck = {
   id: string;
   title: string;
-  cardList: CardInfo['no'][];
+  cardList: CardInfo['imgFileName'][];
 };
 
 

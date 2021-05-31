@@ -11,7 +11,7 @@ export class DeckCardtypeCardListComponent {
   @Input() deckCardList: DeckCardList = [];
   @Input() count = 0;
   @Input() cardtype = '';
-  @Output() add = new EventEmitter<CardInfo['no']>();
-  @Output() remove = new EventEmitter<CardInfo['no']>();
+  @Output() add = new EventEmitter<CardInfo['imgFileName']>();
+  @Output() remove = new EventEmitter<CardInfo['imgFileName']>();
 
 }

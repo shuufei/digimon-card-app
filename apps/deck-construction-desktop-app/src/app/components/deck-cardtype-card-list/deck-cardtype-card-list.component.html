@@ -10,13 +10,13 @@
         [size]="'s'"
       ></digimon-card-app-card-img>
       <div class="card-count">
-        <button class="count-btn" (click)="remove.emit(card.cardInfo.no)">
+        <button class="count-btn" (click)="remove.emit(card.cardInfo.imgFileName)">
           <mat-icon aria-hidden="false" aria-label="minus" class="clickable"
             >remove</mat-icon
           >
         </button>
         <p class="card-count">{{ card.count }}</p>
-        <button class="count-btn" (click)="add.emit(card.cardInfo.no)">
+        <button class="count-btn" (click)="add.emit(card.cardInfo.imgFileName)">
           <mat-icon aria-hidden="false" aria-label="plus" class="clickable"
             >add</mat-icon
           >

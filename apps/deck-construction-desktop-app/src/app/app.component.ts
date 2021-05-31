@@ -93,10 +93,6 @@ export class AppComponent implements OnInit {
       filter: this.getDefaultFilterCondition(),
       deckList: this.getCurrentDeckList(),
     }));
-    this.globalState
-      .select()
-      .pipe(tap((v) => console.log('change global state: ', v)))
-      .subscribe();
   }
 
   private getDefaultFilterCondition() {
