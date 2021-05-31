@@ -1,0 +1,62 @@
+:host {
+  display: block;
+  padding: 4px 0;
+}
+
+.card-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 4px;
+  align-items: center;
+}
+
+.card-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.count-btn {
+  padding: 3px;
+  border-radius: 3px;
+  background-color: #fff;
+  color: #101010;
+  border: #ccc 1px solid;
+  height: 22px;
+  width: 22px;
+  .mat-icon {
+    height: 14px;
+    width: 14px;
+    font-size: 14px;
+  }
+}
+
+.card-count {
+  margin: 0 6px;
+}
+
+.count-label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-radius: 3px;
+  &.total-count {
+    background-color: #101010;
+    color: #fff;
+  }
+  &.type-count {
+    background-color: #fff;
+    color: #101010;
+    border: solid 1px #ccc;
+  }
+}
+
+.deck-type-card-list {
+  padding: 8px 0;
+}

@@ -3,26 +3,81 @@
   <input type="text" matInput [formControl]="titleForm" />
 </mat-form-field>
 
-<div class="card-list">
-  <ng-container *ngFor="let card of deckCards$ | async">
-    <div class="card">
-      <digimon-card-app-card-img
-        [src]="card.cardInfo.imgSrc"
-        [size]="'s'"
-      ></digimon-card-app-card-img>
-      <div class="card-count">
-        <button class="count-btn" (click)="removeCard$.next(card.cardInfo.no)">
-          <mat-icon aria-hidden="false" aria-label="minus" class="clickable"
-            >remove</mat-icon
-          >
-        </button>
-        <p class="card-count">{{ card.count }}</p>
-        <button class="count-btn" (click)="addCard$.next(card.cardInfo.no)">
-          <mat-icon aria-hidden="false" aria-label="plus" class="clickable"
-            >add</mat-icon
-          >
-        </button>
-      </div>
-    </div>
-  </ng-container>
+<div class="deck-card-list">
+  <div class="count-label total-count">
+    <span>total</span>
+    <span>{{ (deckTotalCount$ | async) || 0 }}</span>
+  </div>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(digitamaDeckCardList$ | async) || []"
+    [count]="(digitamaCount$ | async) || 0"
+    [cardtype]="'digitama'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(lv3DeckCardList$ | async) || []"
+    [count]="(lv3Count$ | async) || 0"
+    [cardtype]="'Lv.3'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(lv4DeckCardList$ | async) || []"
+    [count]="(lv4Count$ | async) || 0"
+    [cardtype]="'Lv.4'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(lv5DeckCardList$ | async) || []"
+    [count]="(lv5Count$ | async) || 0"
+    [cardtype]="'Lv.5'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(lv6DeckCardList$ | async) || []"
+    [count]="(lv6Count$ | async) || 0"
+    [cardtype]="'Lv.6'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(lv7DeckCardList$ | async) || []"
+    [count]="(lv7Count$ | async) || 0"
+    [cardtype]="'Lv.7'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(tamerDeckCardList$ | async) || []"
+    [count]="(tamerCount$ | async) || 0"
+    [cardtype]="'tamer'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(optionDeckCardList$ | async) || []"
+    [count]="(optionCount$ | async) || 0"
+    [cardtype]="'option'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+  <button
+    mat-flat-button
+    color="warn"
+    class="delete-btn"
+    (click)="deleteDeck$.next()"
+  >
+    Delete
+  </button>
 </div>

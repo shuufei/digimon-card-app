@@ -1,16 +1,11 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { GLOBAL_RX_STATE, GlobalState } from '../../global-state';
-import { Deck, CardInfo } from '../../types';
-import { RxState, update } from '@rx-angular/state';
+import { Deck, CardInfo, DeckCardList } from '../../types';
+import { RxState, update, remove } from '@rx-angular/state';
 import { FormControl } from '@angular/forms';
 import { filter, pluck, tap, map, withLatestFrom } from 'rxjs/operators';
 import { merge, combineLatest, Observable, Subject } from 'rxjs';
 import * as _ from 'lodash';
-
-type DeckCardList = {
-  cardInfo: CardInfo;
-  count: number;
-}[];
 
 @Component({
   selector: 'digimon-card-app-deck-detail',
@@ -46,12 +41,136 @@ export class DeckDetailComponent implements OnInit {
           },
         ];
       }, [] as DeckCardList);
-      return _.orderBy(deckCardList, ['cardInfo.cardtype', 'cardInfo.lv', 'cardInfo.no'], ['desc']);
+      return _.orderBy(
+        deckCardList,
+        ['cardInfo.cardtype', 'cardInfo.lv', 'cardInfo.no'],
+        ['desc']
+      );
+    })
+  );
+  readonly deckTotalCount$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards.reduce((acc, curr) => {
+        return acc + curr.count;
+      }, 0);
+    })
+  );
+  readonly digitamaCount$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.cardtype === 'デジタマ')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly lv3Count$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.lv === 'Lv.3')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly lv4Count$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.lv === 'Lv.4')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly lv5Count$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.lv === 'Lv.5')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly lv6Count$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.lv === 'Lv.6')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly lv7Count$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.lv === 'Lv.7')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly tamerCount$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.cardtype === 'テイマー')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly optionCount$: Observable<number> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards
+        .filter((deckCard) => deckCard.cardInfo.cardtype === 'オプション')
+        .reduce((acc, curr) => {
+          return acc + curr.count;
+        }, 0);
+    })
+  );
+  readonly digitamaDeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.cardtype === 'デジタマ')
+    })
+  );
+  readonly tamerDeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.cardtype === 'テイマー')
+    })
+  );
+  readonly optionDeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.cardtype === 'オプション')
+    })
+  );
+  readonly lv3DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.3')
+    })
+  );
+  readonly lv4DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.4')
+    })
+  );
+  readonly lv5DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.5')
+    })
+  );
+  readonly lv6DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.6')
+    })
+  );
+  readonly lv7DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map(deckCards => {
+      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.7')
     })
   );
 
   readonly addCard$ = new Subject<CardInfo['no']>();
   readonly removeCard$ = new Subject<CardInfo['no']>();
+  readonly deleteDeck$ = new Subject<void>();
 
   private readonly commitDeckTitleHandler$ = this.titleForm.valueChanges.pipe(
     tap((value) => {
@@ -103,23 +222,32 @@ export class DeckDetailComponent implements OnInit {
     })
   );
   private readonly removeCardHandler$ = this.removeCard$.pipe(
-    tap(no => {
+    tap((no) => {
       this.globalState.set('deckList', (state) => {
         const selectedDeck = state.deckList.find(
           (v) => v.id === state.selectedDeckId
         );
         if (selectedDeck == null) return state.deckList;
-        const index = selectedDeck?.cardList.findIndex(v => v === no);
+        const index = selectedDeck?.cardList.findIndex((v) => v === no);
         if (index === -1) return state.deckList;
         selectedDeck.cardList.splice(index, 1);
-        return update(
-          state.deckList,
-          selectedDeck,
-          'id'
-        )
+        return update(state.deckList, selectedDeck, 'id');
+      });
+    })
+  );
+
+  private readonly deleteDeckHandler$ = this.deleteDeck$.pipe(
+    withLatestFrom(this.selectedDeck$),
+    tap(([, deck]) => {
+      this.globalState.set((state) => {
+        return {
+          ...state,
+          deckList: remove(state.deckList, deck, 'id'),
+          selectedDeckId: undefined
+        }
       })
     })
-  )
+  );
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>
@@ -130,5 +258,6 @@ export class DeckDetailComponent implements OnInit {
     this.globalState.hold(this.updateTitleFormHandler$);
     this.globalState.hold(this.addCardHandler$);
     this.globalState.hold(this.removeCardHandler$);
+    this.globalState.hold(this.deleteDeckHandler$);
   }
 }

@@ -2,41 +2,26 @@
   display: block;
 }
 
-.card-list {
-  display: flex;
-  flex-wrap: wrap;
+.deck-card-list {
   padding-bottom: 32px;
   margin-top: 12px;
 }
 
-.card {
+.count-label {
+  width: 100%;
   display: flex;
-  flex-direction: column;
-  padding: 8px 4px;
-  align-items: center;
-}
-
-.card-count {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.count-btn {
-  padding: 3px;
+  justify-content: space-between;
+  padding: 8px 12px;
   border-radius: 3px;
-  background-color: #fff;
-  color: #101010;
-  border: #ccc 1px solid;
-  height: 22px;
-  width: 22px;
-  .mat-icon {
-    height: 14px;
-    width: 14px;
-    font-size: 14px;
+  margin-bottom: 8px;
+  &.total-count {
+    background-color: #101010;
+    color: #fff;
+    position: sticky;
+    top: 0;
   }
 }
 
-.card-count {
-  margin: 0 6px;
+.delete-btn {
+  margin-top: 24px;
 }

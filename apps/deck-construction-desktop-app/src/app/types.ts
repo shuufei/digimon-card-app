@@ -88,3 +88,8 @@ export type CardInfo = Omit<ApiResponseCardInfo, 'color'> & {
   category: Category;
   color: Color;
 }
+
+export type DeckCardList = {
+  cardInfo: CardInfo;
+  count: number;
+}[];

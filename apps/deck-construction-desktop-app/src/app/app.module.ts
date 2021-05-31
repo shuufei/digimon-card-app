@@ -47,7 +47,8 @@ import { GlobalState, GLOBAL_RX_STATE } from './global-state';
 import {RxState} from '@rx-angular/state';
 import { DeckPanelComponent } from './components/deck-panel/deck-panel.component';
 import { DeckDetailComponent } from './components/deck-detail/deck-detail.component';
-import { CardImgComponent } from './components/card-img/card-img.component'
+import { CardImgComponent } from './components/card-img/card-img.component';
+import { DeckCardtypeCardListComponent } from './components/deck-cardtype-card-list/deck-cardtype-card-list.component'
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { CardImgComponent } from './components/card-img/card-img.component'
     DeckPanelComponent,
     DeckDetailComponent,
     CardImgComponent,
+    DeckCardtypeCardListComponent,
   ],
   imports: [
     BrowserModule,
