@@ -11,7 +11,7 @@ import { map, tap } from 'rxjs/operators';
 import { GLOBAL_RX_STATE, GlobalState } from './global-state';
 import { ApiService } from './service/api.service';
 import { RxState } from '@rx-angular/state';
-import { COLOR, CARD_TYPE, LV, CATEGORY } from './types';
+import { COLOR, CARD_TYPE, LV, CATEGORY, Deck } from './types';
 import * as _ from 'lodash';
 
 type State = Record<string, never>;
@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   title = 'deck-construction-desktop-app';
 
   private readonly LS_KEY_FILTER_CONDITION = 'filter_condition';
+  private readonly LS_KEY_DECK_LIST = 'deck_list';
 
   readonly cards$ = this.apiService.listAllCardInfo();
 
@@ -65,6 +66,17 @@ export class AppComponent implements OnInit {
     })
   );
 
+  private readonly parsistanceDeckListHandler$ = this.globalState
+    .select('deckList')
+    .pipe(
+      tap((deckList) => {
+        window.localStorage.setItem(
+          this.LS_KEY_DECK_LIST,
+          JSON.stringify(deckList)
+        );
+      })
+    );
+
   isOpenDeckPanel = true;
 
   constructor(
@@ -75,9 +87,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.state.hold(this.parsistenceFilterConditionHandler$);
-    this.globalState.set('filter', () => {
-      return this.getDefaultFilterCondition();
-    });
+    this.state.hold(this.parsistanceDeckListHandler$);
+    this.globalState.set(() => ({
+      filter: this.getDefaultFilterCondition(),
+      deckList: this.getCurrentDeckList(),
+    }));
+    this.globalState
+      .select()
+      .pipe(tap((v) => console.log('change global state: ', v)))
+      .subscribe();
   }
 
   private getDefaultFilterCondition() {
@@ -92,5 +110,10 @@ export class AppComponent implements OnInit {
       };
     }
     return JSON.parse(condition) as GlobalState['filter'];
+  }
+
+  private getCurrentDeckList() {
+    const deckList = window.localStorage.getItem(this.LS_KEY_DECK_LIST);
+    return ((deckList && JSON.parse(deckList)) ?? []) as Deck[];
   }
 }

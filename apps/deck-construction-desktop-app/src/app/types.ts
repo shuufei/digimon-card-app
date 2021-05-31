@@ -1,4 +1,3 @@
-
 export const COLOR = {
   '1_red': '1_red',
   '2_blue': '2_blue',
@@ -49,3 +48,43 @@ export const CATEGORY = {
 } as const;
 
 export type Category = keyof typeof CATEGORY;
+
+export type Deck = {
+  id: string;
+  title: string;
+  cardList: CardInfo['no'][];
+};
+
+
+export type ApiResponseColor = 'red' | 'blue' | 'green' | 'yellow' | 'black' | 'purple' | 'white';
+
+export type ApiResponseCardInfo = {
+  no: string;
+  lv: Lv;
+  rarity: string;
+  cardtype: CardType;
+  parallel?: string;
+  name: string;
+  color: ApiResponseColor;
+  form: string;
+  attribute: string;
+  type: string;
+  dp: string;
+  apperanceCost: string;
+  evolutionCost1: string;
+  evolutionCost2: string;
+  effect: string;
+  evolutionaryOriginEffect: string;
+  securityEffect: string;
+  imgFileName: string;
+};
+
+export type ApiResponse = {
+  cardInfoList: ApiResponseCardInfo[];
+};
+
+export type CardInfo = Omit<ApiResponseCardInfo, 'color'> & {
+  imgSrc: string;
+  category: Category;
+  color: Color;
+}

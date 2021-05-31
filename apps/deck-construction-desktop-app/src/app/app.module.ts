@@ -45,7 +45,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
 import {RxState} from '@rx-angular/state';
-import { DeckPanelComponent } from './components/deck-panel/deck-panel.component'
+import { DeckPanelComponent } from './components/deck-panel/deck-panel.component';
+import { DeckDetailComponent } from './components/deck-detail/deck-detail.component'
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { DeckPanelComponent } from './components/deck-panel/deck-panel.component
     FilterAndSortComponent,
     FilterDialogComponent,
     DeckPanelComponent,
+    DeckDetailComponent,
   ],
   imports: [
     BrowserModule,

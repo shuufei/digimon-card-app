@@ -1,6 +1,42 @@
-<div class="deck-panel-header">
-  <h3>Deck</h3>
-</div>
-<div class="deck-panel-content">
-  <button mat-flat-button color="primary" class="create-btn">Create New Deck</button>
-</div>
+<ng-container *ngIf="globalState$ | async as gs">
+  <ng-container *ngIf="gs.selectedDeckId == null; else selectedDeck">
+    <div class="deck-panel-header">
+      <h3>Deck</h3>
+    </div>
+    <div class="deck-panel-content">
+      <button
+        mat-flat-button
+        color="primary"
+        class="create-btn"
+        (click)="onClickedCreateNewDeckBtn$.next()"
+      >
+        Create New Deck
+      </button>
+      <div class="deck-list">
+        <ng-container *ngFor="let deck of gs.deckList">
+          <div
+            class="clickable deck-item"
+            (click)="onClickedDeckItem$.next(deck.id)"
+          >
+            <span>{{ deck.title || '無題' }}</span>
+            <span>{{ deck.cardList.length }}</span>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #selectedDeck>
+    <div>
+      <mat-icon
+        aria-hidden="false"
+        aria-label="back"
+        (click)="onClickedBackBtn$.next()"
+        class="clickable"
+        >arrow_back</mat-icon
+      >
+    </div>
+    <digimon-card-app-deck-detail
+      class="deck-detail"
+    ></digimon-card-app-deck-detail>
+  </ng-template>
+</ng-container>

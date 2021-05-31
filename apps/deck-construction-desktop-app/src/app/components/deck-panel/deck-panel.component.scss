@@ -30,3 +30,21 @@
   display: block;
   width: 100%;
 }
+
+.deck-detail {
+  margin-top: 8px;
+}
+
+.deck-list {
+  margin-top: 16px;
+}
+
+.deck-item{
+  padding: 8px 12px;
+  margin: 6px 0;
+  border: solid 1px #101010;
+  background-color: #f0f0f0;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
+}

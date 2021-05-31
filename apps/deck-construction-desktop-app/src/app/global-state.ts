@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { CardType, Color, Lv, Category } from './types';
+import { CardType, Color, Lv, Category, Deck } from './types';
 
 export type GlobalState = {
   filter: {
@@ -9,6 +9,8 @@ export type GlobalState = {
     categoryList: Category[];
     includeParallel: boolean;
   };
+  selectedDeckId?: Deck['id'];
+  deckList: Deck[];
 };
 
 export const GLOBAL_RX_STATE = new InjectionToken<GlobalState>(

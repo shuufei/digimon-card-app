@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CardType, Color, COLOR, Lv, Category } from '../types';
+import { CardType, Color, COLOR, Lv, Category, ApiResponse, ApiResponseColor, CardInfo } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -81,37 +81,4 @@ export class ApiService {
         return COLOR['7_white'];
     }
   }
-}
-
-export type ApiResponseColor = 'red' | 'blue' | 'green' | 'yellow' | 'black' | 'purple' | 'white';
-
-export type ApiResponseCardInfo = {
-  no: string;
-  lv: Lv;
-  rarity: string;
-  cardtype: CardType;
-  parallel?: string;
-  name: string;
-  color: ApiResponseColor;
-  form: string;
-  attribute: string;
-  type: string;
-  dp: string;
-  apperanceCost: string;
-  evolutionCost1: string;
-  evolutionCost2: string;
-  effect: string;
-  evolutionaryOriginEffect: string;
-  securityEffect: string;
-  imgFileName: string;
-};
-
-export type ApiResponse = {
-  cardInfoList: ApiResponseCardInfo[];
-};
-
-export type CardInfo = Omit<ApiResponseCardInfo, 'color'> & {
-  imgSrc: string;
-  category: Category;
-  color: Color;
 }
