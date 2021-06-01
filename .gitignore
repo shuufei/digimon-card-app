@@ -37,3 +37,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Digimon Card Info Assets
+**/deck-construction-desktop-app/**/assets/cardInfo
+**/deck-construction-desktop-app/**/assets/images

@@ -154,56 +154,6 @@
           }
         }
       }
-    },
-    "rest-api": {
-      "root": "apps/rest-api",
-      "sourceRoot": "apps/rest-api/src",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
-          "options": {
-            "outputPath": "dist/apps/rest-api",
-            "main": "apps/rest-api/src/main.ts",
-            "tsConfig": "apps/rest-api/tsconfig.app.json",
-            "assets": ["apps/rest-api/src/assets"]
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "extractLicenses": true,
-              "inspect": false,
-              "fileReplacements": [
-                {
-                  "replace": "apps/rest-api/src/environments/environment.ts",
-                  "with": "apps/rest-api/src/environments/environment.prod.ts"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "builder": "@nrwl/node:execute",
-          "options": {
-            "buildTarget": "rest-api:build"
-          }
-        },
-        "lint": {
-          "builder": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["apps/rest-api/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/rest-api"],
-          "options": {
-            "jestConfig": "apps/rest-api/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
     }
   }
 }
