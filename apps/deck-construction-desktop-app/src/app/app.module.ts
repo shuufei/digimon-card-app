@@ -48,7 +48,8 @@ import {RxState} from '@rx-angular/state';
 import { DeckPanelComponent } from './components/deck-panel/deck-panel.component';
 import { DeckDetailComponent } from './components/deck-detail/deck-detail.component';
 import { CardImgComponent } from './components/card-img/card-img.component';
-import { DeckCardtypeCardListComponent } from './components/deck-cardtype-card-list/deck-cardtype-card-list.component'
+import { DeckCardtypeCardListComponent } from './components/deck-cardtype-card-list/deck-cardtype-card-list.component';
+import { ExpandCardViewDialogComponent } from './components/expand-card-view-dialog/expand-card-view-dialog.component'
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { DeckCardtypeCardListComponent } from './components/deck-cardtype-card-l
     DeckDetailComponent,
     CardImgComponent,
     DeckCardtypeCardListComponent,
+    ExpandCardViewDialogComponent,
   ],
   imports: [
     BrowserModule,
