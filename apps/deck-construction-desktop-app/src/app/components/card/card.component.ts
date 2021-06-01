@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
 import { GLOBAL_RX_STATE, GlobalState } from '../../global-state';
 import { RxState, update } from '@rx-angular/state';
 import { Subject } from 'rxjs';
@@ -7,7 +7,8 @@ import { CardInfo } from '../../types';
 @Component({
   selector: 'digimon-card-app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CardComponent implements OnInit {
   @Input() src = '';

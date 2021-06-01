@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
 import { v4 } from 'uuid';
@@ -11,6 +11,7 @@ type State = Record<string, never>;
   templateUrl: './deck-panel.component.html',
   styleUrls: ['./deck-panel.component.scss'],
   providers: [RxState],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeckPanelComponent implements OnInit {
   readonly globalState$ = this.globalState.select();

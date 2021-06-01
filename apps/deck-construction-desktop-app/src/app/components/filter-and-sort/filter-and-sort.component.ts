@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { GLOBAL_RX_STATE, GlobalState } from '../../global-state';
 import { RxState } from '@rx-angular/state';
@@ -9,6 +9,7 @@ import { COLOR, CARD_TYPE, LV, CATEGORY } from '../../types';
   selector: 'digimon-card-app-filter-and-sort',
   templateUrl: './filter-and-sort.component.html',
   styleUrls: ['./filter-and-sort.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FilterAndSortComponent implements OnInit {
   colorList = Object.keys(COLOR);

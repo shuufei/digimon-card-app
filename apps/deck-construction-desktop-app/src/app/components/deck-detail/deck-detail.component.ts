@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
 import { GLOBAL_RX_STATE, GlobalState } from '../../global-state';
 import { Deck, CardInfo, DeckCardList } from '../../types';
 import { RxState, update, remove } from '@rx-angular/state';
@@ -11,6 +11,7 @@ import * as _ from 'lodash';
   selector: 'digimon-card-app-deck-detail',
   templateUrl: './deck-detail.component.html',
   styleUrls: ['./deck-detail.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DeckDetailComponent implements OnInit {
   readonly titleForm = new FormControl('');
