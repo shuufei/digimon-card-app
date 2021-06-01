@@ -2,15 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CardType, Color, COLOR, Lv, Category, ApiResponse, ApiResponseColor, CardInfo } from '../types';
+import {
+  Color,
+  COLOR,
+  Category,
+  ApiResponse,
+  ApiResponseColor,
+  CardInfo,
+} from '../types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-
-  private readonly ASSETS_ENDPOINT = 'http://localhost:8081';
-
   constructor(private readonly http: HttpClient) {}
 
   listAllCardInfo(): Observable<CardInfo[]> {
@@ -51,16 +55,18 @@ export class ApiService {
   }
 
   private listCardInfoByCategory(category: Category): Observable<CardInfo[]> {
-    return this.http.get<ApiResponse>(`${this.ASSETS_ENDPOINT}/cardInfo/${category}.json`).pipe(
-      map(res => {
-        return res.cardInfoList.map(v => ({
-          ...v,
-          imgSrc: `${this.ASSETS_ENDPOINT}/images/${category}/${v.imgFileName}`,
-          category: category,
-          color: this.convertColor(v.color)
-        }))
-      })
-    );
+    return this.http
+      .get<ApiResponse>(`./assets/cardInfo/${category}.json`)
+      .pipe(
+        map((res) => {
+          return res.cardInfoList.map((v) => ({
+            ...v,
+            imgSrc: `./assets/images/${category}/${v.imgFileName}`,
+            category: category,
+            color: this.convertColor(v.color),
+          }));
+        })
+      );
   }
 
   private convertColor(color: ApiResponseColor): Color {
