@@ -25,6 +25,13 @@
     "deck-construction-desktop-app-e2e": {
       "tags": [],
       "implicitDependencies": ["deck-construction-desktop-app"]
+    },
+    "vs-desktop-app": {
+      "tags": []
+    },
+    "vs-desktop-app-e2e": {
+      "tags": [],
+      "implicitDependencies": ["vs-desktop-app"]
     }
   }
 }
