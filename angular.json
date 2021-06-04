@@ -174,7 +174,10 @@
               "apps/vs-desktop-app/src/favicon.ico",
               "apps/vs-desktop-app/src/assets"
             ],
-            "styles": ["apps/vs-desktop-app/src/styles.scss"],
+            "styles": [
+              "apps/vs-desktop-app/src/styles.scss",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ],
             "scripts": []
           },
           "configurations": {

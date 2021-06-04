@@ -39,5 +39,5 @@ testem.log
 Thumbs.db
 
 # Digimon Card Info Assets
-**/deck-construction-desktop-app/**/assets/cardInfo
-**/deck-construction-desktop-app/**/assets/images
+**/assets/cardInfo
+**/assets/images

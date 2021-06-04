@@ -1,17 +1,22 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, OnInit } from '@angular/core';
-import { GLOBAL_RX_STATE, GlobalState } from '../../global-state';
-import { Deck, CardInfo, DeckCardList } from '../../types';
-import { RxState, update, remove } from '@rx-angular/state';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { filter, pluck, tap, map, withLatestFrom } from 'rxjs/operators';
-import { merge, combineLatest, Observable, Subject } from 'rxjs';
+import { remove, RxState, update } from '@rx-angular/state';
 import * as _ from 'lodash';
+import { combineLatest, merge, Observable, Subject } from 'rxjs';
+import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
+import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
+import { CardInfo, Deck, DeckCardList } from '../../types';
 
 @Component({
   selector: 'digimon-card-app-deck-detail',
   templateUrl: './deck-detail.component.html',
   styleUrls: ['./deck-detail.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeckDetailComponent implements OnInit {
   readonly titleForm = new FormControl('');
@@ -30,7 +35,9 @@ export class DeckDetailComponent implements OnInit {
       const groupedCardList = _.groupBy(deck.cardList);
       const deckCardList = Object.keys(groupedCardList).reduce((acc, curr) => {
         const imgFileName = curr;
-        const cardInfo = cardInfoList.find((v) => v.imgFileName === imgFileName);
+        const cardInfo = cardInfoList.find(
+          (v) => v.imgFileName === imgFileName
+        );
         if (cardInfo == null) {
           return acc;
         }
@@ -42,6 +49,7 @@ export class DeckDetailComponent implements OnInit {
           },
         ];
       }, [] as DeckCardList);
+      console.log(deckCardList);
       return _.orderBy(
         deckCardList,
         ['cardInfo.cardtype', 'cardInfo.lv', 'cardInfo.imgFileName'],
@@ -129,43 +137,49 @@ export class DeckDetailComponent implements OnInit {
     })
   );
   readonly digitamaDeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.cardtype === 'デジタマ')
+    map((deckCards) => {
+      return deckCards.filter(
+        (deckCard) => deckCard.cardInfo.cardtype === 'デジタマ'
+      );
     })
   );
   readonly tamerDeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.cardtype === 'テイマー')
+    map((deckCards) => {
+      return deckCards.filter(
+        (deckCard) => deckCard.cardInfo.cardtype === 'テイマー'
+      );
     })
   );
   readonly optionDeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.cardtype === 'オプション')
+    map((deckCards) => {
+      return deckCards.filter(
+        (deckCard) => deckCard.cardInfo.cardtype === 'オプション'
+      );
     })
   );
   readonly lv3DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.3')
+    map((deckCards) => {
+      return deckCards.filter((deckCard) => deckCard.cardInfo.lv === 'Lv.3');
     })
   );
   readonly lv4DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.4')
+    map((deckCards) => {
+      return deckCards.filter((deckCard) => deckCard.cardInfo.lv === 'Lv.4');
     })
   );
   readonly lv5DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.5')
+    map((deckCards) => {
+      return deckCards.filter((deckCard) => deckCard.cardInfo.lv === 'Lv.5');
     })
   );
   readonly lv6DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.6')
+    map((deckCards) => {
+      return deckCards.filter((deckCard) => deckCard.cardInfo.lv === 'Lv.6');
     })
   );
   readonly lv7DeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
-    map(deckCards => {
-      return deckCards.filter(deckCard => deckCard.cardInfo.lv === 'Lv.7')
+    map((deckCards) => {
+      return deckCards.filter((deckCard) => deckCard.cardInfo.lv === 'Lv.7');
     })
   );
 
@@ -229,7 +243,9 @@ export class DeckDetailComponent implements OnInit {
           (v) => v.id === state.selectedDeckId
         );
         if (selectedDeck == null) return state.deckList;
-        const index = selectedDeck?.cardList.findIndex((v) => v === imgFileName);
+        const index = selectedDeck?.cardList.findIndex(
+          (v) => v === imgFileName
+        );
         if (index === -1) return state.deckList;
         selectedDeck.cardList.splice(index, 1);
         return update(state.deckList, selectedDeck, 'id');
@@ -244,9 +260,9 @@ export class DeckDetailComponent implements OnInit {
         return {
           ...state,
           deckList: remove(state.deckList, deck, 'id'),
-          selectedDeckId: undefined
-        }
-      })
+          selectedDeckId: undefined,
+        };
+      });
     })
   );
 
