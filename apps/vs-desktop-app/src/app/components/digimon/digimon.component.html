@@ -1,0 +1,10 @@
+<ng-container *ngIf="gs$ | async as gs">
+  <digimon-card-app-card
+    [card]="digimon.card"
+    class="w-full"
+  ></digimon-card-app-card>
+  <span>{{ digimon.evolutionOiriginCardList.length }}</span>
+  <ng-container *ngIf="gs.modeState?.mode != null">
+    <button mat-stroked-button (click)="selected.emit()">選択</button>
+  </ng-container>
+</ng-container>

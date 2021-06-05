@@ -1,18 +1,29 @@
 import { InjectionToken } from '@angular/core';
+import { v4 } from 'uuid';
 import { deck } from './deck';
-import { CardInfo } from './types';
+import { Digimon } from './domain/digimon';
+import { Area, Card, Mode } from './types';
 
-type Area = {
-  cardList: CardInfo[];
+type AreaState = {
+  cardList: Card[];
 };
 
 export type GlobalState = {
-  stack: Area;
-  digitamaStack: Area;
-  hand: Area;
-  battleArea: Area;
-  optionArea: Area;
-  tamerArea: Area;
+  stack: AreaState;
+  digitamaStack: AreaState;
+  hand: AreaState;
+  battleArea: {
+    digimonList: Digimon[];
+  };
+  optionArea: AreaState;
+  tamerArea: AreaState;
+  modeState?: {
+    mode: Mode;
+    trigger?: {
+      card: Card;
+      area: Area;
+    };
+  };
 };
 
 export const GLOBAL_RX_STATE = new InjectionToken<GlobalState>(
@@ -20,11 +31,19 @@ export const GLOBAL_RX_STATE = new InjectionToken<GlobalState>(
 );
 
 export const INITIAL_GLOBAL_STATE: GlobalState = {
-  stack: { cardList: deck.filter((v) => v.cardtype !== 'デジタマ') },
-  digitamaStack: { cardList: deck.filter((v) => v.cardtype === 'デジタマ') },
+  stack: {
+    cardList: deck
+      .filter((v) => v.cardtype !== 'デジタマ')
+      .map((v) => ({ ...v, id: v4() })),
+  },
+  digitamaStack: {
+    cardList: deck
+      .filter((v) => v.cardtype === 'デジタマ')
+      .map((v) => ({ ...v, id: v4() })),
+  },
   hand: { cardList: [] },
   battleArea: {
-    cardList: [],
+    digimonList: [],
   },
   optionArea: {
     cardList: [],

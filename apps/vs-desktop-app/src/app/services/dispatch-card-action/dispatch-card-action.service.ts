@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
 import { RxState } from '@rx-angular/state';
+import { Digimon } from '../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
-import { Area, CardAction, CardInfo } from '../../types';
+import { Area, Card, CardAction } from '../../types';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
 import { createStateForWhole } from './create-state-for-whole-action';
@@ -37,5 +38,9 @@ export class DispatchCardActionService {
 export type StateAction = {
   type: CardAction;
   area: Area;
-  card?: CardInfo;
+  card?: Card;
+  target?: {
+    area: Area;
+    digimon: Digimon;
+  };
 };

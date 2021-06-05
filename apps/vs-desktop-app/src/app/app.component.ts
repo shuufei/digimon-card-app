@@ -1,12 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { Subject } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { tag } from 'rxjs-spy/operators/tag';
-import { filter, tap } from 'rxjs/operators';
+import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import {
   CardActionEvent,
   CardActionItem,
 } from './components/card/card.component';
+import { Digimon } from './domain/digimon';
 import {
   GlobalState,
   GLOBAL_RX_STATE,
@@ -47,11 +48,32 @@ export class AppComponent implements OnInit {
    * Events
    */
   readonly onStackShuffle$ = new Subject();
-  readonly onDraw$ = new Subject();
+  readonly onDrawFromStack$ = new Subject();
   readonly onReset$ = new Subject();
-  readonly onActionHandCardEvent$ = new Subject<CardActionEvent>();
-  private readonly onentryActionFromHandCardEvent$ = this.onActionHandCardEvent$.pipe(
+  readonly onActionFromHand$ = new Subject<CardActionEvent>();
+  readonly onEvolutionFromHand$ = this.onActionFromHand$.pipe(
+    withLatestFrom(this.gs$.pipe(map((v) => v.battleArea.digimonList))),
+    filter(
+      ([event, digimonList]) =>
+        event.action === 'evolution' && digimonList.length > 0
+    ),
+    map(([event]) => event)
+  );
+  readonly onSelectDigimonCard$ = new Subject<Digimon>();
+  private readonly onEntryActionFromHand$ = this.onActionFromHand$.pipe(
     filter((event) => event.action === 'entry')
+  );
+  private readonly onResetMode$ = merge(
+    this.onStackShuffle$,
+    this.onDrawFromStack$,
+    this.onEntryActionFromHand$
+  );
+  private readonly onSubmitEvolutionFromHandToBattleArea$ = this.onSelectDigimonCard$.pipe(
+    withLatestFrom(this.gs$.pipe(map((v) => v.modeState))),
+    filter(
+      ([, modeState]) =>
+        modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
+    )
   );
 
   constructor(
@@ -74,7 +96,7 @@ export class AppComponent implements OnInit {
       )
     );
     this.globalState.hold(
-      this.onDraw$.pipe(
+      this.onDrawFromStack$.pipe(
         tap(() =>
           this.dispatchCardActionService.dispatch({
             type: 'draw',
@@ -94,7 +116,7 @@ export class AppComponent implements OnInit {
       )
     );
     this.globalState.hold(
-      this.onentryActionFromHandCardEvent$.pipe(
+      this.onEntryActionFromHand$.pipe(
         tap((event) => {
           this.dispatchCardActionService.dispatch({
             type: 'entry',
@@ -104,5 +126,35 @@ export class AppComponent implements OnInit {
         })
       )
     );
+    this.globalState.hold(
+      this.onSubmitEvolutionFromHandToBattleArea$.pipe(
+        tap(([digimon, modeState]) => {
+          this.dispatchCardActionService.dispatch({
+            type: 'evolution',
+            area: 'hand',
+            card: modeState?.trigger?.card,
+            target: {
+              area: 'battleArea',
+              digimon,
+            },
+          });
+          this.globalState.set('modeState', () => undefined);
+        })
+      )
+    );
+
+    // connect
+    this.globalState.connect(
+      'modeState',
+      this.onEvolutionFromHand$,
+      (_, event) => ({
+        mode: 'evolution',
+        trigger: {
+          area: 'hand',
+          card: event.card,
+        },
+      })
+    );
+    this.globalState.connect('modeState', this.onResetMode$, () => undefined);
   }
 }

@@ -27,14 +27,15 @@
     <div class="flex-1">
       <mat-card>
         <h3>
-          バトルエリア <span>{{ gs.battleArea.cardList.length }}</span>
+          バトルエリア <span>{{ gs.battleArea.digimonList.length }}</span>
         </h3>
         <div class="mt-2 flex">
-          <ng-container *ngFor="let card of gs.battleArea.cardList">
-            <digimon-card-app-card
-              [card]="card"
+          <ng-container *ngFor="let digimon of gs.battleArea.digimonList">
+            <digimon-card-app-digimon
+              [digimon]="digimon"
+              (selected)="onSelectDigimonCard$.next(digimon)"
               class="w-20 m-1"
-            ></digimon-card-app-card>
+            ></digimon-card-app-digimon>
           </ng-container>
         </div>
       </mat-card>
@@ -74,7 +75,9 @@
         <button mat-stroked-button (click)="onStackShuffle$.next()">
           shuffle
         </button>
-        <button mat-stroked-button (click)="onDraw$.next()">draw</button>
+        <button mat-stroked-button (click)="onDrawFromStack$.next()">
+          draw
+        </button>
       </mat-card>
       <mat-card>
         <h3>トラッシュ</h3>
@@ -92,7 +95,7 @@
         <digimon-card-app-card
           [card]="card"
           [actionList]="handCardActionList"
-          (action)="onActionHandCardEvent$.next($event)"
+          (action)="onActionFromHand$.next($event)"
           class="w-20 m-1"
         ></digimon-card-app-card>
       </ng-container>

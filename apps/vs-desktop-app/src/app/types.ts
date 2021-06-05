@@ -78,6 +78,10 @@ export type CardInfo = {
   color: Color;
 };
 
+export type Card = CardInfo & {
+  id: string;
+};
+
 export const CARD_ACTION = {
   draw: 'draw',
   entry: 'entry',
@@ -95,3 +99,9 @@ export type Area =
   | 'optionArea'
   | 'tamerArea'
   | 'whole';
+
+export const MODE = {
+  evolution: 'evolution',
+} as const;
+
+export type Mode = keyof typeof MODE;

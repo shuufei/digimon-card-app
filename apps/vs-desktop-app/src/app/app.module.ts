@@ -8,6 +8,7 @@ import { CardComponent } from './components/card/card.component';
 import { ExpandCardViewDialogComponent } from './components/expand-card-view-dialog/expand-card-view-dialog.component';
 import { CustomMenueTriggerDirective } from './custom-menu-trigger.directive';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
+import { DigimonComponent } from './components/digimon/digimon.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { GlobalState, GLOBAL_RX_STATE } from './global-state';
     CustomMenueTriggerDirective,
     CardComponent,
     ExpandCardViewDialogComponent,
+    DigimonComponent,
   ],
   imports: [
     AngularMaterialModule,

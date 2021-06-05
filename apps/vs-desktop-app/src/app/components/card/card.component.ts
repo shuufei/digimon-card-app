@@ -12,7 +12,7 @@ import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { CustomMenueTriggerDirective } from '../../custom-menu-trigger.directive';
-import { CardAction, CardInfo } from '../../types';
+import { Card, CardAction } from '../../types';
 import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand-card-view-dialog.component';
 
 @Component({
@@ -23,7 +23,7 @@ import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand
   providers: [RxState],
 })
 export class CardComponent implements OnInit {
-  @Input() card!: CardInfo;
+  @Input() card!: Card;
   @Input() actionList: CardActionItem[] = [];
   @Output() action = new EventEmitter<CardActionEvent>();
   @ViewChild(CustomMenueTriggerDirective) trigger?: CustomMenueTriggerDirective;
@@ -39,7 +39,7 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.card == null) {
-      throw new Error('src is required');
+      throw new Error('card is required');
     }
     this.state.hold(
       this.onContextMenu$.pipe(
@@ -76,5 +76,5 @@ export type CardActionItem = {
 };
 
 export type CardActionEvent = CardActionItem & {
-  card: CardInfo;
+  card: Card;
 };
