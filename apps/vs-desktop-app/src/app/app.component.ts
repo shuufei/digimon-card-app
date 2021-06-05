@@ -1,22 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { tag } from 'rxjs-spy/operators/tag';
-import { deck } from './deck';
-import { CardInfo } from './types';
+import { filter } from 'rxjs/operators';
+import {
+  CardActionEvent,
+  CardActionItem,
+} from './components/card/card.component';
+import {
+  GlobalState,
+  GLOBAL_RX_STATE,
+  INITIAL_GLOBAL_STATE,
+} from './global-state';
 
-type State = {
-  stack: CardInfo[];
-  digitamaStack: CardInfo[];
-  hand: CardInfo[];
-};
+type State = Record<string, never>;
 
-const INITIAL_STATE = {
-  stack: deck.filter((v) => v.cardtype !== 'デジタマ'),
-  digitamaStack: deck.filter((v) => v.cardtype === 'デジタマ'),
-  hand: [],
-};
 @Component({
   selector: 'digimon-card-app-root',
   templateUrl: './app.component.html',
@@ -24,9 +23,25 @@ const INITIAL_STATE = {
   providers: [RxState],
 })
 export class AppComponent implements OnInit {
-  title = 'vs-desktop-app';
+  /**
+   * constants
+   */
+  readonly title = 'vs-desktop-app';
+  readonly handCardActionList: CardActionItem[] = [
+    {
+      action: 'entryOnBattleArea',
+      displayText: '登場',
+    },
+    {
+      action: 'evolution',
+      displayText: '進化',
+    },
+  ];
 
-  readonly state$ = this.state.select().pipe(tag('state'));
+  /**
+   * state
+   */
+  readonly gs$ = this.globalState.select().pipe(tag('gs'));
 
   /**
    * Events
@@ -34,28 +49,89 @@ export class AppComponent implements OnInit {
   readonly onStackShuffle$ = new Subject();
   readonly onDraw$ = new Subject();
   readonly onReset$ = new Subject();
+  readonly onActionHandCardEvent$ = new Subject<CardActionEvent>();
+  private readonly onEntryOnBattleAreaActionFromHandCardEvent$ = this.onActionHandCardEvent$.pipe(
+    filter((event) => event.action === 'entryOnBattleArea')
+  );
 
-  constructor(private readonly state: RxState<State>) {
-    this.state.set(INITIAL_STATE);
+  constructor(
+    private readonly state: RxState<State>,
+    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>
+  ) {
+    this.globalState.set(INITIAL_GLOBAL_STATE);
   }
 
   ngOnInit() {
-    this.state.connect('stack', this.onStackShuffle$, (state) => {
-      return _.shuffle(state.stack);
+    this.globalState.connect('stack', this.onStackShuffle$, (state) => {
+      return {
+        ...state.stack,
+        cardList: _.shuffle(state.stack.cardList),
+      };
     });
-    this.state.connect(this.onDraw$, (state) => {
-      const stack = [...state.stack];
-      const hand = [...state.hand];
-      const drawCard = stack.shift();
+    this.globalState.connect(this.onDraw$, (state) => {
+      const stackCardList = [...state.stack.cardList];
+      const handCardList = [...state.hand.cardList];
+      const drawCard = stackCardList.shift();
       if (drawCard != null) {
-        hand.push(drawCard);
+        handCardList.push(drawCard);
       }
       return {
         ...state,
-        stack,
-        hand,
+        stack: {
+          ...state.stack,
+          cardList: stackCardList,
+        },
+        hand: {
+          ...state.hand,
+          cardList: handCardList,
+        },
       };
     });
-    this.state.connect(this.onReset$, () => INITIAL_STATE);
+    this.globalState.connect(this.onReset$, () => INITIAL_GLOBAL_STATE);
+    this.globalState.connect(
+      this.onEntryOnBattleAreaActionFromHandCardEvent$,
+      (state, event) => {
+        const handCardList = [...state.hand.cardList];
+        _.remove(
+          handCardList,
+          (card) => card.imgFileName === event.card.imgFileName
+        );
+        const mergedHand = {
+          ...state,
+          hand: {
+            ...state.hand,
+            cardList: handCardList,
+          },
+        };
+        switch (event.card.cardtype) {
+          case 'デジモン':
+            return {
+              ...mergedHand,
+              battleArea: {
+                ...state.battleArea,
+                cardList: [...state.battleArea.cardList, event.card],
+              },
+            };
+          case 'オプション':
+            return {
+              ...mergedHand,
+              optionArea: {
+                ...state.optionArea,
+                cardList: [...state.optionArea.cardList, event.card],
+              },
+            };
+          case 'テイマー':
+            return {
+              ...mergedHand,
+              tamerArea: {
+                ...state.tamerArea,
+                cardList: [...state.tamerArea.cardList, event.card],
+              },
+            };
+          default:
+            return mergedHand;
+        }
+      }
+    );
   }
 }

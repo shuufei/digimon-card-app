@@ -1,0 +1,26 @@
+<ng-container *ngIf="actionList.length !== 0; else noActionItem">
+  <div
+    class="cursor-pointer"
+    [digimonCardAppMenuTrigger]="menu"
+    (contextmenu)="onContextMenu$.next($event)"
+    (click)="onClick$.next()"
+  >
+    <img [src]="card.imgSrc" alt="" />
+  </div>
+  <mat-menu #menu="matMenu">
+    <ng-container *ngFor="let action of actionList">
+      <button mat-menu-item (click)="onAction$.next(action)">
+        {{ action.displayText }}
+      </button>
+    </ng-container>
+  </mat-menu>
+</ng-container>
+<ng-template #noActionItem>
+  <div
+    class="cursor-pointer"
+    (click)="onClick$.next()"
+    (contextmenu)="onContextMenu$.next($event)"
+  >
+    <img [src]="card.imgSrc" alt="" />
+  </div>
+</ng-template>

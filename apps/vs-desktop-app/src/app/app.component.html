@@ -6,7 +6,7 @@
   </button>
 </div>
 
-<ng-container *ngIf="state$ | async as state">
+<ng-container *ngIf="gs$ | async as gs">
   <div class="flex">
     <mat-card class="flex-1">
       <h3>セキュリティオープンエリア</h3>
@@ -26,15 +26,41 @@
 
     <div class="flex-1">
       <mat-card>
-        <h3>バトルエリア</h3>
+        <h3>
+          バトルエリア <span>{{ gs.battleArea.cardList.length }}</span>
+        </h3>
+        <div class="mt-2 flex">
+          <ng-container *ngFor="let card of gs.battleArea.cardList">
+            <digimon-card-app-card
+              [card]="card"
+              class="w-20 m-1"
+            ></digimon-card-app-card>
+          </ng-container>
+        </div>
       </mat-card>
 
       <mat-card>
         <h3>オプション</h3>
+        <div class="mt-2 flex">
+          <ng-container *ngFor="let card of gs.optionArea.cardList">
+            <digimon-card-app-card
+              [card]="card"
+              class="w-20 m-1"
+            ></digimon-card-app-card>
+          </ng-container>
+        </div>
       </mat-card>
 
       <mat-card>
         <h3>テイマー</h3>
+        <div class="mt-2 flex">
+          <ng-container *ngFor="let card of gs.tamerArea.cardList">
+            <digimon-card-app-card
+              [card]="card"
+              class="w-20 m-1"
+            ></digimon-card-app-card>
+          </ng-container>
+        </div>
       </mat-card>
     </div>
 
@@ -42,7 +68,7 @@
       <mat-card>
         <h3>
           山札<span>
-            {{ state.stack.length }}
+            {{ gs.stack.cardList.length }}
           </span>
         </h3>
         <button mat-stroked-button (click)="onStackShuffle$.next()">
@@ -56,17 +82,20 @@
     </div>
   </div>
 
-  <mat-card>
+  <mat-card class="hand-area">
     <h3>
       手札
-      <span>{{ state.hand.length }}</span>
+      <span>{{ gs.hand.cardList.length }}</span>
     </h3>
-    <div class="m-2">
-      <ul>
-        <ng-container *ngFor="let card of state.hand">
-          <li>{{ card.no }}</li>
-        </ng-container>
-      </ul>
+    <div class="m-2 flex">
+      <ng-container *ngFor="let card of gs.hand.cardList">
+        <digimon-card-app-card
+          [card]="card"
+          [actionList]="handCardActionList"
+          (action)="onActionHandCardEvent$.next($event)"
+          class="w-20 m-1"
+        ></digimon-card-app-card>
+      </ng-container>
     </div>
   </mat-card>
 </ng-container>

@@ -77,3 +77,11 @@ export type CardInfo = {
   category: Category;
   color: Color;
 };
+
+export const CARD_ACTION = {
+  draw: 'draw',
+  entryOnBattleArea: 'entryOnBattleArea',
+  evolution: 'evolution',
+} as const;
+
+export type CardAction = keyof typeof CARD_ACTION;

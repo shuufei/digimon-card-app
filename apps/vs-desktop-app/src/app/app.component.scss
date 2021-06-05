@@ -6,3 +6,9 @@
 mat-card {
   @apply m-1;
 }
+
+.hand-area {
+  border: solid 1px #101010;
+  position: sticky;
+  bottom: 4%;
+}
