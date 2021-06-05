@@ -80,7 +80,7 @@ export type CardInfo = {
 
 export const CARD_ACTION = {
   draw: 'draw',
-  entryOnBattleArea: 'entryOnBattleArea',
+  entry: 'entry',
   evolution: 'evolution',
 } as const;
 

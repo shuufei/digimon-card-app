@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   readonly title = 'vs-desktop-app';
   readonly handCardActionList: CardActionItem[] = [
     {
-      action: 'entryOnBattleArea',
+      action: 'entry',
       displayText: '登場',
     },
     {
@@ -51,8 +51,8 @@ export class AppComponent implements OnInit {
   readonly onDraw$ = new Subject();
   readonly onReset$ = new Subject();
   readonly onActionHandCardEvent$ = new Subject<CardActionEvent>();
-  private readonly onEntryOnBattleAreaActionFromHandCardEvent$ = this.onActionHandCardEvent$.pipe(
-    filter((event) => event.action === 'entryOnBattleArea')
+  private readonly onentryActionFromHandCardEvent$ = this.onActionHandCardEvent$.pipe(
+    filter((event) => event.action === 'entry')
   );
 
   constructor(
@@ -91,10 +91,10 @@ export class AppComponent implements OnInit {
     });
     this.globalState.connect(this.onReset$, () => INITIAL_GLOBAL_STATE);
     this.globalState.hold(
-      this.onEntryOnBattleAreaActionFromHandCardEvent$.pipe(
+      this.onentryActionFromHandCardEvent$.pipe(
         tap((event) => {
           this.dispatchCardActionService.dispatch({
-            type: 'entryOnBattleArea',
+            type: 'entry',
             area: 'hand',
             card: event.card,
           });

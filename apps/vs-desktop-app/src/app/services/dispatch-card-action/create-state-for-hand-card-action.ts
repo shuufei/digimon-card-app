@@ -8,7 +8,7 @@ export const createStateForHandCardAction = (
   currentState: GlobalState
 ): GlobalState => {
   switch (action.type) {
-    case 'entryOnBattleArea':
+    case 'entry':
       return onEntry(action.card, currentState);
     default:
       return currentState;
