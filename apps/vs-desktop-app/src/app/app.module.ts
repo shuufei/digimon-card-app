@@ -5,10 +5,11 @@ import { RxState } from '@rx-angular/state';
 import { AngularMaterialModule } from './angular-material.module';
 import { AppComponent } from './app.component';
 import { CardComponent } from './components/card/card.component';
+import { DigimonComponent } from './components/digimon/digimon.component';
 import { ExpandCardViewDialogComponent } from './components/expand-card-view-dialog/expand-card-view-dialog.component';
 import { CustomMenueTriggerDirective } from './custom-menu-trigger.directive';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
-import { DigimonComponent } from './components/digimon/digimon.component';
+import { ArrayReversePipe } from './pipes/array-reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { DigimonComponent } from './components/digimon/digimon.component';
     CardComponent,
     ExpandCardViewDialogComponent,
     DigimonComponent,
+    ArrayReversePipe,
   ],
   imports: [
     AngularMaterialModule,

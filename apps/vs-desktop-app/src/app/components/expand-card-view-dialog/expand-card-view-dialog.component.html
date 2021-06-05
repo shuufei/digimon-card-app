@@ -1,1 +1,23 @@
-<img class="card-img" #cardImg [src]="dialogData.src" />
+<img
+  class="card-img"
+  [style.zIndex]="(dialogData.evolutionOriginSrcList?.length || 0) + 1 || 1"
+  #cardImg
+  [src]="dialogData.src"
+/>
+<ng-container *ngIf="dialogData.evolutionOriginSrcList">
+  <ng-container
+    *ngFor="
+      let evolutionOriginCardSrc of dialogData.evolutionOriginSrcList
+        | arrayReverse;
+      index as i
+    "
+  >
+    <img
+      [src]="evolutionOriginCardSrc"
+      [style.zIndex]="(dialogData.evolutionOriginSrcList?.length || 0) - i"
+      [style.transform]="'translateY(' + (i + 1) * -435 + 'px)'"
+      class="evolution-origin"
+      alt=""
+    />
+  </ng-container>
+</ng-container>

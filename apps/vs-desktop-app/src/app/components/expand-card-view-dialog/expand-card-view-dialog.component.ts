@@ -16,7 +16,10 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ExpandCardViewDialogComponent implements AfterViewInit {
   @ViewChild('cardImg') cardImgEl?: ElementRef;
-  constructor(@Inject(MAT_DIALOG_DATA) public dialogData: { src: string }) {}
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public dialogData: { src: string; evolutionOriginSrcList?: string[] }
+  ) {}
 
   ngAfterViewInit() {
     if (this.cardImgEl?.nativeElement == null) {

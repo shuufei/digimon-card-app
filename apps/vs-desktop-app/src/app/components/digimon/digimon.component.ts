@@ -2,14 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  HostListener,
   Inject,
   Input,
   OnInit,
   Output,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { Digimon } from '../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
+import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand-card-view-dialog.component';
 
 @Component({
   selector: 'digimon-card-app-digimon',
@@ -27,8 +30,24 @@ export class DigimonComponent implements OnInit {
   readonly gs$ = this.globalState.select();
 
   constructor(
-    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>
+    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,
+    private readonly dialog: MatDialog
   ) {}
+
+  @HostListener('click', ['$event'])
+  clicked(event: Event) {
+    console.log(event);
+    this.dialog.open(ExpandCardViewDialogComponent, {
+      width: '448px',
+      height: `${559 + 48}px`,
+      data: {
+        src: this.digimon.card.imgSrc,
+        evolutionOriginSrcList: this.digimon.evolutionOiriginCardList.map(
+          (v) => v.imgSrc
+        ),
+      },
+    });
+  }
 
   ngOnInit(): void {
     if (this.digimon == null) {

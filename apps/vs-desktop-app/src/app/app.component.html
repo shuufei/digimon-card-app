@@ -29,7 +29,7 @@
         <h3>
           バトルエリア <span>{{ gs.battleArea.digimonList.length }}</span>
         </h3>
-        <div class="mt-2 flex">
+        <div class="mt-2 flex flex-wrap">
           <ng-container *ngFor="let digimon of gs.battleArea.digimonList">
             <digimon-card-app-digimon
               [digimon]="digimon"
@@ -90,7 +90,7 @@
       手札
       <span>{{ gs.hand.cardList.length }}</span>
     </h3>
-    <div class="m-2 flex">
+    <div class="m-2 flex flex-wrap">
       <ng-container *ngFor="let card of gs.hand.cardList">
         <digimon-card-app-card
           [card]="card"

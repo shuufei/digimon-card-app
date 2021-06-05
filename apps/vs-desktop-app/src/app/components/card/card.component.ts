@@ -10,7 +10,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { CustomMenueTriggerDirective } from '../../custom-menu-trigger.directive';
 import { Card, CardAction } from '../../types';
 import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand-card-view-dialog.component';
@@ -25,6 +25,7 @@ import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand
 export class CardComponent implements OnInit {
   @Input() card!: Card;
   @Input() actionList: CardActionItem[] = [];
+  @Input() disableClick = false;
   @Output() action = new EventEmitter<CardActionEvent>();
   @ViewChild(CustomMenueTriggerDirective) trigger?: CustomMenueTriggerDirective;
 
@@ -51,6 +52,7 @@ export class CardComponent implements OnInit {
     );
     this.state.hold(
       this.onClick$.pipe(
+        filter(() => !this.disableClick),
         tap(() => {
           this.dialog.open(ExpandCardViewDialogComponent, {
             width: '448px',
