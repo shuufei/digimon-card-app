@@ -1,6 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { tag } from 'rxjs-spy/operators/tag';
 import { filter, tap } from 'rxjs/operators';
@@ -64,32 +63,36 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.globalState.connect('stack', this.onStackShuffle$, (state) => {
-      return {
-        ...state.stack,
-        cardList: _.shuffle(state.stack.cardList),
-      };
-    });
-    this.globalState.connect(this.onDraw$, (state) => {
-      const stackCardList = [...state.stack.cardList];
-      const handCardList = [...state.hand.cardList];
-      const drawCard = stackCardList.shift();
-      if (drawCard != null) {
-        handCardList.push(drawCard);
-      }
-      return {
-        ...state,
-        stack: {
-          ...state.stack,
-          cardList: stackCardList,
-        },
-        hand: {
-          ...state.hand,
-          cardList: handCardList,
-        },
-      };
-    });
-    this.globalState.connect(this.onReset$, () => INITIAL_GLOBAL_STATE);
+    this.globalState.hold(
+      this.onStackShuffle$.pipe(
+        tap(() =>
+          this.dispatchCardActionService.dispatch({
+            type: 'shuffle',
+            area: 'stack',
+          })
+        )
+      )
+    );
+    this.globalState.hold(
+      this.onDraw$.pipe(
+        tap(() =>
+          this.dispatchCardActionService.dispatch({
+            type: 'draw',
+            area: 'stack',
+          })
+        )
+      )
+    );
+    this.globalState.hold(
+      this.onReset$.pipe(
+        tap(() =>
+          this.dispatchCardActionService.dispatch({
+            type: 'reset',
+            area: 'whole',
+          })
+        )
+      )
+    );
     this.globalState.hold(
       this.onentryActionFromHandCardEvent$.pipe(
         tap((event) => {

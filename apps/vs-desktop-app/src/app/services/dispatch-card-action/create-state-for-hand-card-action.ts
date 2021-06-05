@@ -1,12 +1,15 @@
 import * as _ from 'lodash';
 import { GlobalState } from '../../global-state';
 import { CardInfo } from '../../types';
-import { Action } from './dispatch-card-action.service';
+import { StateAction } from './dispatch-card-action.service';
 
 export const createStateForHandCardAction = (
-  action: Action,
+  action: StateAction,
   currentState: GlobalState
 ): GlobalState => {
+  if (action.card == null) {
+    return currentState;
+  }
   switch (action.type) {
     case 'entry':
       return onEntry(action.card, currentState);

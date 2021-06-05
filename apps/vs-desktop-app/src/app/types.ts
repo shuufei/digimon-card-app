@@ -82,8 +82,16 @@ export const CARD_ACTION = {
   draw: 'draw',
   entry: 'entry',
   evolution: 'evolution',
+  shuffle: 'shuffle',
+  reset: 'reset',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
 
-export type Area = 'stack' | 'hand' | 'battleArea' | 'optionArea' | 'tamerArea';
+export type Area =
+  | 'stack'
+  | 'hand'
+  | 'battleArea'
+  | 'optionArea'
+  | 'tamerArea'
+  | 'whole';
