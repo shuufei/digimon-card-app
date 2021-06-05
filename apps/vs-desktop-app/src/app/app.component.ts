@@ -3,7 +3,7 @@ import { RxState } from '@rx-angular/state';
 import * as _ from 'lodash';
 import { Subject } from 'rxjs';
 import { tag } from 'rxjs-spy/operators/tag';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import {
   CardActionEvent,
   CardActionItem,
@@ -13,6 +13,7 @@ import {
   GLOBAL_RX_STATE,
   INITIAL_GLOBAL_STATE,
 } from './global-state';
+import { DispatchCardActionService } from './services/dispatch-card-action/dispatch-card-action.service';
 
 type State = Record<string, never>;
 
@@ -56,7 +57,8 @@ export class AppComponent implements OnInit {
 
   constructor(
     private readonly state: RxState<State>,
-    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>
+    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,
+    private readonly dispatchCardActionService: DispatchCardActionService
   ) {
     this.globalState.set(INITIAL_GLOBAL_STATE);
   }
@@ -88,50 +90,16 @@ export class AppComponent implements OnInit {
       };
     });
     this.globalState.connect(this.onReset$, () => INITIAL_GLOBAL_STATE);
-    this.globalState.connect(
-      this.onEntryOnBattleAreaActionFromHandCardEvent$,
-      (state, event) => {
-        const handCardList = [...state.hand.cardList];
-        _.remove(
-          handCardList,
-          (card) => card.imgFileName === event.card.imgFileName
-        );
-        const mergedHand = {
-          ...state,
-          hand: {
-            ...state.hand,
-            cardList: handCardList,
-          },
-        };
-        switch (event.card.cardtype) {
-          case 'デジモン':
-            return {
-              ...mergedHand,
-              battleArea: {
-                ...state.battleArea,
-                cardList: [...state.battleArea.cardList, event.card],
-              },
-            };
-          case 'オプション':
-            return {
-              ...mergedHand,
-              optionArea: {
-                ...state.optionArea,
-                cardList: [...state.optionArea.cardList, event.card],
-              },
-            };
-          case 'テイマー':
-            return {
-              ...mergedHand,
-              tamerArea: {
-                ...state.tamerArea,
-                cardList: [...state.tamerArea.cardList, event.card],
-              },
-            };
-          default:
-            return mergedHand;
-        }
-      }
+    this.globalState.hold(
+      this.onEntryOnBattleAreaActionFromHandCardEvent$.pipe(
+        tap((event) => {
+          this.dispatchCardActionService.dispatch({
+            type: 'entryOnBattleArea',
+            area: 'hand',
+            card: event.card,
+          });
+        })
+      )
     );
   }
 }

@@ -85,3 +85,5 @@ export const CARD_ACTION = {
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
+
+export type Area = 'stack' | 'hand' | 'battleArea' | 'optionArea' | 'tamerArea';
