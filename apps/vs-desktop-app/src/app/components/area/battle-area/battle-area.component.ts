@@ -38,7 +38,7 @@ export class BattleAreaComponent implements OnInit {
     },
     {
       action: 'trash',
-      displayText: '破棄',
+      displayText: '消滅',
     },
     {
       action: 'degeneration',

@@ -4,11 +4,7 @@
       セキュリティ<span class="ml-2">{{ securityArea.cardList.length }}</span>
     </h3>
     <div class="mt-2 flex flex-col items-center">
-      <ng-container *ngIf="securityArea.cardList.length === 0">
-        <button mat-stroked-button (click)="onSetSecurity$.next()">
-          セット
-        </button>
-      </ng-container>
+      <ng-container *ngIf="securityArea.cardList.length === 0"> </ng-container>
       <ng-container
         *ngFor="let card of securityArea.cardList | arrayReverse; index as i"
       >
