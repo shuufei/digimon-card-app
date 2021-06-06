@@ -13,6 +13,7 @@ import { ArrayReversePipe } from './pipes/array-reverse.pipe';
 import { StackComponent } from './components/area/stack/stack.component';
 import { BattleAreaComponent } from './components/area/battle-area/battle-area.component';
 import { HandComponent } from './components/area/hand/hand.component';
+import { OptionAreaComponent } from './components/area/option-area/option-area.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { HandComponent } from './components/area/hand/hand.component';
     StackComponent,
     BattleAreaComponent,
     HandComponent,
+    OptionAreaComponent,
   ],
   imports: [
     AngularMaterialModule,
