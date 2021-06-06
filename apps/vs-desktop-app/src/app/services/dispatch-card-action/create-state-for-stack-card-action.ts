@@ -12,6 +12,8 @@ export const createStateForStackCardAction = (
       return onDraw(currentState);
     case 'shuffle':
       return onShuffle(currentState);
+    case 'recovery':
+      return onRecovery(currentState);
     default:
       return currentState;
   }
@@ -35,5 +37,14 @@ const onShuffle = (currentState: GlobalState): GlobalState => {
     draft.playState.stack.cardList = _.shuffle(
       currentState.playState.stack.cardList
     );
+  });
+};
+
+const onRecovery = (currentState: GlobalState): GlobalState => {
+  return produce(currentState, (draft) => {
+    const card = draft.playState.stack.cardList.shift();
+    if (card != null) {
+      draft.playState.securityArea.cardList.push(card);
+    }
   });
 };

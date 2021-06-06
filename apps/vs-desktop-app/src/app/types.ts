@@ -91,6 +91,7 @@ export const CARD_ACTION = {
   active: 'active',
   rest: 'rest',
   trash: 'trash',
+  recovery: 'recovery',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
@@ -101,6 +102,7 @@ export type Area =
   | 'battleArea'
   | 'optionArea'
   | 'tamerArea'
+  | 'securityArea'
   | 'whole';
 
 export const MODE = {

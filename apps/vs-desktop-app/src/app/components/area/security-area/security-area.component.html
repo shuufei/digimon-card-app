@@ -1,0 +1,25 @@
+<mat-card>
+  <ng-container *ngIf="securityArea$ | async as securityArea">
+    <h3 class="text-xs text-center">
+      セキュリティ<span class="ml-2">{{ securityArea.cardList.length }}</span>
+    </h3>
+    <div class="mt-2 flex flex-col items-center">
+      <ng-container *ngIf="securityArea.cardList.length === 0">
+        <button mat-stroked-button (click)="onSetSecurity$.next()">
+          セット
+        </button>
+      </ng-container>
+      <ng-container
+        *ngFor="let card of securityArea.cardList | arrayReverse; index as i"
+      >
+        <img
+          src="./assets/images/back_rotate90.png"
+          alt="stack"
+          class="h-20 cursor-pointer relative"
+          [ngClass]="[i === 0 ? '' : 'shift']"
+          [style.zIndex]="securityArea.cardList.length - i"
+        />
+      </ng-container>
+    </div>
+  </ng-container>
+</mat-card>

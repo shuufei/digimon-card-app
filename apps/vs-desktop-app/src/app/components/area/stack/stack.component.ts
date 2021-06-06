@@ -35,6 +35,10 @@ export class StackComponent implements OnInit {
       action: 'shuffle',
       displayText: 'シャッフル',
     },
+    {
+      action: 'recovery',
+      displayText: 'リカバリー',
+    },
   ];
 
   /**
@@ -48,12 +52,15 @@ export class StackComponent implements OnInit {
   readonly onContextMenu$ = new Subject<Event>();
   readonly onClick$ = new Subject();
   readonly onAction$ = new Subject<CardActionItem>();
-  readonly onShuffle$ = this.onAction$.pipe(
+  private readonly onShuffle$ = this.onAction$.pipe(
     filter((v) => v.action === 'shuffle')
   );
-  readonly onDraw$ = merge(
+  private readonly onDraw$ = merge(
     this.onAction$.pipe(filter((v) => v.action === 'draw')),
     this.onClick$
+  );
+  private readonly onRecovery$ = merge(
+    this.onAction$.pipe(filter((v) => v.action === 'recovery'))
   );
 
   constructor(
@@ -71,7 +78,7 @@ export class StackComponent implements OnInit {
         })
       )
     );
-    this.globalState.hold(
+    this.state.hold(
       this.onShuffle$.pipe(
         tap(() =>
           this.dispatchCardActionService.dispatch({
@@ -81,7 +88,7 @@ export class StackComponent implements OnInit {
         )
       )
     );
-    this.globalState.hold(
+    this.state.hold(
       this.onDraw$.pipe(
         tap(() =>
           this.dispatchCardActionService.dispatch({
@@ -89,6 +96,16 @@ export class StackComponent implements OnInit {
             area: 'stack',
           })
         )
+      )
+    );
+    this.state.hold(
+      this.onRecovery$.pipe(
+        tap(() => {
+          this.dispatchCardActionService.dispatch({
+            type: 'recovery',
+            area: 'stack',
+          });
+        })
       )
     );
   }

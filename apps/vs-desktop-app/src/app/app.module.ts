@@ -16,6 +16,7 @@ import { HandComponent } from './components/area/hand/hand.component';
 import { OptionAreaComponent } from './components/area/option-area/option-area.component';
 import { TamerAreaComponent } from './components/area/tamer-area/tamer-area.component';
 import { TrashAreaComponent } from './components/area/trash-area/trash-area.component';
+import { SecurityAreaComponent } from './components/area/security-area/security-area.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TrashAreaComponent } from './components/area/trash-area/trash-area.comp
     OptionAreaComponent,
     TamerAreaComponent,
     TrashAreaComponent,
+    SecurityAreaComponent,
   ],
   imports: [
     AngularMaterialModule,
