@@ -1,8 +1,11 @@
 :host {
   display: block;
-  border: solid 1px #101010;
   position: sticky;
   bottom: 4%;
-  max-height: 240px;
+}
+
+mat-card {
+  border: solid 1px #101010;
+  max-height: 250px;
   overflow: auto;
 }

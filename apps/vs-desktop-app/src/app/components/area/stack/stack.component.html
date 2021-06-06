@@ -1,22 +1,25 @@
 <mat-card>
-  <h3 class="text-xs text-center">
-    山札<span>
-      {{ (stack$ | async)?.cardList?.length }}
-    </span>
-  </h3>
-  <img
-    src="./assets/images/back.png"
-    alt="stack"
-    class="w-20 cursor-pointer mt-2"
-    [digimonCardAppMenuTrigger]="menu"
-    (contextmenu)="onContextMenu$.next($event)"
-    (click)="onClick$.next()"
-  />
-  <mat-menu #menu="matMenu">
-    <ng-container *ngFor="let action of actionList">
-      <button mat-menu-item (click)="onAction$.next(action)">
-        {{ action.displayText }}
-      </button>
-    </ng-container>
-  </mat-menu>
+  <ng-container *ngIf="stack$ | async as stack">
+    <h3 class="text-xs text-center">
+      山札<span>
+        {{ stack.cardList?.length }}
+      </span>
+    </h3>
+    <img
+      *ngIf="stack.cardList?.length !== 0"
+      src="./assets/images/back.png"
+      alt="stack"
+      class="w-20 cursor-pointer mt-2"
+      [digimonCardAppMenuTrigger]="menu"
+      (contextmenu)="onContextMenu$.next($event)"
+      (click)="onClick$.next()"
+    />
+    <mat-menu #menu="matMenu">
+      <ng-container *ngFor="let action of actionList">
+        <button mat-menu-item (click)="onAction$.next(action)">
+          {{ action.displayText }}
+        </button>
+      </ng-container>
+    </mat-menu>
+  </ng-container>
 </mat-card>
