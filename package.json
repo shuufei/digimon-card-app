@@ -44,6 +44,7 @@
     "@nestjs/platform-express": "^7.0.0",
     "@nrwl/angular": "12.3.5",
     "@rx-angular/state": "^1.4.3",
+    "immer": "^9.0.2",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.0",

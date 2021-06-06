@@ -1,6 +1,9 @@
+import { remove } from '@rx-angular/state';
+import { produce } from 'immer';
 import * as _ from 'lodash';
 import { Digimon } from '../../domain/digimon';
 import { GlobalState } from '../../global-state';
+import { Card } from '../../types';
 import { StateAction } from './dispatch-card-action.service';
 
 export const createStateForHandCardAction = (
@@ -12,6 +15,8 @@ export const createStateForHandCardAction = (
       return onEntry(action, currentState);
     case 'evolution':
       return onEvolution(action, currentState);
+    case 'trash':
+      return onTrash(action, currentState);
     default:
       return currentState;
   }
@@ -136,4 +141,19 @@ const evolutionBattleAreaDigimon = (
       },
     },
   };
+};
+
+const onTrash = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null) {
+    return currentState;
+  }
+  const card: Card = action.card;
+  return produce(currentState, (draft) => {
+    const handCardList = draft.playState.hand.cardList;
+    draft.playState.hand.cardList = remove(handCardList, card, 'id');
+    draft.playState.trashArea.cardList.push(card);
+  });
 };

@@ -6,7 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { Subject } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { CustomMenueTriggerDirective } from '../../../custom-menu-trigger.directive';
 import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
@@ -46,11 +46,15 @@ export class StackComponent implements OnInit {
    * Events
    */
   readonly onContextMenu$ = new Subject<Event>();
+  readonly onClick$ = new Subject();
   readonly onAction$ = new Subject<CardActionItem>();
   readonly onShuffle$ = this.onAction$.pipe(
     filter((v) => v.action === 'shuffle')
   );
-  readonly onDraw$ = this.onAction$.pipe(filter((v) => v.action === 'draw'));
+  readonly onDraw$ = merge(
+    this.onAction$.pipe(filter((v) => v.action === 'draw')),
+    this.onClick$
+  );
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,

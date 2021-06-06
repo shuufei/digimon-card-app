@@ -18,6 +18,7 @@ export type GlobalState = {
     };
     optionArea: AreaState;
     tamerArea: AreaState;
+    trashArea: AreaState;
   };
   ui: {
     modeState?: {
@@ -54,6 +55,9 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
       cardList: [],
     },
     tamerArea: {
+      cardList: [],
+    },
+    trashArea: {
       cardList: [],
     },
   },

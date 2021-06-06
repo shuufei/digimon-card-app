@@ -90,7 +90,7 @@ export const CARD_ACTION = {
   reset: 'reset',
   active: 'active',
   rest: 'rest',
-  discard: 'discard',
+  trash: 'trash',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;

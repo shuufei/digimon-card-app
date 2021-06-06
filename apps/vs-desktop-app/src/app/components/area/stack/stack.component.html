@@ -10,6 +10,7 @@
     class="w-20 cursor-pointer mt-2"
     [digimonCardAppMenuTrigger]="menu"
     (contextmenu)="onContextMenu$.next($event)"
+    (click)="onClick$.next()"
   />
   <mat-menu #menu="matMenu">
     <ng-container *ngFor="let action of actionList">

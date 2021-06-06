@@ -36,6 +36,10 @@ export class BattleAreaComponent implements OnInit {
       action: 'draw',
       displayText: '手札に戻す',
     },
+    {
+      action: 'trash',
+      displayText: '破棄',
+    },
   ];
 
   /**

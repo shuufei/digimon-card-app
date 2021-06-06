@@ -31,6 +31,10 @@ export class HandComponent implements OnInit {
       action: 'evolution',
       displayText: '進化',
     },
+    {
+      action: 'trash',
+      displayText: '破棄',
+    },
   ];
 
   /**
@@ -57,6 +61,9 @@ export class HandComponent implements OnInit {
   private readonly onEntryAction$ = this.onAction$.pipe(
     filter((event) => event.action === 'entry')
   );
+  private readonly onTrashAction$ = this.onAction$.pipe(
+    filter((event) => event.action === 'trash')
+  );
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
@@ -70,6 +77,17 @@ export class HandComponent implements OnInit {
         tap((event) => {
           this.dispatchCardActionService.dispatch({
             type: 'entry',
+            area: 'hand',
+            card: event.card,
+          });
+        })
+      )
+    );
+    this.state.hold(
+      this.onTrashAction$.pipe(
+        tap((event) => {
+          this.dispatchCardActionService.dispatch({
+            type: 'trash',
             area: 'hand',
             card: event.card,
           });
