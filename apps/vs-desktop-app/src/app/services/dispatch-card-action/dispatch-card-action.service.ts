@@ -7,6 +7,7 @@ import { createStateForBattleAreaCardAction } from './create-state-for-battle-ar
 import { createStateForDigitamaStackCardAction } from './create-state-for-digitama-stack-card-action';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
+import { createStateForStandbyAreaCardAction } from './create-state-for-standby-area-card-action';
 import { createStateForWhole } from './create-state-for-whole-action';
 
 @Injectable({
@@ -35,6 +36,8 @@ export class DispatchCardActionService {
         return createStateForBattleAreaCardAction(action, currentState);
       case 'digitamaStack':
         return createStateForDigitamaStackCardAction(action, currentState);
+      case 'standbyArea':
+        return createStateForStandbyAreaCardAction(action, currentState);
       default:
         return this.globalState.get();
     }

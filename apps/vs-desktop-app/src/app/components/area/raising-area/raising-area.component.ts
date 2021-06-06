@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { merge, Subject } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { CustomMenueTriggerDirective } from '../../../custom-menu-trigger.directive';
 import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
@@ -64,6 +64,12 @@ export class RaisingAreaComponent implements OnInit {
     ),
     this.onClick$
   );
+  private readonly onEntry$ = this.onActionFromStandbyArea$.pipe(
+    withLatestFrom(this.gs$.pipe(map((v) => v.playState.standbyArea.digimon))),
+    filter(
+      ([event, digimon]) => event.action === 'entry' && digimon !== undefined
+    )
+  );
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
@@ -98,6 +104,17 @@ export class RaisingAreaComponent implements OnInit {
             area: 'digitamaStack',
           })
         )
+      )
+    );
+    this.state.hold(
+      this.onEntry$.pipe(
+        tap(([, digimon]) => {
+          this.dispatchCardActionService.dispatch({
+            type: 'entry',
+            area: 'standbyArea',
+            card: digimon?.card,
+          });
+        })
       )
     );
   }
