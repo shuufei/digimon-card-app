@@ -20,7 +20,10 @@ const onEntry = (
   currentState: GlobalState
 ): GlobalState => {
   if (action.card == null) return currentState;
-  const digimon = new Digimon(action.card);
+  const digimon = new Digimon(
+    action.card,
+    action.evolutionOriginCardList ?? []
+  );
   return produce(currentState, (draft) => {
     draft.playState.standbyArea.digimon = undefined;
     draft.playState.battleArea.digimonList.push(digimon);

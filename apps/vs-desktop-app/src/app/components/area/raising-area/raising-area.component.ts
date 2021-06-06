@@ -120,6 +120,7 @@ export class RaisingAreaComponent implements OnInit {
             type: 'entry',
             area: 'standbyArea',
             card: digimon?.card,
+            evolutionOriginCardList: digimon?.evolutionOiriginCardList,
           });
         })
       )

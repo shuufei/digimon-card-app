@@ -52,4 +52,5 @@ export type StateAction = {
     area: Area;
     digimon: Digimon;
   };
+  evolutionOriginCardList?: Card[];
 };
