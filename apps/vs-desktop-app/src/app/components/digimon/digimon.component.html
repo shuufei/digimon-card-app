@@ -1,8 +1,11 @@
 <ng-container *ngIf="gs$ | async as gs">
   <digimon-card-app-card
     [card]="digimon.card"
+    [actionList]="actionList"
     [disableClick]="true"
+    (action)="action.emit($event)"
     class="w-full"
+    [ngClass]="[digimon.isRest ? 'rest' : '']"
   ></digimon-card-app-card>
   <ng-container *ngIf="digimon.evolutionOiriginCardList.length !== 0">
     <div class="flex flex-wrap justify-center mt-1">

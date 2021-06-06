@@ -12,6 +12,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { Digimon } from '../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
+import { CardActionEvent, CardActionItem } from '../card/card.component';
 import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand-card-view-dialog.component';
 
 @Component({
@@ -22,7 +23,9 @@ import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand
 })
 export class DigimonComponent implements OnInit {
   @Input() digimon!: Digimon;
+  @Input() actionList: CardActionItem[] = [];
   @Output() selected = new EventEmitter<void>();
+  @Output() action = new EventEmitter<CardActionEvent>();
 
   /**
    * State

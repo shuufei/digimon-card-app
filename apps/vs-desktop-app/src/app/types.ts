@@ -88,6 +88,9 @@ export const CARD_ACTION = {
   evolution: 'evolution',
   shuffle: 'shuffle',
   reset: 'reset',
+  active: 'active',
+  rest: 'rest',
+  discard: 'discard',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;

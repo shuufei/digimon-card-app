@@ -3,6 +3,7 @@ import { RxState } from '@rx-angular/state';
 import { Digimon } from '../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
 import { Area, Card, CardAction } from '../../types';
+import { createStateForBattleAreaCardAction } from './create-state-for-battle-area-card-action';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
 import { createStateForWhole } from './create-state-for-whole-action';
@@ -29,6 +30,8 @@ export class DispatchCardActionService {
         return createStateForStackCardAction(action, currentState);
       case 'whole':
         return createStateForWhole(action, currentState);
+      case 'battleArea':
+        return createStateForBattleAreaCardAction(action, currentState);
       default:
         return this.globalState.get();
     }

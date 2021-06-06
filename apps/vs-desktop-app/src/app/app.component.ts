@@ -38,6 +38,20 @@ export class AppComponent implements OnInit {
       displayText: '進化',
     },
   ];
+  readonly battleAreaCardActionList: CardActionItem[] = [
+    {
+      action: 'rest',
+      displayText: 'レスト',
+    },
+    {
+      action: 'active',
+      displayText: 'アクティブ',
+    },
+    {
+      action: 'draw',
+      displayText: '手札に戻す',
+    },
+  ];
 
   /**
    * state
@@ -51,6 +65,7 @@ export class AppComponent implements OnInit {
   readonly onDrawFromStack$ = new Subject();
   readonly onReset$ = new Subject();
   readonly onActionFromHand$ = new Subject<CardActionEvent>();
+  readonly onActionFromBattleArea$ = new Subject<CardActionEvent>();
   readonly onEvolutionFromHand$ = this.onActionFromHand$.pipe(
     withLatestFrom(this.gs$.pipe(map((v) => v.battleArea.digimonList))),
     filter(
@@ -74,6 +89,9 @@ export class AppComponent implements OnInit {
       ([, modeState]) =>
         modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
     )
+  );
+  private readonly onRestActionFromBattleArea$ = this.onActionFromBattleArea$.pipe(
+    filter((v) => v.action === 'rest')
   );
 
   constructor(
@@ -139,6 +157,17 @@ export class AppComponent implements OnInit {
             },
           });
           this.globalState.set('modeState', () => undefined);
+        })
+      )
+    );
+    this.globalState.hold(
+      this.onRestActionFromBattleArea$.pipe(
+        tap((event) => {
+          this.dispatchCardActionService.dispatch({
+            type: 'rest',
+            area: 'battleArea',
+            card: event.card,
+          });
         })
       )
     );

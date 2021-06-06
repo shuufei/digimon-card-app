@@ -6,7 +6,7 @@ export class Digimon {
   constructor(
     private readonly _card: Card,
     private readonly _evolutionOiriginCardList: Card[] = [],
-    private readonly _isRest: boolean = false
+    private _isRest: boolean = false
   ) {}
 
   get card() {
@@ -19,6 +19,14 @@ export class Digimon {
 
   get isRest() {
     return this._isRest;
+  }
+
+  rest() {
+    this._isRest = true;
+  }
+
+  active() {
+    this._isRest = false;
   }
 
   addEvolutionOrigin(card: Card, index: number) {
