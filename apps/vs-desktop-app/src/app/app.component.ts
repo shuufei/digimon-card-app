@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
   /**
    * Events
    */
-  readonly onReset$ = new Subject();
+  readonly onReset$ = new Subject<void>();
+  readonly onInitPlay$ = new Subject<void>();
   // TODO
   private readonly onResetMode$ = merge(this.onReset$);
 
@@ -45,7 +46,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.globalState.hold(
+    this.state.hold(
       this.onReset$.pipe(
         tap(() =>
           this.dispatchCardActionService.dispatch({
@@ -53,6 +54,30 @@ export class AppComponent implements OnInit {
             area: 'whole',
           })
         )
+      )
+    );
+    this.state.hold(
+      this.onInitPlay$.pipe(
+        tap(() => {
+          new Array(5).fill(1).forEach(() => {
+            this.dispatchCardActionService.dispatch({
+              type: 'shuffle',
+              area: 'stack',
+            });
+          });
+          new Array(5).fill(1).forEach(() => {
+            this.dispatchCardActionService.dispatch({
+              type: 'recovery',
+              area: 'stack',
+            });
+          });
+          new Array(5).fill(1).forEach(() => {
+            this.dispatchCardActionService.dispatch({
+              type: 'draw',
+              area: 'stack',
+            });
+          });
+        })
       )
     );
 

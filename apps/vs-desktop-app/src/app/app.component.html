@@ -1,7 +1,12 @@
 <div class="p-4">
-  <button mat-flat-button color="primary" (click)="onReset$.next()">
-    reset
-  </button>
+  <div class="inline-block m-1">
+    <button mat-flat-button color="primary" (click)="onReset$.next()">
+      reset
+    </button>
+  </div>
+  <div class="inline-block m-1">
+    <button mat-stroked-button (click)="onInitPlay$.next()">init</button>
+  </div>
 </div>
 
 <ng-container *ngIf="gs$ | async as gs">
