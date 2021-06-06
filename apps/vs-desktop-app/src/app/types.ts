@@ -114,6 +114,7 @@ export type Area =
   | 'stackOpenArea'
   | 'securityOpenArea'
   | 'securityCheckArea'
+  | 'trashArea'
   | 'whole';
 
 export const MODE = {

@@ -1,0 +1,13 @@
+<h3 class="text-s">トラッシュ</h3>
+<ng-container *ngIf="trashArea$ | async as trashArea">
+  <div class="mt-2 flex flex-wrap">
+    <ng-container *ngFor="let card of trashArea.cardList">
+      <digimon-card-app-card
+        [card]="card"
+        [actionList]="actionList"
+        (action)="onAction$.next($event)"
+        class="w-20 m-2"
+      ></digimon-card-app-card>
+    </ng-container>
+  </div>
+</ng-container>

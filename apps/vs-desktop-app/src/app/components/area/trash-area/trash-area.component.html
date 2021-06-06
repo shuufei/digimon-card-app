@@ -3,9 +3,12 @@
     <h3 class="text-xs text-center">
       トラッシュ <span>{{ trashArea.cardList.length }}</span>
     </h3>
-    <div class="w-20 mt-2">
+    <div class="w-20 mt-2 cursor-pointer" (click)="onClick$.next()">
       <ng-container *ngIf="latestTrashCard$ | async as latestTrashCard">
-        <digimon-card-app-card [card]="latestTrashCard"></digimon-card-app-card>
+        <digimon-card-app-card
+          [card]="latestTrashCard"
+          [disableClick]="true"
+        ></digimon-card-app-card>
       </ng-container>
     </div>
   </ng-container>

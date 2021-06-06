@@ -13,6 +13,7 @@ import { createStateForSecurityOpenAreaCardAction } from './create-state-for-sec
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
 import { createStateForStackOpenAreaCardAction } from './create-state-for-stack-open-area-card-action';
 import { createStateForStandbyAreaCardAction } from './create-state-for-standby-area-card-action';
+import { createStateForTrashAreaCardAction } from './create-state-for-trash-area-card-action';
 import { createStateForWhole } from './create-state-for-whole-action';
 
 @Injectable({
@@ -53,6 +54,8 @@ export class DispatchCardActionService {
         return createStateForSecurityCheckAreaCardAction(action, currentState);
       case 'optionArea':
         return createStateForOptionAreaCardAction(action, currentState);
+      case 'trashArea':
+        return createStateForTrashAreaCardAction(action, currentState);
       default:
         return this.globalState.get();
     }
