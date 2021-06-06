@@ -18,6 +18,8 @@ import { TamerAreaComponent } from './components/area/tamer-area/tamer-area.comp
 import { TrashAreaComponent } from './components/area/trash-area/trash-area.component';
 import { SecurityAreaComponent } from './components/area/security-area/security-area.component';
 import { RaisingAreaComponent } from './components/area/raising-area/raising-area.component';
+import { SecurityOpenAreaComponent } from './components/area/security-open-area/security-open-area.component';
+import { StackOpenAreaComponent } from './components/area/stack-open-area/stack-open-area.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { RaisingAreaComponent } from './components/area/raising-area/raising-are
     TrashAreaComponent,
     SecurityAreaComponent,
     RaisingAreaComponent,
+    SecurityOpenAreaComponent,
+    StackOpenAreaComponent,
   ],
   imports: [
     AngularMaterialModule,

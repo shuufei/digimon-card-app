@@ -1,0 +1,15 @@
+<ng-container *ngIf="stackOpenArea$ | async as stackOpenArea">
+  <div *ngIf="stackOpenArea.cardList.length > 0" class="m-3">
+    <h3 class="text-xs text-right">山札オープン</h3>
+    <div class="mt-2 flex justify-end flex-wrap">
+      <ng-container *ngFor="let card of stackOpenArea.cardList">
+        <digimon-card-app-card
+          [card]="card"
+          [actionList]="actionList"
+          (action)="onAction$.next($event)"
+          class="w-20 m-1"
+        ></digimon-card-app-card>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

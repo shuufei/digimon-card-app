@@ -23,6 +23,8 @@ export type GlobalState = {
     standbyArea: {
       digimon?: Digimon;
     };
+    securityOpenArea: AreaState;
+    stackOpenArea: AreaState;
   };
   ui: {
     modeState?: {
@@ -69,6 +71,12 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
     },
     standbyArea: {
       digimon: undefined,
+    },
+    securityOpenArea: {
+      cardList: [],
+    },
+    stackOpenArea: {
+      cardList: [],
     },
   },
   ui: {},

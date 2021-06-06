@@ -11,13 +11,13 @@
 
 <ng-container *ngIf="gs$ | async as gs">
   <div class="flex">
-    <mat-card class="flex-1">
-      <h3>セキュリティオープンエリア</h3>
-    </mat-card>
+    <digimon-card-app-security-open-area
+      class="m-1 flex-1"
+    ></digimon-card-app-security-open-area>
 
-    <mat-card class="flex-1">
-      <h3>山札オープンエリア</h3>
-    </mat-card>
+    <digimon-card-app-stack-open-area
+      class="m-1 flex-1"
+    ></digimon-card-app-stack-open-area>
   </div>
 
   <div class="flex">

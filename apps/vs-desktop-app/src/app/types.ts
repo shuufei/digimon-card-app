@@ -93,6 +93,8 @@ export const CARD_ACTION = {
   trash: 'trash',
   recovery: 'recovery',
   incubation: 'incubation',
+  open: 'open',
+  addToBottomOfStack: 'addToBottomOfStack',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
@@ -106,6 +108,8 @@ export type Area =
   | 'tamerArea'
   | 'securityArea'
   | 'standbyArea'
+  | 'stackOpenArea'
+  | 'securityOpenArea'
   | 'whole';
 
 export const MODE = {

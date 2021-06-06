@@ -32,6 +32,10 @@ export class StackComponent implements OnInit {
       displayText: 'ドロー',
     },
     {
+      action: 'open',
+      displayText: 'オープン',
+    },
+    {
       action: 'recovery',
       displayText: 'リカバリー',
     },
@@ -61,6 +65,9 @@ export class StackComponent implements OnInit {
   );
   private readonly onRecovery$ = merge(
     this.onAction$.pipe(filter((v) => v.action === 'recovery'))
+  );
+  private readonly onOpen$ = merge(
+    this.onAction$.pipe(filter((v) => v.action === 'open'))
   );
 
   constructor(
@@ -103,6 +110,16 @@ export class StackComponent implements OnInit {
         tap(() => {
           this.dispatchCardActionService.dispatch({
             type: 'recovery',
+            area: 'stack',
+          });
+        })
+      )
+    );
+    this.state.hold(
+      this.onOpen$.pipe(
+        tap(() => {
+          this.dispatchCardActionService.dispatch({
+            type: 'open',
             area: 'stack',
           });
         })

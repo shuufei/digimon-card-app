@@ -7,6 +7,7 @@ import { createStateForBattleAreaCardAction } from './create-state-for-battle-ar
 import { createStateForDigitamaStackCardAction } from './create-state-for-digitama-stack-card-action';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
+import { createStateForStackOpenAreaCardAction } from './create-state-for-stack-open-area-card-action';
 import { createStateForStandbyAreaCardAction } from './create-state-for-standby-area-card-action';
 import { createStateForWhole } from './create-state-for-whole-action';
 
@@ -38,6 +39,8 @@ export class DispatchCardActionService {
         return createStateForDigitamaStackCardAction(action, currentState);
       case 'standbyArea':
         return createStateForStandbyAreaCardAction(action, currentState);
+      case 'stackOpenArea':
+        return createStateForStackOpenAreaCardAction(action, currentState);
       default:
         return this.globalState.get();
     }
