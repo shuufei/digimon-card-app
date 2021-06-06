@@ -40,7 +40,7 @@ export class StackComponent implements OnInit {
   /**
    * State
    */
-  readonly stack$ = this.globalState.select('stack');
+  readonly stack$ = this.globalState.select('playState', 'stack');
 
   /**
    * Events

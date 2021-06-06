@@ -17,21 +17,24 @@ export const createStateForStackCardAction = (
 };
 
 const onDraw = (currentState: GlobalState): GlobalState => {
-  const stackCardList = [...currentState.stack.cardList];
-  const handCardList = [...currentState.hand.cardList];
+  const stackCardList = [...currentState.playState.stack.cardList];
+  const handCardList = [...currentState.playState.hand.cardList];
   const drawCard = stackCardList.shift();
   if (drawCard != null) {
     handCardList.push(drawCard);
   }
   return {
     ...currentState,
-    stack: {
-      ...currentState.stack,
-      cardList: stackCardList,
-    },
-    hand: {
-      ...currentState.hand,
-      cardList: handCardList,
+    playState: {
+      ...currentState.playState,
+      stack: {
+        ...currentState.playState.stack,
+        cardList: stackCardList,
+      },
+      hand: {
+        ...currentState.playState.hand,
+        cardList: handCardList,
+      },
     },
   };
 };
@@ -39,9 +42,12 @@ const onDraw = (currentState: GlobalState): GlobalState => {
 const onShuffle = (currentState: GlobalState): GlobalState => {
   return {
     ...currentState,
-    stack: {
-      ...currentState.stack,
-      cardList: _.shuffle(currentState.stack.cardList),
+    playState: {
+      ...currentState.playState,
+      stack: {
+        ...currentState.playState.stack,
+        cardList: _.shuffle(currentState.playState.stack.cardList),
+      },
     },
   };
 };

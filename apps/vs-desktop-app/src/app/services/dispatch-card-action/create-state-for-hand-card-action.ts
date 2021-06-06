@@ -24,41 +24,59 @@ const onEntry = (
   if (action.card == null) {
     return currentState;
   }
-  const handCardList = [...currentState.hand.cardList];
+  const handCardList = [...currentState.playState.hand.cardList];
   _.remove(handCardList, (v) => v.id === action.card?.id);
   const mergedHand: GlobalState = {
     ...currentState,
-    hand: {
-      ...currentState.hand,
-      cardList: handCardList,
+    playState: {
+      ...currentState.playState,
+      hand: {
+        ...currentState.playState.hand,
+        cardList: handCardList,
+      },
     },
   };
   switch (action.card.cardtype) {
     case 'デジモン':
       return {
         ...mergedHand,
-        battleArea: {
-          ...currentState.battleArea,
-          digimonList: [
-            ...currentState.battleArea.digimonList,
-            new Digimon(action.card),
-          ],
+        playState: {
+          ...mergedHand.playState,
+          battleArea: {
+            ...currentState.playState.battleArea,
+            digimonList: [
+              ...currentState.playState.battleArea.digimonList,
+              new Digimon(action.card),
+            ],
+          },
         },
       };
     case 'オプション':
       return {
         ...mergedHand,
-        optionArea: {
-          ...currentState.optionArea,
-          cardList: [...currentState.optionArea.cardList, action.card],
+        playState: {
+          ...mergedHand.playState,
+          optionArea: {
+            ...currentState.playState.optionArea,
+            cardList: [
+              ...currentState.playState.optionArea.cardList,
+              action.card,
+            ],
+          },
         },
       };
     case 'テイマー':
       return {
         ...mergedHand,
-        tamerArea: {
-          ...currentState.tamerArea,
-          cardList: [...currentState.tamerArea.cardList, action.card],
+        playState: {
+          ...mergedHand.playState,
+          tamerArea: {
+            ...currentState.playState.tamerArea,
+            cardList: [
+              ...currentState.playState.tamerArea.cardList,
+              action.card,
+            ],
+          },
         },
       };
     default:
@@ -73,13 +91,16 @@ const onEvolution = (
   if (action.card == null) {
     return currentState;
   }
-  const handCardList = [...currentState.hand.cardList];
+  const handCardList = [...currentState.playState.hand.cardList];
   _.remove(handCardList, (v) => v.id === action.card?.id);
   const mergedHand: GlobalState = {
     ...currentState,
-    hand: {
-      ...currentState.hand,
-      cardList: handCardList,
+    playState: {
+      ...currentState.playState,
+      hand: {
+        ...currentState.playState.hand,
+        cardList: handCardList,
+      },
     },
   };
   switch (action.target?.area) {
@@ -101,15 +122,18 @@ const evolutionBattleAreaDigimon = (
     ...action.target.digimon.evolutionOiriginCardList,
     action.target.digimon.card,
   ]);
-  const digimonList = [...currentState.battleArea.digimonList];
+  const digimonList = [...currentState.playState.battleArea.digimonList];
   const index = digimonList.findIndex(
     (v) => v.id === action.target?.digimon.id
   );
   digimonList.splice(index, 1, evolutionDigimon);
   return {
     ...currentState,
-    battleArea: {
-      digimonList,
+    playState: {
+      ...currentState.playState,
+      battleArea: {
+        digimonList,
+      },
     },
   };
 };

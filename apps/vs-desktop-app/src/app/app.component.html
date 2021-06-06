@@ -28,7 +28,7 @@
       <mat-card>
         <h3>オプション</h3>
         <div class="mt-2 flex">
-          <ng-container *ngFor="let card of gs.optionArea.cardList">
+          <ng-container *ngFor="let card of gs.playState.optionArea.cardList">
             <digimon-card-app-card
               [card]="card"
               class="w-20 m-1"
@@ -40,7 +40,7 @@
       <mat-card>
         <h3>テイマー</h3>
         <div class="mt-2 flex">
-          <ng-container *ngFor="let card of gs.tamerArea.cardList">
+          <ng-container *ngFor="let card of gs.playState.tamerArea.cardList">
             <digimon-card-app-card
               [card]="card"
               class="w-20 m-1"

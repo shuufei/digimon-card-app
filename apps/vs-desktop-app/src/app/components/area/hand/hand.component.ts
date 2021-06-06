@@ -37,14 +37,16 @@ export class HandComponent implements OnInit {
    * State
    */
   private readonly gs$ = this.globalState.select();
-  readonly hand$ = this.globalState.select('hand');
+  readonly hand$ = this.globalState.select('playState', 'hand');
 
   /**
    * Events
    */
   readonly onAction$ = new Subject<CardActionEvent>();
   readonly onEvolution$ = this.onAction$.pipe(
-    withLatestFrom(this.gs$.pipe(map((v) => v.battleArea.digimonList))),
+    withLatestFrom(
+      this.gs$.pipe(map((v) => v.playState.battleArea.digimonList))
+    ),
     filter(
       ([event, digimonList]) =>
         event.action === 'evolution' && digimonList.length > 0
@@ -75,11 +77,14 @@ export class HandComponent implements OnInit {
       )
     );
 
-    this.globalState.connect('modeState', this.onEvolution$, (_, event) => ({
-      mode: 'evolution',
-      trigger: {
-        area: 'hand',
-        card: event.card,
+    this.globalState.connect('ui', this.onEvolution$, (state, event) => ({
+      ...state.ui,
+      modeState: {
+        mode: 'evolution',
+        trigger: {
+          area: 'hand',
+          card: event.card,
+        },
       },
     }));
   }

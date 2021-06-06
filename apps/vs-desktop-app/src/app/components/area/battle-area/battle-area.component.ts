@@ -42,7 +42,7 @@ export class BattleAreaComponent implements OnInit {
    * State
    */
   private readonly gs$ = this.globalState.select();
-  readonly battleArea$ = this.globalState.select('battleArea');
+  readonly battleArea$ = this.globalState.select('playState', 'battleArea');
 
   /**
    * Events
@@ -50,7 +50,7 @@ export class BattleAreaComponent implements OnInit {
   readonly onSelectDigimonCard$ = new Subject<Digimon>();
   readonly onAction$ = new Subject<CardActionEvent>();
   private readonly onSubmitEvolutionFromHandToBattleArea$ = this.onSelectDigimonCard$.pipe(
-    withLatestFrom(this.gs$.pipe(map((v) => v.modeState))),
+    withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
     filter(
       ([, modeState]) =>
         modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
@@ -82,7 +82,10 @@ export class BattleAreaComponent implements OnInit {
               digimon,
             },
           });
-          this.globalState.set('modeState', () => undefined);
+          this.globalState.set('ui', (state) => ({
+            ...state.ui,
+            modeState: undefined,
+          }));
         })
       )
     );

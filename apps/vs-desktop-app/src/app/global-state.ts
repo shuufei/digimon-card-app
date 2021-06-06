@@ -9,19 +9,23 @@ type AreaState = {
 };
 
 export type GlobalState = {
-  stack: AreaState;
-  digitamaStack: AreaState;
-  hand: AreaState;
-  battleArea: {
-    digimonList: Digimon[];
+  playState: {
+    stack: AreaState;
+    digitamaStack: AreaState;
+    hand: AreaState;
+    battleArea: {
+      digimonList: Digimon[];
+    };
+    optionArea: AreaState;
+    tamerArea: AreaState;
   };
-  optionArea: AreaState;
-  tamerArea: AreaState;
-  modeState?: {
-    mode: Mode;
-    trigger?: {
-      card: Card;
-      area: Area;
+  ui: {
+    modeState?: {
+      mode: Mode;
+      trigger?: {
+        card: Card;
+        area: Area;
+      };
     };
   };
 };
@@ -31,24 +35,27 @@ export const GLOBAL_RX_STATE = new InjectionToken<GlobalState>(
 );
 
 export const INITIAL_GLOBAL_STATE: GlobalState = {
-  stack: {
-    cardList: deck
-      .filter((v) => v.cardtype !== 'デジタマ')
-      .map((v) => ({ ...v, id: v4() })),
+  playState: {
+    stack: {
+      cardList: deck
+        .filter((v) => v.cardtype !== 'デジタマ')
+        .map((v) => ({ ...v, id: v4() })),
+    },
+    digitamaStack: {
+      cardList: deck
+        .filter((v) => v.cardtype === 'デジタマ')
+        .map((v) => ({ ...v, id: v4() })),
+    },
+    hand: { cardList: [] },
+    battleArea: {
+      digimonList: [],
+    },
+    optionArea: {
+      cardList: [],
+    },
+    tamerArea: {
+      cardList: [],
+    },
   },
-  digitamaStack: {
-    cardList: deck
-      .filter((v) => v.cardtype === 'デジタマ')
-      .map((v) => ({ ...v, id: v4() })),
-  },
-  hand: { cardList: [] },
-  battleArea: {
-    digimonList: [],
-  },
-  optionArea: {
-    cardList: [],
-  },
-  tamerArea: {
-    cardList: [],
-  },
+  ui: {},
 };

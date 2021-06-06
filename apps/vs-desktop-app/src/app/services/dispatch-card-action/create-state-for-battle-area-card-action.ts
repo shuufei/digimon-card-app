@@ -20,18 +20,25 @@ const onRest = (
   action: StateAction,
   currentState: GlobalState
 ): GlobalState => {
-  const index = currentState.battleArea.digimonList.findIndex(
+  const index = currentState.playState.battleArea.digimonList.findIndex(
     (v) => v.card.id === action.card?.id
   );
-  const digimon = _.cloneDeep(currentState.battleArea.digimonList[index]);
+  const digimon = _.cloneDeep(
+    currentState.playState.battleArea.digimonList[index]
+  );
   digimon.rest();
-  const battleAreaDigimonList = [...currentState.battleArea.digimonList];
+  const battleAreaDigimonList = [
+    ...currentState.playState.battleArea.digimonList,
+  ];
   battleAreaDigimonList.splice(index, 1, digimon);
   return {
     ...currentState,
-    battleArea: {
-      ...currentState.battleArea,
-      digimonList: battleAreaDigimonList,
+    playState: {
+      ...currentState.playState,
+      battleArea: {
+        ...currentState.playState.battleArea,
+        digimonList: battleAreaDigimonList,
+      },
     },
   };
 };
@@ -40,18 +47,25 @@ const onActive = (
   action: StateAction,
   currentState: GlobalState
 ): GlobalState => {
-  const index = currentState.battleArea.digimonList.findIndex(
+  const index = currentState.playState.battleArea.digimonList.findIndex(
     (v) => v.card.id === action.card?.id
   );
-  const digimon = _.cloneDeep(currentState.battleArea.digimonList[index]);
+  const digimon = _.cloneDeep(
+    currentState.playState.battleArea.digimonList[index]
+  );
   digimon.active();
-  const battleAreaDigimonList = [...currentState.battleArea.digimonList];
+  const battleAreaDigimonList = [
+    ...currentState.playState.battleArea.digimonList,
+  ];
   battleAreaDigimonList.splice(index, 1, digimon);
   return {
     ...currentState,
-    battleArea: {
-      ...currentState.battleArea,
-      digimonList: battleAreaDigimonList,
+    playState: {
+      ...currentState.playState,
+      battleArea: {
+        ...currentState.playState.battleArea,
+        digimonList: battleAreaDigimonList,
+      },
     },
   };
 };

@@ -56,6 +56,9 @@ export class AppComponent implements OnInit {
       )
     );
 
-    this.globalState.connect('modeState', this.onResetMode$, () => undefined);
+    this.globalState.connect('ui', this.onResetMode$, (state) => ({
+      ...state.ui,
+      modeState: undefined,
+    }));
   }
 }
