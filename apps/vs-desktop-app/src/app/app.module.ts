@@ -11,6 +11,7 @@ import { CustomMenueTriggerDirective } from './custom-menu-trigger.directive';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
 import { ArrayReversePipe } from './pipes/array-reverse.pipe';
 import { StackComponent } from './components/area/stack/stack.component';
+import { BattleAreaComponent } from './components/area/battle-area/battle-area.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { StackComponent } from './components/area/stack/stack.component';
     DigimonComponent,
     ArrayReversePipe,
     StackComponent,
+    BattleAreaComponent,
   ],
   imports: [
     AngularMaterialModule,

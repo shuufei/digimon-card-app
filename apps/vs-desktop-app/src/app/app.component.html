@@ -25,23 +25,7 @@
     </div>
 
     <div class="flex-1">
-      <mat-card>
-        <h3>
-          バトルエリア <span>{{ gs.battleArea.digimonList.length }}</span>
-        </h3>
-        <div class="mt-2 flex flex-wrap">
-          <ng-container *ngFor="let digimon of gs.battleArea.digimonList">
-            <digimon-card-app-digimon
-              [digimon]="digimon"
-              [actionList]="battleAreaCardActionList"
-              (selected)="onSelectDigimonCard$.next(digimon)"
-              (action)="onActionFromBattleArea$.next($event)"
-              class="w-20"
-              [ngClass]="[digimon.isRest ? 'mx-5 my-1' : 'm-1']"
-            ></digimon-card-app-digimon>
-          </ng-container>
-        </div>
-      </mat-card>
+      <digimon-card-app-battle-area class="m-1"></digimon-card-app-battle-area>
 
       <mat-card>
         <h3>オプション</h3>

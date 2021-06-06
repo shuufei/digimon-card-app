@@ -1,0 +1,17 @@
+<mat-card>
+  <ng-container *ngIf="battleArea$ | async as battleArea">
+    <h3 class="text-xs">バトルエリア</h3>
+    <div class="mt-2 flex flex-wrap">
+      <ng-container *ngFor="let digimon of battleArea.digimonList">
+        <digimon-card-app-digimon
+          [digimon]="digimon"
+          [actionList]="battleAreaCardActionList"
+          (selected)="onSelectDigimonCard$.next(digimon)"
+          (action)="onAction$.next($event)"
+          class="w-20"
+          [ngClass]="[digimon.isRest ? 'mx-5 my-2' : 'mx-1 my-2']"
+        ></digimon-card-app-digimon>
+      </ng-container>
+    </div>
+  </ng-container>
+</mat-card>
