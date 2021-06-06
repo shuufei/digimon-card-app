@@ -34,9 +34,9 @@ const onDraw = (currentState: GlobalState): GlobalState => {
 
 const onShuffle = (currentState: GlobalState): GlobalState => {
   return produce(currentState, (draft) => {
-    draft.playState.stack.cardList = _.shuffle(
-      currentState.playState.stack.cardList
-    );
+    draft.playState.stack.cardList = new Array(5)
+      .fill(1)
+      .reduce((acc) => _.shuffle(acc), currentState.playState.stack.cardList);
   });
 };
 

@@ -59,11 +59,13 @@ export class AppComponent implements OnInit {
     this.state.hold(
       this.onInitPlay$.pipe(
         tap(() => {
-          new Array(5).fill(1).forEach(() => {
-            this.dispatchCardActionService.dispatch({
-              type: 'shuffle',
-              area: 'stack',
-            });
+          this.dispatchCardActionService.dispatch({
+            type: 'shuffle',
+            area: 'digitamaStack',
+          });
+          this.dispatchCardActionService.dispatch({
+            type: 'shuffle',
+            area: 'stack',
           });
           new Array(5).fill(1).forEach(() => {
             this.dispatchCardActionService.dispatch({

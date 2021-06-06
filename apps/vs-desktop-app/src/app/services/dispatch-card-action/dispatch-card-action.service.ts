@@ -4,6 +4,7 @@ import { Digimon } from '../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
 import { Area, Card, CardAction } from '../../types';
 import { createStateForBattleAreaCardAction } from './create-state-for-battle-area-card-action';
+import { createStateForDigitamaStackCardAction } from './create-state-for-digitama-stack-card-action';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
 import { createStateForWhole } from './create-state-for-whole-action';
@@ -32,6 +33,8 @@ export class DispatchCardActionService {
         return createStateForWhole(action, currentState);
       case 'battleArea':
         return createStateForBattleAreaCardAction(action, currentState);
+      case 'digitamaStack':
+        return createStateForDigitamaStackCardAction(action, currentState);
       default:
         return this.globalState.get();
     }

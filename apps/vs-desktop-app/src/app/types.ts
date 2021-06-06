@@ -92,17 +92,20 @@ export const CARD_ACTION = {
   rest: 'rest',
   trash: 'trash',
   recovery: 'recovery',
+  incubation: 'incubation',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
 
 export type Area =
   | 'stack'
+  | 'digitamaStack'
   | 'hand'
   | 'battleArea'
   | 'optionArea'
   | 'tamerArea'
   | 'securityArea'
+  | 'standbyArea'
   | 'whole';
 
 export const MODE = {

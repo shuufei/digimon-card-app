@@ -17,6 +17,7 @@ import { OptionAreaComponent } from './components/area/option-area/option-area.c
 import { TamerAreaComponent } from './components/area/tamer-area/tamer-area.component';
 import { TrashAreaComponent } from './components/area/trash-area/trash-area.component';
 import { SecurityAreaComponent } from './components/area/security-area/security-area.component';
+import { RaisingAreaComponent } from './components/area/raising-area/raising-area.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { SecurityAreaComponent } from './components/area/security-area/security-
     TamerAreaComponent,
     TrashAreaComponent,
     SecurityAreaComponent,
+    RaisingAreaComponent,
   ],
   imports: [
     AngularMaterialModule,

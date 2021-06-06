@@ -14,58 +14,60 @@ import { DispatchCardActionService } from '../../../services/dispatch-card-actio
 import { CardActionItem } from '../../card/card.component';
 
 @Component({
-  selector: 'digimon-card-app-stack',
-  templateUrl: './stack.component.html',
-  styleUrls: ['./stack.component.scss'],
+  selector: 'digimon-card-app-raising-area',
+  templateUrl: './raising-area.component.html',
+  styleUrls: ['./raising-area.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [RxState],
 })
-export class StackComponent implements OnInit {
+export class RaisingAreaComponent implements OnInit {
   @ViewChild(CustomMenueTriggerDirective) trigger?: CustomMenueTriggerDirective;
 
   /**
    * constants
    */
-  readonly actionList: CardActionItem[] = [
+  readonly actionListForDigitamaStack: CardActionItem[] = [
     {
-      action: 'draw',
-      displayText: 'ドロー',
-    },
-    {
-      action: 'recovery',
-      displayText: 'リカバリー',
+      action: 'incubation',
+      displayText: '孵化',
     },
     {
       action: 'shuffle',
       displayText: 'シャッフル',
     },
   ];
+  readonly actionListForStandbyArea: CardActionItem[] = [
+    {
+      action: 'entry',
+      displayText: '登場',
+    },
+  ];
 
   /**
    * State
    */
-  readonly stack$ = this.globalState.select('playState', 'stack');
+  readonly gs$ = this.globalState.select();
 
   /**
    * Events
    */
   readonly onContextMenu$ = new Subject<Event>();
-  readonly onClick$ = new Subject();
-  readonly onAction$ = new Subject<CardActionItem>();
-  private readonly onShuffle$ = this.onAction$.pipe(
+  readonly onClick$ = new Subject<void>();
+  readonly onActionFromDigitamaStack$ = new Subject<CardActionItem>();
+  readonly onActionFromStandbyArea$ = new Subject<CardActionItem>();
+  private readonly onShuffle$ = this.onActionFromDigitamaStack$.pipe(
     filter((v) => v.action === 'shuffle')
   );
-  private readonly onDraw$ = merge(
-    this.onAction$.pipe(filter((v) => v.action === 'draw')),
+  private readonly onIncubation$ = merge(
+    this.onActionFromDigitamaStack$.pipe(
+      filter((v) => v.action === 'incubation')
+    ),
     this.onClick$
-  );
-  private readonly onRecovery$ = merge(
-    this.onAction$.pipe(filter((v) => v.action === 'recovery'))
   );
 
   constructor(
-    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,
-    private readonly state: RxState<Record<string, never>>,
+    @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
+    private state: RxState<Record<string, never>>,
     private readonly dispatchCardActionService: DispatchCardActionService
   ) {}
 
@@ -83,29 +85,19 @@ export class StackComponent implements OnInit {
         tap(() =>
           this.dispatchCardActionService.dispatch({
             type: 'shuffle',
-            area: 'stack',
+            area: 'digitamaStack',
           })
         )
       )
     );
     this.state.hold(
-      this.onDraw$.pipe(
+      this.onIncubation$.pipe(
         tap(() =>
           this.dispatchCardActionService.dispatch({
-            type: 'draw',
-            area: 'stack',
+            type: 'incubation',
+            area: 'digitamaStack',
           })
         )
-      )
-    );
-    this.state.hold(
-      this.onRecovery$.pipe(
-        tap(() => {
-          this.dispatchCardActionService.dispatch({
-            type: 'recovery',
-            area: 'stack',
-          });
-        })
       )
     );
   }

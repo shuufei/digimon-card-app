@@ -20,6 +20,9 @@ export type GlobalState = {
     tamerArea: AreaState;
     trashArea: AreaState;
     securityArea: AreaState;
+    standbyArea: {
+      digimon?: Digimon;
+    };
   };
   ui: {
     modeState?: {
@@ -63,6 +66,9 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
     },
     securityArea: {
       cardList: [],
+    },
+    standbyArea: {
+      digimon: undefined,
     },
   },
   ui: {},
