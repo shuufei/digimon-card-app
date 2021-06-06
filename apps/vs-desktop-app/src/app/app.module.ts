@@ -14,6 +14,7 @@ import { StackComponent } from './components/area/stack/stack.component';
 import { BattleAreaComponent } from './components/area/battle-area/battle-area.component';
 import { HandComponent } from './components/area/hand/hand.component';
 import { OptionAreaComponent } from './components/area/option-area/option-area.component';
+import { TamerAreaComponent } from './components/area/tamer-area/tamer-area.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { OptionAreaComponent } from './components/area/option-area/option-area.c
     BattleAreaComponent,
     HandComponent,
     OptionAreaComponent,
+    TamerAreaComponent,
   ],
   imports: [
     AngularMaterialModule,

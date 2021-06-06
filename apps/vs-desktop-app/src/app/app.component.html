@@ -24,20 +24,8 @@
 
     <div class="flex-1">
       <digimon-card-app-battle-area class="m-1"></digimon-card-app-battle-area>
-
       <digimon-card-app-option-area class="m-1"></digimon-card-app-option-area>
-
-      <mat-card>
-        <h3>テイマー</h3>
-        <div class="mt-2 flex">
-          <ng-container *ngFor="let card of gs.playState.tamerArea.cardList">
-            <digimon-card-app-card
-              [card]="card"
-              class="w-20 m-1"
-            ></digimon-card-app-card>
-          </ng-container>
-        </div>
-      </mat-card>
+      <digimon-card-app-tamer-area class="m-1"></digimon-card-app-tamer-area>
     </div>
 
     <div class="">
