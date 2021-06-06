@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import * as _ from 'lodash';
 import { GlobalState } from '../../global-state';
 import { StateAction } from './dispatch-card-action.service';
@@ -31,16 +32,9 @@ const onRest = (
     ...currentState.playState.battleArea.digimonList,
   ];
   battleAreaDigimonList.splice(index, 1, digimon);
-  return {
-    ...currentState,
-    playState: {
-      ...currentState.playState,
-      battleArea: {
-        ...currentState.playState.battleArea,
-        digimonList: battleAreaDigimonList,
-      },
-    },
-  };
+  return produce(currentState, (draft) => {
+    draft.playState.battleArea.digimonList = battleAreaDigimonList;
+  });
 };
 
 const onActive = (
@@ -58,14 +52,7 @@ const onActive = (
     ...currentState.playState.battleArea.digimonList,
   ];
   battleAreaDigimonList.splice(index, 1, digimon);
-  return {
-    ...currentState,
-    playState: {
-      ...currentState.playState,
-      battleArea: {
-        ...currentState.playState.battleArea,
-        digimonList: battleAreaDigimonList,
-      },
-    },
-  };
+  return produce(currentState, (draft) => {
+    draft.playState.battleArea.digimonList = battleAreaDigimonList;
+  });
 };

@@ -1,3 +1,4 @@
+import { produce } from 'immer';
 import * as _ from 'lodash';
 import { GlobalState } from '../../global-state';
 import { StateAction } from './dispatch-card-action.service';
@@ -23,31 +24,16 @@ const onDraw = (currentState: GlobalState): GlobalState => {
   if (drawCard != null) {
     handCardList.push(drawCard);
   }
-  return {
-    ...currentState,
-    playState: {
-      ...currentState.playState,
-      stack: {
-        ...currentState.playState.stack,
-        cardList: stackCardList,
-      },
-      hand: {
-        ...currentState.playState.hand,
-        cardList: handCardList,
-      },
-    },
-  };
+  return produce(currentState, (draft) => {
+    draft.playState.stack.cardList = stackCardList;
+    draft.playState.hand.cardList = handCardList;
+  });
 };
 
 const onShuffle = (currentState: GlobalState): GlobalState => {
-  return {
-    ...currentState,
-    playState: {
-      ...currentState.playState,
-      stack: {
-        ...currentState.playState.stack,
-        cardList: _.shuffle(currentState.playState.stack.cardList),
-      },
-    },
-  };
+  return produce(currentState, (draft) => {
+    draft.playState.stack.cardList = _.shuffle(
+      currentState.playState.stack.cardList
+    );
+  });
 };

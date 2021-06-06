@@ -29,61 +29,34 @@ const onEntry = (
   if (action.card == null) {
     return currentState;
   }
+  const card: Card = action.card;
   const handCardList = [...currentState.playState.hand.cardList];
-  _.remove(handCardList, (v) => v.id === action.card?.id);
-  const mergedHand: GlobalState = {
-    ...currentState,
-    playState: {
-      ...currentState.playState,
-      hand: {
-        ...currentState.playState.hand,
-        cardList: handCardList,
-      },
-    },
-  };
+  _.remove(handCardList, (v) => v.id === card.id);
+  const mergedHand: GlobalState = produce(currentState, (draft) => {
+    draft.playState.hand.cardList = handCardList;
+  });
   switch (action.card.cardtype) {
     case 'デジモン':
-      return {
-        ...mergedHand,
-        playState: {
-          ...mergedHand.playState,
-          battleArea: {
-            ...currentState.playState.battleArea,
-            digimonList: [
-              ...currentState.playState.battleArea.digimonList,
-              new Digimon(action.card),
-            ],
-          },
-        },
-      };
+      return produce(mergedHand, (draft) => {
+        draft.playState.battleArea.digimonList = [
+          ...draft.playState.battleArea.digimonList,
+          new Digimon(card),
+        ];
+      });
     case 'オプション':
-      return {
-        ...mergedHand,
-        playState: {
-          ...mergedHand.playState,
-          optionArea: {
-            ...currentState.playState.optionArea,
-            cardList: [
-              ...currentState.playState.optionArea.cardList,
-              action.card,
-            ],
-          },
-        },
-      };
+      return produce(mergedHand, (draft) => {
+        draft.playState.optionArea.cardList = [
+          ...currentState.playState.optionArea.cardList,
+          card,
+        ];
+      });
     case 'テイマー':
-      return {
-        ...mergedHand,
-        playState: {
-          ...mergedHand.playState,
-          tamerArea: {
-            ...currentState.playState.tamerArea,
-            cardList: [
-              ...currentState.playState.tamerArea.cardList,
-              action.card,
-            ],
-          },
-        },
-      };
+      return produce(mergedHand, (draft) => {
+        draft.playState.tamerArea.cardList = [
+          ...currentState.playState.tamerArea.cardList,
+          card,
+        ];
+      });
     default:
       return mergedHand;
   }
@@ -98,16 +71,9 @@ const onEvolution = (
   }
   const handCardList = [...currentState.playState.hand.cardList];
   _.remove(handCardList, (v) => v.id === action.card?.id);
-  const mergedHand: GlobalState = {
-    ...currentState,
-    playState: {
-      ...currentState.playState,
-      hand: {
-        ...currentState.playState.hand,
-        cardList: handCardList,
-      },
-    },
-  };
+  const mergedHand: GlobalState = produce(currentState, (draft) => {
+    draft.playState.hand.cardList = handCardList;
+  });
   switch (action.target?.area) {
     case 'battleArea':
       return evolutionBattleAreaDigimon(action, mergedHand);
@@ -132,15 +98,9 @@ const evolutionBattleAreaDigimon = (
     (v) => v.id === action.target?.digimon.id
   );
   digimonList.splice(index, 1, evolutionDigimon);
-  return {
-    ...currentState,
-    playState: {
-      ...currentState.playState,
-      battleArea: {
-        digimonList,
-      },
-    },
-  };
+  return produce(currentState, (draft) => {
+    draft.playState.battleArea.digimonList = digimonList;
+  });
 };
 
 const onTrash = (
