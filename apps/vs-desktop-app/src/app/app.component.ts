@@ -2,11 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { merge, Subject } from 'rxjs';
 import { tag } from 'rxjs-spy/operators/tag';
-import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
-import {
-  CardActionEvent,
-  CardActionItem,
-} from './components/card/card.component';
+import { tap } from 'rxjs/operators';
 import {
   GlobalState,
   GLOBAL_RX_STATE,
@@ -27,16 +23,6 @@ export class AppComponent implements OnInit {
    * constants
    */
   readonly title = 'vs-desktop-app';
-  readonly handCardActionList: CardActionItem[] = [
-    {
-      action: 'entry',
-      displayText: '登場',
-    },
-    {
-      action: 'evolution',
-      displayText: '進化',
-    },
-  ];
 
   /**
    * state
@@ -47,20 +33,8 @@ export class AppComponent implements OnInit {
    * Events
    */
   readonly onReset$ = new Subject();
-  readonly onActionFromHand$ = new Subject<CardActionEvent>();
-  readonly onEvolutionFromHand$ = this.onActionFromHand$.pipe(
-    withLatestFrom(this.gs$.pipe(map((v) => v.battleArea.digimonList))),
-    filter(
-      ([event, digimonList]) =>
-        event.action === 'evolution' && digimonList.length > 0
-    ),
-    map(([event]) => event)
-  );
-
-  private readonly onEntryActionFromHand$ = this.onActionFromHand$.pipe(
-    filter((event) => event.action === 'entry')
-  );
-  private readonly onResetMode$ = merge(this.onEntryActionFromHand$);
+  // TODO
+  private readonly onResetMode$ = merge(this.onReset$);
 
   constructor(
     private readonly state: RxState<State>,
@@ -81,30 +55,7 @@ export class AppComponent implements OnInit {
         )
       )
     );
-    this.globalState.hold(
-      this.onEntryActionFromHand$.pipe(
-        tap((event) => {
-          this.dispatchCardActionService.dispatch({
-            type: 'entry',
-            area: 'hand',
-            card: event.card,
-          });
-        })
-      )
-    );
 
-    // connect
-    this.globalState.connect(
-      'modeState',
-      this.onEvolutionFromHand$,
-      (_, event) => ({
-        mode: 'evolution',
-        trigger: {
-          area: 'hand',
-          card: event.card,
-        },
-      })
-    );
     this.globalState.connect('modeState', this.onResetMode$, () => undefined);
   }
 }

@@ -1,5 +1,3 @@
-<h1>vs app</h1>
-
 <div class="p-4">
   <button mat-flat-button color="primary" (click)="onReset$.next()">
     reset
@@ -60,20 +58,5 @@
     </div>
   </div>
 
-  <mat-card class="hand-area">
-    <h3>
-      手札
-      <span>{{ gs.hand.cardList.length }}</span>
-    </h3>
-    <div class="m-2 flex flex-wrap">
-      <ng-container *ngFor="let card of gs.hand.cardList">
-        <digimon-card-app-card
-          [card]="card"
-          [actionList]="handCardActionList"
-          (action)="onActionFromHand$.next($event)"
-          class="w-20 m-1"
-        ></digimon-card-app-card>
-      </ng-container>
-    </div>
-  </mat-card>
+  <digimon-card-app-hand class="m-1"></digimon-card-app-hand>
 </ng-container>

@@ -70,7 +70,7 @@ export class BattleAreaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.globalState.hold(
+    this.state.hold(
       this.onSubmitEvolutionFromHandToBattleArea$.pipe(
         tap(([digimon, modeState]) => {
           this.dispatchCardActionService.dispatch({
@@ -86,7 +86,7 @@ export class BattleAreaComponent implements OnInit {
         })
       )
     );
-    this.globalState.hold(
+    this.state.hold(
       this.onRestAction$.pipe(
         tap((event) => {
           this.dispatchCardActionService.dispatch({
@@ -97,7 +97,7 @@ export class BattleAreaComponent implements OnInit {
         })
       )
     );
-    this.globalState.hold(
+    this.state.hold(
       this.onActiveAction$.pipe(
         tap((event) => {
           this.dispatchCardActionService.dispatch({

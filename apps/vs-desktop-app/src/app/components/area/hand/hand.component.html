@@ -1,0 +1,18 @@
+<mat-card class="hand-area">
+  <ng-container *ngIf="hand$ | async as hand">
+    <h3 class="text-xs">
+      手札
+      <span>{{ hand.cardList.length }}</span>
+    </h3>
+    <div class="mt-2 flex flex-wrap">
+      <ng-container *ngFor="let card of hand.cardList">
+        <digimon-card-app-card
+          [card]="card"
+          [actionList]="handCardActionList"
+          (action)="onAction$.next($event)"
+          class="w-20 m-1"
+        ></digimon-card-app-card>
+      </ng-container>
+    </div>
+  </ng-container>
+</mat-card>

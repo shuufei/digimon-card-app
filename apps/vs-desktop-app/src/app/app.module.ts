@@ -12,6 +12,7 @@ import { GlobalState, GLOBAL_RX_STATE } from './global-state';
 import { ArrayReversePipe } from './pipes/array-reverse.pipe';
 import { StackComponent } from './components/area/stack/stack.component';
 import { BattleAreaComponent } from './components/area/battle-area/battle-area.component';
+import { HandComponent } from './components/area/hand/hand.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { BattleAreaComponent } from './components/area/battle-area/battle-area.c
     ArrayReversePipe,
     StackComponent,
     BattleAreaComponent,
+    HandComponent,
   ],
   imports: [
     AngularMaterialModule,
