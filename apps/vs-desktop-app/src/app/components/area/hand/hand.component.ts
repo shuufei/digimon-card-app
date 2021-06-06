@@ -48,12 +48,12 @@ export class HandComponent implements OnInit {
    */
   readonly onAction$ = new Subject<CardActionEvent>();
   readonly onEvolution$ = this.onAction$.pipe(
-    withLatestFrom(
-      this.gs$.pipe(map((v) => v.playState.battleArea.digimonList))
-    ),
+    withLatestFrom(this.gs$),
     filter(
-      ([event, digimonList]) =>
-        event.action === 'evolution' && digimonList.length > 0
+      ([event, gs]) =>
+        event.action === 'evolution' &&
+        (gs.playState.battleArea.digimonList.length > 0 ||
+          gs.playState.standbyArea.digimon != null)
     ),
     map(([event]) => event)
   );

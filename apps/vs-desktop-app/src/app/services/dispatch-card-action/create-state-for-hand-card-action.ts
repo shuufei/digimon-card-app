@@ -77,6 +77,8 @@ const onEvolution = (
   switch (action.target?.area) {
     case 'battleArea':
       return evolutionBattleAreaDigimon(action, mergedHand);
+    case 'standbyArea':
+      return evolutionStandbyAreaDigimon(action, mergedHand);
     default:
       return currentState;
   }
@@ -100,6 +102,22 @@ const evolutionBattleAreaDigimon = (
   digimonList.splice(index, 1, evolutionDigimon);
   return produce(currentState, (draft) => {
     draft.playState.battleArea.digimonList = digimonList;
+  });
+};
+
+const evolutionStandbyAreaDigimon = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null || action.target?.digimon == null) {
+    return currentState;
+  }
+  const evolutionDigimon = new Digimon(action.card, [
+    ...action.target.digimon.evolutionOiriginCardList,
+    action.target.digimon.card,
+  ]);
+  return produce(currentState, (draft) => {
+    draft.playState.standbyArea.digimon = evolutionDigimon;
   });
 };
 

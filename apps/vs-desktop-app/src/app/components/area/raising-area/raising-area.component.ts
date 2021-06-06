@@ -9,6 +9,7 @@ import { RxState } from '@rx-angular/state';
 import { merge, Subject } from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { CustomMenueTriggerDirective } from '../../../custom-menu-trigger.directive';
+import { Digimon } from '../../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
 import { CardActionItem } from '../../card/card.component';
@@ -55,6 +56,7 @@ export class RaisingAreaComponent implements OnInit {
   readonly onClick$ = new Subject<void>();
   readonly onActionFromDigitamaStack$ = new Subject<CardActionItem>();
   readonly onActionFromStandbyArea$ = new Subject<CardActionItem>();
+  readonly onSelectedDigimonCard$ = new Subject<Digimon>();
   private readonly onShuffle$ = this.onActionFromDigitamaStack$.pipe(
     filter((v) => v.action === 'shuffle')
   );
@@ -68,6 +70,13 @@ export class RaisingAreaComponent implements OnInit {
     withLatestFrom(this.gs$.pipe(map((v) => v.playState.standbyArea.digimon))),
     filter(
       ([event, digimon]) => event.action === 'entry' && digimon !== undefined
+    )
+  );
+  private readonly onSubmitEvolutionFromHandToStandbyArea$ = this.onSelectedDigimonCard$.pipe(
+    withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
+    filter(
+      ([, modeState]) =>
+        modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
     )
   );
 
@@ -114,6 +123,25 @@ export class RaisingAreaComponent implements OnInit {
             area: 'standbyArea',
             card: digimon?.card,
           });
+        })
+      )
+    );
+    this.state.hold(
+      this.onSubmitEvolutionFromHandToStandbyArea$.pipe(
+        tap(([digimon, modeState]) => {
+          this.dispatchCardActionService.dispatch({
+            type: 'evolution',
+            area: 'hand',
+            card: modeState?.trigger?.card,
+            target: {
+              area: 'standbyArea',
+              digimon,
+            },
+          });
+          this.globalState.set('ui', (state) => ({
+            ...state.ui,
+            modeState: undefined,
+          }));
         })
       )
     );

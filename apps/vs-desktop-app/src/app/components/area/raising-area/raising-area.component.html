@@ -31,6 +31,9 @@
           <digimon-card-app-digimon
             [digimon]="gs.playState.standbyArea.digimon"
             [actionList]="actionListForStandbyArea"
+            (selected)="
+              onSelectedDigimonCard$.next(gs.playState.standbyArea.digimon)
+            "
             (action)="onActionFromStandbyArea$.next($event)"
             class="w-full"
           ></digimon-card-app-digimon>
