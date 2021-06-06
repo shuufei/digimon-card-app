@@ -5,6 +5,8 @@
       <ng-container *ngFor="let card of optionArea.cardList">
         <digimon-card-app-card
           [card]="card"
+          [actionList]="actionList"
+          (action)="onAction$.next($event)"
           class="w-20 m-1"
         ></digimon-card-app-card>
       </ng-container>
