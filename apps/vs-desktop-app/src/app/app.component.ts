@@ -61,8 +61,6 @@ export class AppComponent implements OnInit {
   /**
    * Events
    */
-  readonly onStackShuffle$ = new Subject();
-  readonly onDrawFromStack$ = new Subject();
   readonly onReset$ = new Subject();
   readonly onActionFromHand$ = new Subject<CardActionEvent>();
   readonly onActionFromBattleArea$ = new Subject<CardActionEvent>();
@@ -78,11 +76,7 @@ export class AppComponent implements OnInit {
   private readonly onEntryActionFromHand$ = this.onActionFromHand$.pipe(
     filter((event) => event.action === 'entry')
   );
-  private readonly onResetMode$ = merge(
-    this.onStackShuffle$,
-    this.onDrawFromStack$,
-    this.onEntryActionFromHand$
-  );
+  private readonly onResetMode$ = merge(this.onEntryActionFromHand$);
   private readonly onSubmitEvolutionFromHandToBattleArea$ = this.onSelectDigimonCard$.pipe(
     withLatestFrom(this.gs$.pipe(map((v) => v.modeState))),
     filter(
@@ -92,6 +86,9 @@ export class AppComponent implements OnInit {
   );
   private readonly onRestActionFromBattleArea$ = this.onActionFromBattleArea$.pipe(
     filter((v) => v.action === 'rest')
+  );
+  private readonly onActiveActionFromBattleArea$ = this.onActionFromBattleArea$.pipe(
+    filter((v) => v.action === 'active')
   );
 
   constructor(
@@ -103,26 +100,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.globalState.hold(
-      this.onStackShuffle$.pipe(
-        tap(() =>
-          this.dispatchCardActionService.dispatch({
-            type: 'shuffle',
-            area: 'stack',
-          })
-        )
-      )
-    );
-    this.globalState.hold(
-      this.onDrawFromStack$.pipe(
-        tap(() =>
-          this.dispatchCardActionService.dispatch({
-            type: 'draw',
-            area: 'stack',
-          })
-        )
-      )
-    );
     this.globalState.hold(
       this.onReset$.pipe(
         tap(() =>
@@ -165,6 +142,17 @@ export class AppComponent implements OnInit {
         tap((event) => {
           this.dispatchCardActionService.dispatch({
             type: 'rest',
+            area: 'battleArea',
+            card: event.card,
+          });
+        })
+      )
+    );
+    this.globalState.hold(
+      this.onActiveActionFromBattleArea$.pipe(
+        tap((event) => {
+          this.dispatchCardActionService.dispatch({
+            type: 'active',
             area: 'battleArea',
             card: event.card,
           });

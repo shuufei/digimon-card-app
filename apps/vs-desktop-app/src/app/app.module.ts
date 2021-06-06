@@ -10,6 +10,7 @@ import { ExpandCardViewDialogComponent } from './components/expand-card-view-dia
 import { CustomMenueTriggerDirective } from './custom-menu-trigger.directive';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
 import { ArrayReversePipe } from './pipes/array-reverse.pipe';
+import { StackComponent } from './components/area/stack/stack.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ArrayReversePipe } from './pipes/array-reverse.pipe';
     ExpandCardViewDialogComponent,
     DigimonComponent,
     ArrayReversePipe,
+    StackComponent,
   ],
   imports: [
     AngularMaterialModule,

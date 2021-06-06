@@ -69,19 +69,7 @@
     </div>
 
     <div class="">
-      <mat-card>
-        <h3>
-          山札<span>
-            {{ gs.stack.cardList.length }}
-          </span>
-        </h3>
-        <button mat-stroked-button (click)="onStackShuffle$.next()">
-          shuffle
-        </button>
-        <button mat-stroked-button (click)="onDrawFromStack$.next()">
-          draw
-        </button>
-      </mat-card>
+      <digimon-card-app-stack class="m-1"></digimon-card-app-stack>
       <mat-card>
         <h3>トラッシュ</h3>
       </mat-card>

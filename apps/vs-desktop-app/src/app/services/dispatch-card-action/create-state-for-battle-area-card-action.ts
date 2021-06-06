@@ -9,6 +9,8 @@ export const createStateForBattleAreaCardAction = (
   switch (action.type) {
     case 'rest':
       return onRest(action, currentState);
+    case 'active':
+      return onActive(action, currentState);
     default:
       return currentState;
   }
@@ -23,6 +25,26 @@ const onRest = (
   );
   const digimon = _.cloneDeep(currentState.battleArea.digimonList[index]);
   digimon.rest();
+  const battleAreaDigimonList = [...currentState.battleArea.digimonList];
+  battleAreaDigimonList.splice(index, 1, digimon);
+  return {
+    ...currentState,
+    battleArea: {
+      ...currentState.battleArea,
+      digimonList: battleAreaDigimonList,
+    },
+  };
+};
+
+const onActive = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  const index = currentState.battleArea.digimonList.findIndex(
+    (v) => v.card.id === action.card?.id
+  );
+  const digimon = _.cloneDeep(currentState.battleArea.digimonList[index]);
+  digimon.active();
   const battleAreaDigimonList = [...currentState.battleArea.digimonList];
   battleAreaDigimonList.splice(index, 1, digimon);
   return {
