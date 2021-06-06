@@ -60,6 +60,10 @@ export class AppComponent implements OnInit {
       this.onInitPlay$.pipe(
         tap(() => {
           this.dispatchCardActionService.dispatch({
+            type: 'reset',
+            area: 'whole',
+          });
+          this.dispatchCardActionService.dispatch({
             type: 'shuffle',
             area: 'digitamaStack',
           });

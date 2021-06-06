@@ -53,7 +53,6 @@ export class RaisingAreaComponent implements OnInit {
    * Events
    */
   readonly onContextMenu$ = new Subject<Event>();
-  readonly onClick$ = new Subject<void>();
   readonly onActionFromDigitamaStack$ = new Subject<CardActionItem>();
   readonly onActionFromStandbyArea$ = new Subject<CardActionItem>();
   readonly onSelectedDigimonCard$ = new Subject<Digimon>();
@@ -63,8 +62,7 @@ export class RaisingAreaComponent implements OnInit {
   private readonly onIncubation$ = merge(
     this.onActionFromDigitamaStack$.pipe(
       filter((v) => v.action === 'incubation')
-    ),
-    this.onClick$
+    )
   );
   private readonly onEntry$ = this.onActionFromStandbyArea$.pipe(
     withLatestFrom(this.gs$.pipe(map((v) => v.playState.standbyArea.digimon))),

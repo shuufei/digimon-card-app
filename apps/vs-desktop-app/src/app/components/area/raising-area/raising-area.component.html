@@ -10,7 +10,6 @@
           class="w-full cursor-pointer"
           [digimonCardAppMenuTrigger]="menu"
           (contextmenu)="onContextMenu$.next($event)"
-          (click)="onClick$.next()"
         />
         <mat-menu #menu="matMenu">
           <ng-container *ngFor="let action of actionListForDigitamaStack">
