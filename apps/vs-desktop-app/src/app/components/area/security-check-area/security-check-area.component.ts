@@ -12,36 +12,33 @@ import { DispatchCardActionService } from '../../../services/dispatch-card-actio
 import { CardActionEvent, CardActionItem } from '../../card/card.component';
 
 @Component({
-  selector: 'digimon-card-app-security-open-area',
-  templateUrl: './security-open-area.component.html',
-  styleUrls: ['./security-open-area.component.scss'],
+  selector: 'digimon-card-app-security-check-area',
+  templateUrl: './security-check-area.component.html',
+  styleUrls: ['./security-check-area.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [RxState],
 })
-export class SecurityOpenAreaComponent implements OnInit {
+export class SecurityCheckAreaComponent implements OnInit {
   /**
    * Constants
    */
   readonly actionList: CardActionItem[] = [
     {
-      action: 'trash',
-      displayText: '破棄',
-    },
-    {
-      action: 'entry',
-      displayText: '登場',
-    },
-    {
       action: 'draw',
       displayText: '手札に加える',
+    },
+    {
+      action: 'return',
+      displayText: 'セキュリティに戻す',
     },
   ];
 
   /**
    * State
    */
-  readonly securityOpenArea$ = this.globalState.select(
+  readonly securityCheckArea$ = this.globalState.select(
     'playState',
-    'securityOpenArea'
+    'securityCheckArea'
   );
 
   /**
@@ -61,7 +58,7 @@ export class SecurityOpenAreaComponent implements OnInit {
         tap((event) => {
           this.dispatchCardActionService.dispatch({
             type: event.action,
-            area: 'securityOpenArea',
+            area: 'securityCheckArea',
             card: event.card,
           });
         })

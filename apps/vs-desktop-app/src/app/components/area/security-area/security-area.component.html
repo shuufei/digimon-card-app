@@ -18,7 +18,16 @@
           class="h-20 cursor-pointer relative"
           [ngClass]="[i === 0 ? '' : 'shift']"
           [style.zIndex]="securityArea.cardList.length - i"
+          [digimonCardAppMenuTrigger]="menu"
+          (contextmenu)="onContextMenu$.next($event)"
         />
+        <mat-menu #menu="matMenu">
+          <ng-container *ngFor="let action of actionList">
+            <button mat-menu-item (click)="onAction$.next(action)">
+              {{ action.displayText }}
+            </button>
+          </ng-container>
+        </mat-menu>
       </ng-container>
     </div>
   </ng-container>

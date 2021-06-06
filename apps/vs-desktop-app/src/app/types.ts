@@ -95,6 +95,8 @@ export const CARD_ACTION = {
   incubation: 'incubation',
   open: 'open',
   addToBottomOfStack: 'addToBottomOfStack',
+  selfCheck: 'selfCheck',
+  return: 'return',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
@@ -110,6 +112,7 @@ export type Area =
   | 'standbyArea'
   | 'stackOpenArea'
   | 'securityOpenArea'
+  | 'securityCheckArea'
   | 'whole';
 
 export const MODE = {

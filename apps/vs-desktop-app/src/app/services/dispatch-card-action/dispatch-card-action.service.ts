@@ -6,6 +6,9 @@ import { Area, Card, CardAction } from '../../types';
 import { createStateForBattleAreaCardAction } from './create-state-for-battle-area-card-action';
 import { createStateForDigitamaStackCardAction } from './create-state-for-digitama-stack-card-action';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
+import { createStateForSecurityAreaCardAction } from './create-state-for-security-area-card-action';
+import { createStateForSecurityCheckAreaCardAction } from './create-state-for-security-check-area-card-action';
+import { createStateForSecurityOpenAreaCardAction } from './create-state-for-security-open-area-card-action';
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
 import { createStateForStackOpenAreaCardAction } from './create-state-for-stack-open-area-card-action';
 import { createStateForStandbyAreaCardAction } from './create-state-for-standby-area-card-action';
@@ -41,6 +44,12 @@ export class DispatchCardActionService {
         return createStateForStandbyAreaCardAction(action, currentState);
       case 'stackOpenArea':
         return createStateForStackOpenAreaCardAction(action, currentState);
+      case 'securityArea':
+        return createStateForSecurityAreaCardAction(action, currentState);
+      case 'securityOpenArea':
+        return createStateForSecurityOpenAreaCardAction(action, currentState);
+      case 'securityCheckArea':
+        return createStateForSecurityCheckAreaCardAction(action, currentState);
       default:
         return this.globalState.get();
     }

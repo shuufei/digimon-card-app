@@ -10,15 +10,16 @@
 </div>
 
 <ng-container *ngIf="gs$ | async as gs">
-  <div class="flex">
-    <digimon-card-app-security-open-area
-      class="m-1 flex-1"
-    ></digimon-card-app-security-open-area>
+  <digimon-card-app-security-open-area
+    class="m-1"
+  ></digimon-card-app-security-open-area>
+  <digimon-card-app-security-check-area
+    class="m-1"
+  ></digimon-card-app-security-check-area>
 
-    <digimon-card-app-stack-open-area
-      class="m-1 flex-1"
-    ></digimon-card-app-stack-open-area>
-  </div>
+  <digimon-card-app-stack-open-area
+    class="m-1"
+  ></digimon-card-app-stack-open-area>
 
   <div class="flex">
     <div class="">

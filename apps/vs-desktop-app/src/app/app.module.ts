@@ -20,6 +20,7 @@ import { SecurityAreaComponent } from './components/area/security-area/security-
 import { RaisingAreaComponent } from './components/area/raising-area/raising-area.component';
 import { SecurityOpenAreaComponent } from './components/area/security-open-area/security-open-area.component';
 import { StackOpenAreaComponent } from './components/area/stack-open-area/stack-open-area.component';
+import { SecurityCheckAreaComponent } from './components/area/security-check-area/security-check-area.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { StackOpenAreaComponent } from './components/area/stack-open-area/stack-
     RaisingAreaComponent,
     SecurityOpenAreaComponent,
     StackOpenAreaComponent,
+    SecurityCheckAreaComponent,
   ],
   imports: [
     AngularMaterialModule,
