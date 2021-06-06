@@ -40,6 +40,14 @@ export class BattleAreaComponent implements OnInit {
       action: 'trash',
       displayText: '破棄',
     },
+    {
+      action: 'degeneration',
+      displayText: '退化',
+    },
+    {
+      action: 'addToBottomOfStack',
+      displayText: '山札の一番下に加える',
+    },
   ];
 
   /**
@@ -59,12 +67,6 @@ export class BattleAreaComponent implements OnInit {
       ([, modeState]) =>
         modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
     )
-  );
-  private readonly onRestAction$ = this.onAction$.pipe(
-    filter((v) => v.action === 'rest')
-  );
-  private readonly onActiveAction$ = this.onAction$.pipe(
-    filter((v) => v.action === 'active')
   );
 
   constructor(
@@ -94,21 +96,10 @@ export class BattleAreaComponent implements OnInit {
       )
     );
     this.state.hold(
-      this.onRestAction$.pipe(
+      this.onAction$.pipe(
         tap((event) => {
           this.dispatchCardActionService.dispatch({
-            type: 'rest',
-            area: 'battleArea',
-            card: event.card,
-          });
-        })
-      )
-    );
-    this.state.hold(
-      this.onActiveAction$.pipe(
-        tap((event) => {
-          this.dispatchCardActionService.dispatch({
-            type: 'active',
+            type: event.action,
             area: 'battleArea',
             card: event.card,
           });

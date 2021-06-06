@@ -97,6 +97,7 @@ export const CARD_ACTION = {
   addToBottomOfStack: 'addToBottomOfStack',
   selfCheck: 'selfCheck',
   return: 'return',
+  degeneration: 'degeneration',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
