@@ -2,10 +2,13 @@
   <ng-container *ngIf="tamerArea$ | async as tamerArea">
     <h3 class="text-xs">テイマー</h3>
     <div class="mt-2 flex">
-      <ng-container *ngFor="let card of tamerArea.cardList">
+      <ng-container *ngFor="let tamer of tamerArea.tamerList">
         <digimon-card-app-card
-          [card]="card"
-          class="w-20 m-1"
+          [card]="tamer.card"
+          [actionList]="actionList"
+          (action)="onAction$.next($event)"
+          class="w-20"
+          [ngClass]="[tamer.isRest ? 'rest mx-5 my-2' : 'mx-1 my-2']"
         ></digimon-card-app-card>
       </ng-container>
     </div>

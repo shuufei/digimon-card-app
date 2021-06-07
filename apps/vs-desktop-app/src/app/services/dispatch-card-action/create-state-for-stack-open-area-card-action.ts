@@ -1,6 +1,7 @@
 import { produce } from 'immer';
 import * as _ from 'lodash';
 import { Digimon } from '../../domain/digimon';
+import { Tamer } from '../../domain/tamer';
 import { GlobalState } from '../../global-state';
 import { Card } from '../../types';
 import { StateAction } from './dispatch-card-action.service';
@@ -95,9 +96,9 @@ const onEntry = (
       });
     case 'テイマー':
       return produce(state, (draft) => {
-        draft.playState.tamerArea.cardList = [
-          ...currentState.playState.tamerArea.cardList,
-          card,
+        draft.playState.tamerArea.tamerList = [
+          ...currentState.playState.tamerArea.tamerList,
+          new Tamer(card),
         ];
       });
     default:

@@ -13,6 +13,7 @@ import { createStateForSecurityOpenAreaCardAction } from './create-state-for-sec
 import { createStateForStackCardAction } from './create-state-for-stack-card-action';
 import { createStateForStackOpenAreaCardAction } from './create-state-for-stack-open-area-card-action';
 import { createStateForStandbyAreaCardAction } from './create-state-for-standby-area-card-action';
+import { createStateForTamerAreaCardAction } from './create-state-for-tamer-area-card-action';
 import { createStateForTrashAreaCardAction } from './create-state-for-trash-area-card-action';
 import { createStateForWhole } from './create-state-for-whole-action';
 
@@ -56,6 +57,8 @@ export class DispatchCardActionService {
         return createStateForOptionAreaCardAction(action, currentState);
       case 'trashArea':
         return createStateForTrashAreaCardAction(action, currentState);
+      case 'tamerArea':
+        return createStateForTamerAreaCardAction(action, currentState);
       default:
         return this.globalState.get();
     }

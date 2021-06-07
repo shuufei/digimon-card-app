@@ -2,6 +2,7 @@ import { InjectionToken } from '@angular/core';
 import { v4 } from 'uuid';
 import { deck } from './deck';
 import { Digimon } from './domain/digimon';
+import { Tamer } from './domain/tamer';
 import { Area, Card, Mode } from './types';
 
 type AreaState = {
@@ -17,7 +18,9 @@ export type GlobalState = {
       digimonList: Digimon[];
     };
     optionArea: AreaState;
-    tamerArea: AreaState;
+    tamerArea: {
+      tamerList: Tamer[];
+    };
     trashArea: AreaState;
     securityArea: AreaState;
     standbyArea: {
@@ -62,7 +65,7 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
       cardList: [],
     },
     tamerArea: {
-      cardList: [],
+      tamerList: [],
     },
     trashArea: {
       cardList: [],

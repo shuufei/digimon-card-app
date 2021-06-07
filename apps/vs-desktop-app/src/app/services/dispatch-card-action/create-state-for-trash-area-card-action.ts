@@ -43,6 +43,7 @@ const onEntry = (
     _.remove(draft.playState.trashArea.cardList, (v) => v.id === card.id);
   });
   const digimon = new Digimon(card);
+  const tamer = new Digimon(card);
   switch (action.card.cardtype) {
     case 'デジモン':
       return produce(state, (draft) => {
@@ -60,9 +61,9 @@ const onEntry = (
       });
     case 'テイマー':
       return produce(state, (draft) => {
-        draft.playState.tamerArea.cardList = [
-          ...currentState.playState.tamerArea.cardList,
-          card,
+        draft.playState.tamerArea.tamerList = [
+          ...currentState.playState.tamerArea.tamerList,
+          tamer,
         ];
       });
     default:

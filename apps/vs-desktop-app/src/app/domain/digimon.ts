@@ -1,32 +1,19 @@
 import { v4 } from 'uuid';
 import { Card } from '../types';
+import { BattleCard } from './battle-card';
 
-export class Digimon {
+export class Digimon extends BattleCard {
   readonly id = v4();
   constructor(
-    private readonly _card: Card,
+    _card: Card,
     private readonly _evolutionOiriginCardList: Card[] = [],
-    private _isRest: boolean = false
-  ) {}
-
-  get card() {
-    return this._card;
+    _isRest: boolean = false
+  ) {
+    super(_card, _isRest);
   }
 
   get evolutionOiriginCardList() {
     return this._evolutionOiriginCardList;
-  }
-
-  get isRest() {
-    return this._isRest;
-  }
-
-  rest() {
-    this._isRest = true;
-  }
-
-  active() {
-    this._isRest = false;
   }
 
   addEvolutionOrigin(card: Card, index: number) {
