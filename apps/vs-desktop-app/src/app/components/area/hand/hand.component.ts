@@ -37,7 +37,7 @@ export class HandComponent implements OnInit {
     },
     {
       action: 'addToEvolutionOrigin',
-      displayText: '進化もとに追加',
+      displayText: '進化元に追加',
     },
   ];
 

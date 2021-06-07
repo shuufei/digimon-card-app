@@ -7,7 +7,7 @@ import {
 import { MatDialogRef } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
 import { DispatchCardActionService } from '../../services/dispatch-card-action/dispatch-card-action.service';
 import { CardActionEvent, CardActionItem } from '../card/card.component';
@@ -32,6 +32,10 @@ export class TrashConfirmDialogComponent implements OnInit {
       action: 'entry',
       displayText: '登場',
     },
+    {
+      action: 'addToEvolutionOrigin',
+      displayText: '進化元に追加',
+    },
   ];
 
   /**
@@ -43,6 +47,15 @@ export class TrashConfirmDialogComponent implements OnInit {
    * Events
    */
   readonly onAction$ = new Subject<CardActionEvent>();
+  private readonly onAddToEvolutionOrigin$ = this.onAction$.pipe(
+    withLatestFrom(this.globalState.select()),
+    filter(
+      ([event, gs]) =>
+        event.action === 'addToEvolutionOrigin' &&
+        gs.playState.battleArea.digimonList.length > 0
+    ),
+    map(([event]) => event)
+  );
 
   constructor(
     private dialogRef: MatDialogRef<TrashConfirmDialogComponent>,
@@ -63,6 +76,23 @@ export class TrashConfirmDialogComponent implements OnInit {
           // this.dialogRef.close();
         })
       )
+    );
+    this.globalState.connect(
+      'ui',
+      this.onAddToEvolutionOrigin$,
+      (state, event) => ({
+        ...state.ui,
+        modeState: {
+          mode: 'addToEvolutionOrigin',
+          trigger: {
+            area: 'trashArea',
+            card: event.card,
+          },
+        },
+      })
+    );
+    this.state.hold(
+      this.onAddToEvolutionOrigin$.pipe(tap(() => this.dialogRef.close()))
     );
   }
 }

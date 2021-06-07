@@ -70,13 +70,9 @@ export class BattleAreaComponent implements OnInit {
         modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
     )
   );
-  private readonly onSelectAddToEvolutionOriginFromHand$ = this.onSelectDigimonCard$.pipe(
+  private readonly onSelectAddToEvolutionOrigin$ = this.onSelectDigimonCard$.pipe(
     withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
-    filter(
-      ([, modeState]) =>
-        modeState?.mode === 'addToEvolutionOrigin' &&
-        modeState?.trigger?.area === 'hand'
-    )
+    filter(([, modeState]) => modeState?.mode === 'addToEvolutionOrigin')
   );
 
   constructor(
@@ -118,7 +114,7 @@ export class BattleAreaComponent implements OnInit {
       )
     );
     this.state.hold(
-      this.onSelectAddToEvolutionOriginFromHand$.pipe(
+      this.onSelectAddToEvolutionOrigin$.pipe(
         tap(([digimon]) => {
           this.dialog.open(AddEvolutionOriginDialogComponent, {
             width: '60%',

@@ -4,7 +4,7 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
 import { tap, withLatestFrom } from 'rxjs/operators';
@@ -27,7 +27,8 @@ export class AddEvolutionOriginDialogComponent implements OnInit {
     public dialogData: { digimon: Digimon },
     private readonly state: RxState<Record<string, never>>,
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
-    private dispatchCardActionService: DispatchCardActionService
+    private dispatchCardActionService: DispatchCardActionService,
+    private dialogRef: MatDialogRef<AddEvolutionOriginDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -61,6 +62,7 @@ export class AddEvolutionOriginDialogComponent implements OnInit {
             ...state.ui,
             modeState: undefined,
           }));
+          this.dialogRef.close();
         })
       )
     );

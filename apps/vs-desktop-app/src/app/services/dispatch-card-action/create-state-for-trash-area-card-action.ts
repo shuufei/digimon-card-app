@@ -14,6 +14,8 @@ export const createStateForTrashAreaCardAction = (
       return onDraw(action, currentState);
     case 'entry':
       return onEntry(action, currentState);
+    case 'addToEvolutionOrigin':
+      return onAddToEvolutionOrigin(action, currentState);
     default:
       return currentState;
   }
@@ -69,4 +71,23 @@ const onEntry = (
     default:
       return state;
   }
+};
+
+const onAddToEvolutionOrigin = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null || action.target?.addIndex == null) {
+    return currentState;
+  }
+  const card: Card = action.card;
+  const addIndex: number = action.target.addIndex;
+  return produce(currentState, (draft) => {
+    const digimon = draft.playState.battleArea.digimonList.find(
+      (v) => v.id === action.target?.digimon.id
+    );
+    if (digimon == null) return;
+    digimon.addEvolutionOrigin(card, addIndex);
+    _.remove(draft.playState.trashArea.cardList, (v) => v.id === card.id);
+  });
 };
