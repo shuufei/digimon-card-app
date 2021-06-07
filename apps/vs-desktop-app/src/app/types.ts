@@ -98,6 +98,7 @@ export const CARD_ACTION = {
   selfCheck: 'selfCheck',
   return: 'return',
   degeneration: 'degeneration',
+  addToEvolutionOrigin: 'addToEvolutionOrigin',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
@@ -115,10 +116,12 @@ export type Area =
   | 'securityOpenArea'
   | 'securityCheckArea'
   | 'trashArea'
+  | 'evolutionOrigin'
   | 'whole';
 
 export const MODE = {
   evolution: 'evolution',
+  addToEvolutionOrigin: 'addToEvolutionOrigin',
 } as const;
 
 export type Mode = keyof typeof MODE;

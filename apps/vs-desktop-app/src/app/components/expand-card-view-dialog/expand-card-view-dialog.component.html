@@ -1,23 +1,26 @@
-<img
-  class="card-img"
-  [style.zIndex]="(dialogData.evolutionOriginSrcList?.length || 0) + 1 || 1"
-  #cardImg
-  [src]="dialogData.src"
-/>
-<ng-container *ngIf="dialogData.evolutionOriginSrcList">
-  <ng-container
-    *ngFor="
-      let evolutionOriginCardSrc of dialogData.evolutionOriginSrcList
-        | arrayReverse;
-      index as i
-    "
-  >
-    <img
-      [src]="evolutionOriginCardSrc"
-      [style.zIndex]="(dialogData.evolutionOriginSrcList?.length || 0) - i"
-      [style.transform]="'translateY(' + (i + 1) * -415 + 'px)'"
-      class="evolution-origin"
-      alt=""
-    />
+<ng-container
+  *ngIf="evolutionOriginCardList$ | async as evolutionOriginCardList"
+>
+  <img
+    class="card-img"
+    [style.zIndex]="(evolutionOriginCardList.length || 0) + 1 || 1"
+    #cardImg
+    [src]="dialogData.src"
+  />
+  <ng-container *ngIf="evolutionOriginCardList">
+    <ng-container
+      *ngFor="
+        let evolutionOriginCard of evolutionOriginCardList | arrayReverse;
+        index as i
+      "
+    >
+      <digimon-card-app-card
+        [card]="evolutionOriginCard"
+        [actionList]="evolutionOriginActionList"
+        [style.zIndex]="(evolutionOriginCardList?.length || 0) - i"
+        [style.marginTop]="-415 + 'px'"
+        (action)="onAction$.next($event)"
+      ></digimon-card-app-card>
+    </ng-container>
   </ng-container>
 </ng-container>

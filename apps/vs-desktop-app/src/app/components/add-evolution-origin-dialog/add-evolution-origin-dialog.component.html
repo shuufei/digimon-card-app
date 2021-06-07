@@ -1,0 +1,26 @@
+<h3 class="text-xs">進化元に追加</h3>
+<div class="mt-2 flex flex-col items-center">
+  <digimon-card-app-card
+    [card]="dialogData.digimon.card"
+    class="w-20"
+  ></digimon-card-app-card>
+  <div class="mt-2">
+    <button mat-stroked-button (click)="onAdd$.next(dialogData.digimon.card)">
+      追加
+    </button>
+  </div>
+  <ng-container
+    *ngFor="
+      let card of dialogData.digimon.evolutionOiriginCardList | arrayReverse
+    "
+  >
+    <digimon-card-app-card
+      [card]="card"
+      [disableClick]="true"
+      class="mt-2 w-20"
+    ></digimon-card-app-card>
+    <div class="mt-2">
+      <button mat-stroked-button (click)="onAdd$.next(card)">追加</button>
+    </div>
+  </ng-container>
+</div>

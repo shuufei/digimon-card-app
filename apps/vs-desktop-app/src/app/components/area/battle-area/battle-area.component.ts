@@ -4,12 +4,14 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { Digimon } from '../../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
+import { AddEvolutionOriginDialogComponent } from '../../add-evolution-origin-dialog/add-evolution-origin-dialog.component';
 import { CardActionEvent, CardActionItem } from '../../card/card.component';
 
 @Component({
@@ -68,11 +70,20 @@ export class BattleAreaComponent implements OnInit {
         modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
     )
   );
+  private readonly onSelectAddToEvolutionOriginFromHand$ = this.onSelectDigimonCard$.pipe(
+    withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
+    filter(
+      ([, modeState]) =>
+        modeState?.mode === 'addToEvolutionOrigin' &&
+        modeState?.trigger?.area === 'hand'
+    )
+  );
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
     private readonly state: RxState<Record<string, never>>,
-    private readonly dispatchCardActionService: DispatchCardActionService
+    private readonly dispatchCardActionService: DispatchCardActionService,
+    private readonly dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +113,19 @@ export class BattleAreaComponent implements OnInit {
             type: event.action,
             area: 'battleArea',
             card: event.card,
+          });
+        })
+      )
+    );
+    this.state.hold(
+      this.onSelectAddToEvolutionOriginFromHand$.pipe(
+        tap(([digimon]) => {
+          this.dialog.open(AddEvolutionOriginDialogComponent, {
+            width: '60%',
+            height: '70%',
+            data: {
+              digimon,
+            },
           });
         })
       )

@@ -38,16 +38,13 @@ export class DigimonComponent implements OnInit {
   ) {}
 
   @HostListener('click', ['$event'])
-  clicked(event: Event) {
-    console.log(event);
+  clicked() {
     this.dialog.open(ExpandCardViewDialogComponent, {
       width: '448px',
       height: `${559 + 48}px`,
       data: {
+        cardId: this.digimon.card.id,
         src: this.digimon.card.imgSrc,
-        evolutionOriginSrcList: this.digimon.evolutionOiriginCardList.map(
-          (v) => v.imgSrc
-        ),
       },
     });
   }

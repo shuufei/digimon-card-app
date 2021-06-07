@@ -35,6 +35,10 @@ export class HandComponent implements OnInit {
       action: 'trash',
       displayText: '破棄',
     },
+    {
+      action: 'addToEvolutionOrigin',
+      displayText: '進化もとに追加',
+    },
   ];
 
   /**
@@ -63,6 +67,15 @@ export class HandComponent implements OnInit {
   );
   private readonly onTrashAction$ = this.onAction$.pipe(
     filter((event) => event.action === 'trash')
+  );
+  private readonly onAddToEvolutionOrigin$ = this.onAction$.pipe(
+    withLatestFrom(this.gs$),
+    filter(
+      ([event, gs]) =>
+        event.action === 'addToEvolutionOrigin' &&
+        gs.playState.battleArea.digimonList.length > 0
+    ),
+    map(([event]) => event)
   );
 
   constructor(
@@ -105,5 +118,19 @@ export class HandComponent implements OnInit {
         },
       },
     }));
+    this.globalState.connect(
+      'ui',
+      this.onAddToEvolutionOrigin$,
+      (state, event) => ({
+        ...state.ui,
+        modeState: {
+          mode: 'addToEvolutionOrigin',
+          trigger: {
+            area: 'hand',
+            card: event.card,
+          },
+        },
+      })
+    );
   }
 }

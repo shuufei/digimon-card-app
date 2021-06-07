@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { v4 } from 'uuid';
 import { Card } from '../types';
 import { BattleCard } from './battle-card';
@@ -18,5 +19,10 @@ export class Digimon extends BattleCard {
 
   addEvolutionOrigin(card: Card, index: number) {
     this._evolutionOiriginCardList.splice(index, 0, card);
+  }
+
+  removeEvolutionOrigin(cardId: Card['id']) {
+    _.remove(this._evolutionOiriginCardList, (v) => v.id === cardId);
+    console.log(this._evolutionOiriginCardList);
   }
 }

@@ -5,6 +5,7 @@ import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
 import { Area, Card, CardAction } from '../../types';
 import { createStateForBattleAreaCardAction } from './create-state-for-battle-area-card-action';
 import { createStateForDigitamaStackCardAction } from './create-state-for-digitama-stack-card-action';
+import { createStateForEvolutionOriginCardAction } from './create-state-for-evolution-origin-card-action';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
 import { createStateForOptionAreaCardAction } from './create-state-for-option-area-card-action';
 import { createStateForSecurityAreaCardAction } from './create-state-for-security-area-card-action';
@@ -59,6 +60,8 @@ export class DispatchCardActionService {
         return createStateForTrashAreaCardAction(action, currentState);
       case 'tamerArea':
         return createStateForTamerAreaCardAction(action, currentState);
+      case 'evolutionOrigin':
+        return createStateForEvolutionOriginCardAction(action, currentState);
       default:
         return this.globalState.get();
     }
@@ -72,6 +75,7 @@ export type StateAction = {
   target?: {
     area: Area;
     digimon: Digimon;
+    addIndex?: number; // for AddToEvolutionOrigin
   };
   evolutionOriginCardList?: Card[];
 };

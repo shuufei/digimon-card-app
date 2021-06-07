@@ -18,6 +18,8 @@ export const createStateForHandCardAction = (
       return onEvolution(action, currentState);
     case 'trash':
       return onTrash(action, currentState);
+    case 'addToEvolutionOrigin':
+      return onAddToEvolutionOrigin(action, currentState);
     default:
       return currentState;
   }
@@ -134,5 +136,24 @@ const onTrash = (
     const handCardList = draft.playState.hand.cardList;
     draft.playState.hand.cardList = remove(handCardList, card, 'id');
     draft.playState.trashArea.cardList.push(card);
+  });
+};
+
+const onAddToEvolutionOrigin = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null || action.target?.addIndex == null) {
+    return currentState;
+  }
+  const card: Card = action.card;
+  const addIndex: number = action.target.addIndex;
+  return produce(currentState, (draft) => {
+    const digimon = draft.playState.battleArea.digimonList.find(
+      (v) => v.id === action.target?.digimon.id
+    );
+    if (digimon == null) return;
+    digimon.addEvolutionOrigin(card, addIndex);
+    _.remove(draft.playState.hand.cardList, (v) => v.id === card.id);
   });
 };
