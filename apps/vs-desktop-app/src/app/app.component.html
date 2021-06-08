@@ -47,7 +47,9 @@
       <mat-icon aria-hidden="false" aria-label="menu">menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item>デッキ Import</button>
+      <button mat-menu-item (click)="onImportDeck$.next()">
+        デッキ Import
+      </button>
       <button mat-menu-item (click)="onInitPlay$.next()">
         対戦セットアップ
       </button>

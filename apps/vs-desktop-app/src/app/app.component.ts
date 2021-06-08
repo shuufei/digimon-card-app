@@ -1,8 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { merge, Subject } from 'rxjs';
 import { tag } from 'rxjs-spy/operators/tag';
 import { tap } from 'rxjs/operators';
+import { DeckImportDialogComponent } from './components/deck-import-dialog/deck-import-dialog.component';
 import {
   GlobalState,
   GLOBAL_RX_STATE,
@@ -34,13 +36,15 @@ export class AppComponent implements OnInit {
    */
   readonly onReset$ = new Subject<void>();
   readonly onInitPlay$ = new Subject<void>();
+  readonly onImportDeck$ = new Subject<void>();
   // TODO
   private readonly onResetMode$ = merge(this.onReset$);
 
   constructor(
     private readonly state: RxState<State>,
     @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,
-    private readonly dispatchCardActionService: DispatchCardActionService
+    private readonly dispatchCardActionService: DispatchCardActionService,
+    private readonly dialog: MatDialog
   ) {
     this.globalState.set(INITIAL_GLOBAL_STATE);
   }
@@ -83,6 +87,13 @@ export class AppComponent implements OnInit {
               area: 'stack',
             });
           });
+        })
+      )
+    );
+    this.state.hold(
+      this.onImportDeck$.pipe(
+        tap(() => {
+          this.dialog.open(DeckImportDialogComponent);
         })
       )
     );

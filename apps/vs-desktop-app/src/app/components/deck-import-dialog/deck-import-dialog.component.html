@@ -1,0 +1,12 @@
+<div class="flex justify-center">
+  <button mat-stroked-button (click)="onClickedImport$.next()">
+    デッキをImport
+  </button>
+</div>
+<input
+  #fileInput
+  class="hide-input"
+  type="file"
+  accept="application/json"
+  (change)="onChangedFile$.next($event)"
+/>

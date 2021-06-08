@@ -1,6 +1,4 @@
 import { InjectionToken } from '@angular/core';
-import { v4 } from 'uuid';
-import { deck } from './deck';
 import { Digimon } from './domain/digimon';
 import { Tamer } from './domain/tamer';
 import { Area, Card, MemoryCount, Mode, Side } from './types';
@@ -13,6 +11,9 @@ export type GlobalState = {
   memory: {
     side: Side;
     count: MemoryCount;
+  };
+  deck: {
+    cardList: Card[];
   };
   playState: {
     stack: AreaState;
@@ -54,16 +55,15 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
     side: 'unknown',
     count: 0,
   },
+  deck: {
+    cardList: [],
+  },
   playState: {
     stack: {
-      cardList: deck
-        .filter((v) => v.cardtype !== 'デジタマ')
-        .map((v) => ({ ...v, id: v4() })),
+      cardList: [],
     },
     digitamaStack: {
-      cardList: deck
-        .filter((v) => v.cardtype === 'デジタマ')
-        .map((v) => ({ ...v, id: v4() })),
+      cardList: [],
     },
     hand: { cardList: [] },
     battleArea: {

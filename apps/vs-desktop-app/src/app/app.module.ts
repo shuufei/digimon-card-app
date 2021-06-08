@@ -24,6 +24,7 @@ import { SecurityCheckAreaComponent } from './components/area/security-check-are
 import { TrashConfirmDialogComponent } from './components/trash-confirm-dialog/trash-confirm-dialog.component';
 import { AddEvolutionOriginDialogComponent } from './components/add-evolution-origin-dialog/add-evolution-origin-dialog.component';
 import { MemoryComponent } from './components/memory/memory.component';
+import { DeckImportDialogComponent } from './components/deck-import-dialog/deck-import-dialog.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { MemoryComponent } from './components/memory/memory.component';
     TrashConfirmDialogComponent,
     AddEvolutionOriginDialogComponent,
     MemoryComponent,
+    DeckImportDialogComponent,
   ],
   imports: [
     AngularMaterialModule,
