@@ -1,43 +1,40 @@
-<mat-card>
-  <ng-container *ngIf="gs$ | async as gs">
-    <h3 class="text-center text-xs">育成エリア</h3>
-    <div class="mt-2 flex">
-      <div class="w-20">
-        <img
-          *ngIf="gs.playState.digitamaStack.cardList.length !== 0"
-          src="./assets/images/back_digitama.png"
-          alt="digitama stack"
-          class="w-full cursor-pointer"
-          [digimonCardAppMenuTrigger]="menu"
-          (contextmenu)="onContextMenu$.next($event)"
-        />
-        <mat-menu #menu="matMenu">
-          <ng-container *ngFor="let action of actionListForDigitamaStack">
-            <button
-              mat-menu-item
-              (click)="onActionFromDigitamaStack$.next(action)"
-            >
-              {{ action.displayText }}
-            </button>
-          </ng-container>
-        </mat-menu>
-        <span class="inline-block w-full text-center text-xs mt-1">{{
-          gs.playState.digitamaStack.cardList.length
-        }}</span>
-      </div>
-      <div class="ml-2 w-20">
-        <ng-container *ngIf="gs.playState.standbyArea.digimon">
-          <digimon-card-app-digimon
-            [digimon]="gs.playState.standbyArea.digimon"
-            [actionList]="actionListForStandbyArea"
-            (selected)="
-              onSelectedDigimonCard$.next(gs.playState.standbyArea.digimon)
-            "
-            (action)="onActionFromStandbyArea$.next($event)"
-            class="w-full"
-          ></digimon-card-app-digimon>
+<ng-container *ngIf="gs$ | async as gs">
+  <div class="flex">
+    <div class="w-14">
+      <img
+        *ngIf="gs.playState.digitamaStack.cardList.length !== 0"
+        src="./assets/images/back_digitama.png"
+        alt="digitama stack"
+        class="w-full cursor-pointer"
+        [digimonCardAppMenuTrigger]="menu"
+        (contextmenu)="onContextMenu$.next($event)"
+      />
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let action of actionListForDigitamaStack">
+          <button
+            mat-menu-item
+            (click)="onActionFromDigitamaStack$.next(action)"
+          >
+            {{ action.displayText }}
+          </button>
         </ng-container>
-      </div>
+      </mat-menu>
+      <span class="inline-block w-full text-center text-xs mt-1">{{
+        gs.playState.digitamaStack.cardList.length
+      }}</span>
     </div>
-  </ng-container>
-</mat-card>
+    <div class="ml-2 w-14">
+      <ng-container *ngIf="gs.playState.standbyArea.digimon">
+        <digimon-card-app-digimon
+          [digimon]="gs.playState.standbyArea.digimon"
+          [actionList]="actionListForStandbyArea"
+          (selected)="
+            onSelectedDigimonCard$.next(gs.playState.standbyArea.digimon)
+          "
+          (action)="onActionFromStandbyArea$.next($event)"
+          class="w-full"
+        ></digimon-card-app-digimon>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

@@ -2,10 +2,11 @@
   display: block;
   position: sticky;
   bottom: 4%;
-}
-
-mat-card {
   border: solid 1px #101010;
   max-height: 250px;
   overflow: auto;
+  padding: 8px 12px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
 }

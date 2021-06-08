@@ -36,7 +36,7 @@ const onDraw = (currentState: GlobalState): GlobalState => {
 
 const onShuffle = (currentState: GlobalState): GlobalState => {
   return produce(currentState, (draft) => {
-    draft.playState.stack.cardList = new Array(5)
+    draft.playState.stack.cardList = new Array(10)
       .fill(1)
       .reduce((acc) => _.shuffle(acc), currentState.playState.stack.cardList);
   });

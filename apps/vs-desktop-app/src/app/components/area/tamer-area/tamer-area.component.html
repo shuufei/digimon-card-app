@@ -1,16 +1,13 @@
-<mat-card>
-  <ng-container *ngIf="tamerArea$ | async as tamerArea">
-    <h3 class="text-xs">テイマー</h3>
-    <div class="mt-2 flex">
-      <ng-container *ngFor="let tamer of tamerArea.tamerList">
-        <digimon-card-app-card
-          [card]="tamer.card"
-          [actionList]="actionList"
-          (action)="onAction$.next($event)"
-          class="w-20"
-          [ngClass]="[tamer.isRest ? 'rest mx-5 my-2' : 'mx-1 my-2']"
-        ></digimon-card-app-card>
-      </ng-container>
-    </div>
-  </ng-container>
-</mat-card>
+<ng-container *ngIf="tamerArea$ | async as tamerArea">
+  <div class="flex justify-center">
+    <ng-container *ngFor="let tamer of tamerArea.tamerList">
+      <digimon-card-app-card
+        [card]="tamer.card"
+        [actionList]="actionList"
+        (action)="onAction$.next($event)"
+        class="w-14"
+        [ngClass]="[tamer.isRest ? 'rest mx-5 my-2' : 'mx-1 my-2']"
+      ></digimon-card-app-card>
+    </ng-container>
+  </div>
+</ng-container>

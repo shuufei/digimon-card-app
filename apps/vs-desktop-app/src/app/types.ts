@@ -125,3 +125,7 @@ export const MODE = {
 } as const;
 
 export type Mode = keyof typeof MODE;
+
+export type Side = 'self' | 'other' | 'unknown';
+
+export type MemoryCount = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;

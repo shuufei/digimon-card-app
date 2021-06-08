@@ -1,13 +1,12 @@
 <ng-container *ngIf="securityOpenArea$ | async as securityOpenArea">
-  <div *ngIf="securityOpenArea.cardList.length > 0" class="p-3">
-    <h3 class="text-xs text-left">セキュリティオープン</h3>
-    <div class="mt-2 flex flex-wrap">
+  <div *ngIf="securityOpenArea.cardList.length > 0" class="">
+    <div class="flex flex-wrap">
       <ng-container *ngFor="let card of securityOpenArea.cardList">
         <digimon-card-app-card
           [card]="card"
           [actionList]="actionList"
           (action)="onAction$.next($event)"
-          class="w-20 m-1"
+          class="w-14 m-1"
         ></digimon-card-app-card>
       </ng-container>
     </div>

@@ -23,6 +23,7 @@ import { StackOpenAreaComponent } from './components/area/stack-open-area/stack-
 import { SecurityCheckAreaComponent } from './components/area/security-check-area/security-check-area.component';
 import { TrashConfirmDialogComponent } from './components/trash-confirm-dialog/trash-confirm-dialog.component';
 import { AddEvolutionOriginDialogComponent } from './components/add-evolution-origin-dialog/add-evolution-origin-dialog.component';
+import { MemoryComponent } from './components/memory/memory.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { AddEvolutionOriginDialogComponent } from './components/add-evolution-or
     SecurityCheckAreaComponent,
     TrashConfirmDialogComponent,
     AddEvolutionOriginDialogComponent,
+    MemoryComponent,
   ],
   imports: [
     AngularMaterialModule,

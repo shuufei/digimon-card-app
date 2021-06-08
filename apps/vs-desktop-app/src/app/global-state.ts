@@ -3,13 +3,17 @@ import { v4 } from 'uuid';
 import { deck } from './deck';
 import { Digimon } from './domain/digimon';
 import { Tamer } from './domain/tamer';
-import { Area, Card, Mode } from './types';
+import { Area, Card, MemoryCount, Mode, Side } from './types';
 
 type AreaState = {
   cardList: Card[];
 };
 
 export type GlobalState = {
+  memory: {
+    side: Side;
+    count: MemoryCount;
+  };
   playState: {
     stack: AreaState;
     digitamaStack: AreaState;
@@ -46,6 +50,10 @@ export const GLOBAL_RX_STATE = new InjectionToken<GlobalState>(
 );
 
 export const INITIAL_GLOBAL_STATE: GlobalState = {
+  memory: {
+    side: 'unknown',
+    count: 0,
+  },
   playState: {
     stack: {
       cardList: deck

@@ -1,30 +1,25 @@
-<mat-card>
-  <ng-container *ngIf="securityArea$ | async as securityArea">
-    <h3 class="text-xs text-center">
-      セキュリティ<span class="ml-2">{{ securityArea.cardList.length }}</span>
-    </h3>
-    <div class="mt-2 flex flex-col items-center">
-      <ng-container *ngIf="securityArea.cardList.length === 0"> </ng-container>
-      <ng-container
-        *ngFor="let card of securityArea.cardList | arrayReverse; index as i"
-      >
-        <img
-          src="./assets/images/back_rotate90.png"
-          alt="stack"
-          class="h-20 cursor-pointer relative"
-          [ngClass]="[i === 0 ? '' : 'shift']"
-          [style.zIndex]="securityArea.cardList.length - i"
-          [digimonCardAppMenuTrigger]="menu"
-          (contextmenu)="onContextMenu$.next($event)"
-        />
-        <mat-menu #menu="matMenu">
-          <ng-container *ngFor="let action of actionList">
-            <button mat-menu-item (click)="onAction$.next(action)">
-              {{ action.displayText }}
-            </button>
-          </ng-container>
-        </mat-menu>
-      </ng-container>
-    </div>
-  </ng-container>
-</mat-card>
+<ng-container *ngIf="securityArea$ | async as securityArea">
+  <div class="flex flex-col items-center">
+    <ng-container *ngIf="securityArea.cardList.length === 0"> </ng-container>
+    <ng-container
+      *ngFor="let card of securityArea.cardList | arrayReverse; index as i"
+    >
+      <img
+        src="./assets/images/back_rotate90.png"
+        alt="stack"
+        class="h-14 cursor-pointer relative"
+        [ngClass]="[i === 0 ? '' : 'shift']"
+        [style.zIndex]="securityArea.cardList.length - i"
+        [digimonCardAppMenuTrigger]="menu"
+        (contextmenu)="onContextMenu$.next($event)"
+      />
+      <mat-menu #menu="matMenu">
+        <ng-container *ngFor="let action of actionList">
+          <button mat-menu-item (click)="onAction$.next(action)">
+            {{ action.displayText }}
+          </button>
+        </ng-container>
+      </mat-menu>
+    </ng-container>
+  </div>
+</ng-container>

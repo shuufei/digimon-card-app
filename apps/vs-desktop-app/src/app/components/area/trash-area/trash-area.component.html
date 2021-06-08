@@ -1,15 +1,14 @@
-<mat-card>
-  <ng-container *ngIf="trashArea$ | async as trashArea">
-    <h3 class="text-xs text-center">
-      トラッシュ <span>{{ trashArea.cardList.length }}</span>
-    </h3>
-    <div class="w-20 mt-2 cursor-pointer" (click)="onClick$.next()">
-      <ng-container *ngIf="latestTrashCard$ | async as latestTrashCard">
-        <digimon-card-app-card
-          [card]="latestTrashCard"
-          [disableClick]="true"
-        ></digimon-card-app-card>
-      </ng-container>
-    </div>
-  </ng-container>
-</mat-card>
+<ng-container *ngIf="trashArea$ | async as trashArea">
+  <div class="w-14 cursor-pointer" (click)="onClick$.next()">
+    <ng-container *ngIf="latestTrashCard$ | async as latestTrashCard">
+      <digimon-card-app-card
+        [card]="latestTrashCard"
+        [disableClick]="true"
+      ></digimon-card-app-card>
+    </ng-container>
+  </div>
+
+  <p class="text-xs text-center mt-2" *ngIf="trashArea.cardList.length !== 0">
+    {{ trashArea.cardList.length }}
+  </p>
+</ng-container>

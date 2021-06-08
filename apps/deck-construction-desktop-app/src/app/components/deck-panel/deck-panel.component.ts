@@ -1,8 +1,14 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { v4 } from 'uuid';
-import { GLOBAL_RX_STATE, GlobalState } from '../../global-state';
+import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
 import { Deck } from '../../types';
 
 type State = Record<string, never>;
@@ -11,7 +17,7 @@ type State = Record<string, never>;
   templateUrl: './deck-panel.component.html',
   styleUrls: ['./deck-panel.component.scss'],
   providers: [RxState],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DeckPanelComponent implements OnInit {
   readonly globalState$ = this.globalState.select();
@@ -38,7 +44,22 @@ export class DeckPanelComponent implements OnInit {
       ...state,
       selectedDeckId: undefined,
     }));
-    this.globalState.connect('selectedDeckId', this.onClickedDeckItem$, (_, deckId) => deckId);
+    this.globalState.connect(
+      'selectedDeckId',
+      this.onClickedDeckItem$,
+      (_, deckId) => deckId
+    );
+    this.globalState
+      .select()
+      .pipe(
+        tap((state) => {
+          const cardlist = state.deckList[0]?.cardList.map((v) =>
+            state?.cardInfoList?.find((card) => card.imgFileName === v)
+          );
+          console.log(JSON.stringify(cardlist));
+        })
+      )
+      .subscribe();
   }
 
   private createNewDeck(): Deck {

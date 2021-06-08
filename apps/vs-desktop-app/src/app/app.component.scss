@@ -3,6 +3,10 @@
   padding: 24px;
 }
 
-mat-card {
-  @apply m-1;
+.other-side {
+  transform: rotate(180deg);
+}
+
+digimon-card-app-hand {
+  z-index: 100;
 }

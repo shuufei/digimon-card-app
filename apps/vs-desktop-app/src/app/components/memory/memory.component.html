@@ -1,0 +1,39 @@
+<ng-container *ngIf="memory$ | async as memory">
+  <div class="memory">
+    <div class="other-side flex">
+      <ng-container *ngFor="let count of otherSideMemoryList">
+        <div
+          class="count"
+          [ngClass]="{
+            active: memory.count === count && memory.side === 'other'
+          }"
+          (click)="onClickOtherSideMemory$.next(count)"
+        >
+          {{ count }}
+        </div>
+      </ng-container>
+    </div>
+    <div
+      class="count"
+      [ngClass]="{
+        active: memory.count === zero
+      }"
+      (click)="onClickedZero$.next(zero)"
+    >
+      {{ zero }}
+    </div>
+    <div class="self-side flex">
+      <ng-container *ngFor="let count of selfSideMemoryList">
+        <div
+          class="count"
+          [ngClass]="{
+            active: memory.count === count && memory.side === 'self'
+          }"
+          (click)="onClickSelfSideMemory$.next(count)"
+        >
+          {{ count }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>
