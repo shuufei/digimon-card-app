@@ -291,7 +291,6 @@ export class DeckDetailComponent implements OnInit {
               .find((card) => card.imgFileName === v)
           );
           const content = JSON.stringify(cardList);
-          console.log(content);
           const blob = new Blob([content], { type: 'application/json' });
           const fileName = `${this.titleForm.value}.json`;
           if (window.navigator.msSaveBlob) {
