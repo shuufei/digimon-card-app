@@ -72,12 +72,21 @@
     (add)="addCard$.next($event)"
     (remove)="removeCard$.next($event)"
   ></digimon-card-app-deck-cardtype-card-list>
-  <button
-    mat-flat-button
-    color="warn"
-    class="delete-btn"
-    (click)="deleteDeck$.next()"
-  >
-    Delete
-  </button>
+
+  <div class="flex mt-6">
+    <div class="m-2">
+      <button mat-stroked-button (click)="exportDeck$.next()">Export</button>
+      <a #downloadLink href="#" id="download"></a>
+    </div>
+    <div class="m-2">
+      <button
+        mat-flat-button
+        color="warn"
+        class="delete-btn"
+        (click)="deleteDeck$.next()"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
 </div>

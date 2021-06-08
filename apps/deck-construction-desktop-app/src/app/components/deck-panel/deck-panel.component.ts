@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { v4 } from 'uuid';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
 import { Deck } from '../../types';
@@ -49,17 +48,6 @@ export class DeckPanelComponent implements OnInit {
       this.onClickedDeckItem$,
       (_, deckId) => deckId
     );
-    this.globalState
-      .select()
-      .pipe(
-        tap((state) => {
-          const cardlist = state.deckList[0]?.cardList.map((v) =>
-            state?.cardInfoList?.find((card) => card.imgFileName === v)
-          );
-          console.log(JSON.stringify(cardlist));
-        })
-      )
-      .subscribe();
   }
 
   private createNewDeck(): Deck {

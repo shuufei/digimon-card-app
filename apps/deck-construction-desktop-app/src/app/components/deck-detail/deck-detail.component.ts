@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  ElementRef,
   Inject,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { remove, RxState, update } from '@rx-angular/state';
@@ -17,8 +19,10 @@ import { CardInfo, Deck, DeckCardList } from '../../types';
   templateUrl: './deck-detail.component.html',
   styleUrls: ['./deck-detail.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [RxState],
 })
 export class DeckDetailComponent implements OnInit {
+  @ViewChild('downloadLink') downloadLinkEl?: ElementRef;
   readonly titleForm = new FormControl('');
   readonly selectedDeck$ = combineLatest([
     this.globalState.select('deckList'),
@@ -49,7 +53,6 @@ export class DeckDetailComponent implements OnInit {
           },
         ];
       }, [] as DeckCardList);
-      console.log(deckCardList);
       return _.orderBy(
         deckCardList,
         ['cardInfo.cardtype', 'cardInfo.lv', 'cardInfo.imgFileName'],
@@ -186,6 +189,7 @@ export class DeckDetailComponent implements OnInit {
   readonly addCard$ = new Subject<CardInfo['imgFileName']>();
   readonly removeCard$ = new Subject<CardInfo['imgFileName']>();
   readonly deleteDeck$ = new Subject<void>();
+  readonly exportDeck$ = new Subject<void>();
 
   private readonly commitDeckTitleHandler$ = this.titleForm.valueChanges.pipe(
     tap((value) => {
@@ -267,14 +271,41 @@ export class DeckDetailComponent implements OnInit {
   );
 
   constructor(
-    @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>
+    @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
+    private state: RxState<Record<string, never>>
   ) {}
 
   ngOnInit(): void {
-    this.globalState.hold(this.commitDeckTitleHandler$);
-    this.globalState.hold(this.updateTitleFormHandler$);
-    this.globalState.hold(this.addCardHandler$);
-    this.globalState.hold(this.removeCardHandler$);
-    this.globalState.hold(this.deleteDeckHandler$);
+    this.state.hold(this.commitDeckTitleHandler$);
+    this.state.hold(this.updateTitleFormHandler$);
+    this.state.hold(this.addCardHandler$);
+    this.state.hold(this.removeCardHandler$);
+    this.state.hold(this.deleteDeckHandler$);
+    this.state.hold(
+      this.exportDeck$.pipe(
+        withLatestFrom(this.selectedDeck$),
+        tap(([, deck]) => {
+          const cardList = deck.cardList.map((v) =>
+            this.globalState
+              .get('cardInfoList')
+              .find((card) => card.imgFileName === v)
+          );
+          const content = JSON.stringify(cardList);
+          console.log(content);
+          const blob = new Blob([content], { type: 'application/json' });
+          const fileName = `${this.titleForm.value}.json`;
+          if (window.navigator.msSaveBlob) {
+            window.navigator.msSaveBlob(blob, fileName);
+          } else {
+            if (this.downloadLinkEl?.nativeElement == null) return;
+            const el = this.downloadLinkEl.nativeElement as HTMLElement;
+            el.setAttribute('href', window.URL.createObjectURL(blob));
+            el.setAttribute('download', fileName);
+            el.click();
+          }
+          return;
+        })
+      )
+    );
   }
 }

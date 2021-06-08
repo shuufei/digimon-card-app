@@ -1,5 +1,5 @@
 <div class="count-label type-count">
-  <span>{{cardtype}}</span>
+  <span>{{ cardtype }}</span>
   <span>{{ count }}</span>
 </div>
 <div class="card-list">
@@ -10,7 +10,10 @@
         [size]="'s'"
       ></digimon-card-app-card-img>
       <div class="card-count">
-        <button class="count-btn" (click)="remove.emit(card.cardInfo.imgFileName)">
+        <button
+          class="count-btn"
+          (click)="remove.emit(card.cardInfo.imgFileName)"
+        >
           <mat-icon aria-hidden="false" aria-label="minus" class="clickable"
             >remove</mat-icon
           >
