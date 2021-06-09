@@ -1,5 +1,5 @@
-<div class="other-side">
-  <ng-container *ngIf="gs$ | async as gs">
+<ng-container *ngIf="gs$ | async as gs">
+  <div class="other-side" *ngIf="gs.deck.cardList.length > 0">
     <digimon-card-app-security-open-area
       class="m-1"
     ></digimon-card-app-security-open-area>
@@ -36,30 +36,28 @@
         <digimon-card-app-trash-area class="m-1"></digimon-card-app-trash-area>
       </div>
     </div>
-  </ng-container>
-</div>
-
-<div class="flex items-center">
-  <div></div>
-  <digimon-card-app-memory class="my-4 flex-1"></digimon-card-app-memory>
-  <div>
-    <button mat-icon-button [matMenuTriggerFor]="menu">
-      <mat-icon aria-hidden="false" aria-label="menu">menu</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="onImportDeck$.next()">
-        デッキ Import
-      </button>
-      <button mat-menu-item (click)="onInitPlay$.next()">
-        対戦セットアップ
-      </button>
-      <button mat-menu-item (click)="onReset$.next()">リセット</button>
-    </mat-menu>
   </div>
-</div>
 
-<div>
-  <ng-container *ngIf="gs$ | async as gs">
+  <div class="flex items-center">
+    <div></div>
+    <digimon-card-app-memory class="my-4 flex-1"></digimon-card-app-memory>
+    <div>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon aria-hidden="false" aria-label="menu">menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="onImportDeck$.next()">
+          デッキ Import
+        </button>
+        <button mat-menu-item (click)="onInitPlay$.next()">
+          対戦セットアップ
+        </button>
+        <button mat-menu-item (click)="onReset$.next()">リセット</button>
+      </mat-menu>
+    </div>
+  </div>
+
+  <div *ngIf="gs.deck.cardList.length > 0">
     <digimon-card-app-security-open-area
       class="m-1"
     ></digimon-card-app-security-open-area>
@@ -98,5 +96,5 @@
     </div>
 
     <digimon-card-app-hand class="m-1 mt-5"></digimon-card-app-hand>
-  </ng-container>
-</div>
+  </div>
+</ng-container>

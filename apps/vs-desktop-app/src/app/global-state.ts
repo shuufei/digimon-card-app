@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { Digimon } from './domain/digimon';
-import { Tamer } from './domain/tamer';
+import { Digimon, SerializedDigimon } from './domain/digimon';
+import { SerializedTamer, Tamer } from './domain/tamer';
 import { Area, Card, MemoryCount, Mode, Side } from './types';
 
 type AreaState = {
@@ -95,4 +95,78 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
     },
   },
   ui: {},
+};
+
+export type SerializedGlobalState = Pick<
+  GlobalState,
+  'deck' | 'memory' | 'ui'
+> & {
+  playState: Pick<
+    GlobalState['playState'],
+    | 'digitamaStack'
+    | 'hand'
+    | 'optionArea'
+    | 'securityArea'
+    | 'securityCheckArea'
+    | 'securityOpenArea'
+    | 'stack'
+    | 'stackOpenArea'
+    | 'trashArea'
+  > & {
+    battleArea: {
+      digimonList: SerializedDigimon[];
+    };
+    tamerArea: {
+      tamerList: SerializedTamer[];
+    };
+    standbyArea: {
+      digimon?: SerializedDigimon;
+    };
+  };
+};
+
+export const serialize = (globalState: GlobalState): SerializedGlobalState => {
+  return {
+    ...globalState,
+    playState: {
+      ...globalState.playState,
+      battleArea: {
+        digimonList: globalState.playState.battleArea.digimonList.map((v) =>
+          v.serialize()
+        ),
+      },
+      tamerArea: {
+        tamerList: globalState.playState.tamerArea.tamerList.map((v) =>
+          v.serialize()
+        ),
+      },
+      standbyArea: {
+        digimon: globalState.playState.standbyArea.digimon?.serialize(),
+      },
+    },
+  };
+};
+
+export const deserialize = (serialized: SerializedGlobalState): GlobalState => {
+  return {
+    ...serialized,
+    playState: {
+      ...serialized.playState,
+      battleArea: {
+        digimonList: serialized.playState.battleArea.digimonList.map((v) =>
+          Digimon.deserialize(v)
+        ),
+      },
+      tamerArea: {
+        tamerList: serialized.playState.tamerArea.tamerList.map((v) =>
+          Tamer.deserialize(v)
+        ),
+      },
+      standbyArea: {
+        digimon:
+          serialized.playState.standbyArea.digimon &&
+          Digimon.deserialize(serialized.playState.standbyArea.digimon),
+      },
+    },
+  };
 };

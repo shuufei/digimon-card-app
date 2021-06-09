@@ -6,9 +6,11 @@ import { tag } from 'rxjs-spy/operators/tag';
 import { tap } from 'rxjs/operators';
 import { DeckImportDialogComponent } from './components/deck-import-dialog/deck-import-dialog.component';
 import {
+  deserialize,
   GlobalState,
   GLOBAL_RX_STATE,
   INITIAL_GLOBAL_STATE,
+  serialize,
 } from './global-state';
 import { DispatchCardActionService } from './services/dispatch-card-action/dispatch-card-action.service';
 
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit {
    * constants
    */
   readonly title = 'vs-desktop-app';
+  readonly localStorageKeyGlobalState = 'vs:globalstate';
 
   /**
    * state
@@ -50,6 +53,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.setInitState();
+
     this.state.hold(
       this.onReset$.pipe(
         tap(() =>
@@ -98,9 +103,26 @@ export class AppComponent implements OnInit {
       )
     );
 
+    this.state.hold(
+      this.globalState.select().pipe(
+        tap((state) => {
+          const stringifyState = JSON.stringify(serialize(state));
+          localStorage.setItem(this.localStorageKeyGlobalState, stringifyState);
+        })
+      )
+    );
+
     this.globalState.connect('ui', this.onResetMode$, (state) => ({
       ...state.ui,
       modeState: undefined,
     }));
+  }
+
+  private setInitState() {
+    const globalState = localStorage.getItem(this.localStorageKeyGlobalState);
+    const initGlobalState = globalState
+      ? deserialize(JSON.parse(globalState))
+      : INITIAL_GLOBAL_STATE;
+    this.globalState.set(() => initGlobalState);
   }
 }
