@@ -49,6 +49,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "~6.6.0",
     "rxjs-spy": "^8.0.0",
+    "skyway-js": "^4.4.1",
     "tailwindcss": "^2.1.4",
     "tslib": "^2.0.0",
     "uuid": "^8.3.2",

@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { Digimon } from '../../domain/digimon';
-import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
+import { GlobalState, GLOBAL_RX_STATE, serialize } from '../../global-state';
 import { Area, Card, CardAction } from '../../types';
+import { PeerService } from '../peer.service';
 import { createStateForBattleAreaCardAction } from './create-state-for-battle-area-card-action';
 import { createStateForDigitamaStackCardAction } from './create-state-for-digitama-stack-card-action';
 import { createStateForEvolutionOriginCardAction } from './create-state-for-evolution-origin-card-action';
@@ -23,12 +24,14 @@ import { createStateForWhole } from './create-state-for-whole-action';
 })
 export class DispatchCardActionService {
   constructor(
-    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>
+    @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,
+    private peerService: PeerService
   ) {}
 
   dispatch(action: StateAction): void {
     const state = this.createState(action);
     this.globalState.set(state);
+    this.peerService.send(serialize(state));
   }
 
   private createState(action: StateAction): GlobalState {

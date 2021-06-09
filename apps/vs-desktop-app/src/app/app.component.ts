@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { merge, Subject } from 'rxjs';
@@ -13,6 +14,7 @@ import {
   serialize,
 } from './global-state';
 import { DispatchCardActionService } from './services/dispatch-card-action/dispatch-card-action.service';
+import { PeerService } from './services/peer.service';
 
 type State = Record<string, never>;
 
@@ -43,11 +45,19 @@ export class AppComponent implements OnInit {
   // TODO
   private readonly onResetMode$ = merge(this.onReset$);
 
+  remoteId = new FormControl();
+  myPeerId$ = this.peerService.peerId$;
+  // peer = new Peer({
+  //   key: '508f4815-b594-4128-bb37-c01c9e23889b',
+  //   debug: 3,
+  // });
+
   constructor(
     private readonly state: RxState<State>,
     @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,
     private readonly dispatchCardActionService: DispatchCardActionService,
-    private readonly dialog: MatDialog
+    private readonly dialog: MatDialog,
+    private readonly peerService: PeerService
   ) {
     this.globalState.set(INITIAL_GLOBAL_STATE);
   }
@@ -124,5 +134,32 @@ export class AppComponent implements OnInit {
       ? deserialize(JSON.parse(globalState))
       : INITIAL_GLOBAL_STATE;
     this.globalState.set(() => initGlobalState);
+  }
+
+  // private testPeer() {
+  //   this.peer.on('connection', (dataConnection) => {
+  //     console.log('connection');
+  //     dataConnection.once('open', () => {
+  //       console.log('connection open');
+  //       dataConnection.send('--- connection open send message');
+  //     });
+  //     dataConnection.on('data', (data) => {
+  //       console.log('remote: ', data);
+  //     });
+  //   });
+  //   this.peer.on('open', async () => {
+  //     console.log('--- this.peer id: ', this.peer.id);
+  //   });
+  // }
+
+  connect() {
+    this.peerService.connect(this.remoteId.value);
+    // const dataConnection = this.peer.connect(this.remoteId.value);
+    // dataConnection.once('open', async () => {
+    //   dataConnection.send(`hello ${new Date().valueOf()}`);
+    // });
+    // dataConnection.on('data', (data) => {
+    //   console.log('remote: ', data);
+    // });
   }
 }
