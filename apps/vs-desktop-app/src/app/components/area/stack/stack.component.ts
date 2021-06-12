@@ -2,15 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { merge, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Subject } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { CustomMenueTriggerDirective } from '../../../custom-menu-trigger.directive';
-import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
+import { GlobalState, GLOBAL_RX_STATE, PlayState } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
+import { Side } from '../../../types';
 import { CardActionItem } from '../../card/card.component';
 
 @Component({
@@ -21,6 +23,11 @@ import { CardActionItem } from '../../card/card.component';
   providers: [RxState],
 })
 export class StackComponent implements OnInit {
+  @Input()
+  set stack(value: PlayState['stack']) {
+    this.stack$.next(value);
+  }
+  @Input() side!: Side;
   @ViewChild(CustomMenueTriggerDirective) trigger?: CustomMenueTriggerDirective;
 
   /**
@@ -48,7 +55,7 @@ export class StackComponent implements OnInit {
   /**
    * State
    */
-  readonly stack$ = this.globalState.select('playState', 'stack');
+  readonly stack$ = new BehaviorSubject<PlayState['stack']>({ cardList: [] });
 
   /**
    * Events
@@ -77,6 +84,10 @@ export class StackComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.side == null) {
+      throw new Error('side is required!');
+    }
+    if (this.side === 'other') return;
     this.state.hold(
       this.onContextMenu$.pipe(
         tap((v) => {

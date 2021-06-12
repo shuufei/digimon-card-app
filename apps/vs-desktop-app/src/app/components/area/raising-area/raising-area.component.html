@@ -1,8 +1,8 @@
-<ng-container *ngIf="gs$ | async as gs">
-  <div class="flex">
+<div class="flex">
+  <ng-container *ngIf="digitamaStack$ | async as digitamaStack">
     <div class="w-14">
       <img
-        *ngIf="gs.playState.digitamaStack.cardList.length !== 0"
+        *ngIf="digitamaStack.cardList.length !== 0"
         src="./assets/images/back_digitama.png"
         alt="digitama stack"
         class="w-full cursor-pointer"
@@ -20,21 +20,21 @@
         </ng-container>
       </mat-menu>
       <span class="inline-block w-full text-center text-xs mt-1">{{
-        gs.playState.digitamaStack.cardList.length
+        digitamaStack.cardList.length
       }}</span>
     </div>
+  </ng-container>
+  <ng-container *ngIf="standbyArea$ | async as standbyArea">
     <div class="ml-2 w-14">
-      <ng-container *ngIf="gs.playState.standbyArea.digimon">
+      <ng-container *ngIf="standbyArea.digimon">
         <digimon-card-app-digimon
-          [digimon]="gs.playState.standbyArea.digimon"
+          [digimon]="standbyArea.digimon"
           [actionList]="actionListForStandbyArea"
-          (selected)="
-            onSelectedDigimonCard$.next(gs.playState.standbyArea.digimon)
-          "
+          (selected)="onSelectedDigimonCard$.next(standbyArea.digimon)"
           (action)="onActionFromStandbyArea$.next($event)"
           class="w-full"
         ></digimon-card-app-digimon>
       </ng-container>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
+</div>

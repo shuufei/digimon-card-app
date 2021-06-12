@@ -2,16 +2,18 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { merge, Subject } from 'rxjs';
+import { BehaviorSubject, merge, Subject } from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { CustomMenueTriggerDirective } from '../../../custom-menu-trigger.directive';
 import { Digimon } from '../../../domain/digimon';
-import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
+import { GlobalState, GLOBAL_RX_STATE, PlayState } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
+import { Side } from '../../../types';
 import { CardActionItem } from '../../card/card.component';
 
 @Component({
@@ -22,6 +24,15 @@ import { CardActionItem } from '../../card/card.component';
   providers: [RxState],
 })
 export class RaisingAreaComponent implements OnInit {
+  @Input()
+  set digitamaStack(value: PlayState['digitamaStack']) {
+    this.digitamaStack$.next(value);
+  }
+  @Input()
+  set standbyArea(value: PlayState['standbyArea']) {
+    this.standbyArea$.next(value);
+  }
+  @Input() side!: Side;
   @ViewChild(CustomMenueTriggerDirective) trigger?: CustomMenueTriggerDirective;
 
   /**
@@ -48,6 +59,10 @@ export class RaisingAreaComponent implements OnInit {
    * State
    */
   readonly gs$ = this.globalState.select();
+  readonly digitamaStack$ = new BehaviorSubject<PlayState['digitamaStack']>({
+    cardList: [],
+  });
+  readonly standbyArea$ = new BehaviorSubject<PlayState['standbyArea']>({});
 
   /**
    * Events
@@ -85,6 +100,10 @@ export class RaisingAreaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.side == null) {
+      throw new Error('side is required!');
+    }
+    if (this.side === 'other') return;
     this.state.hold(
       this.onContextMenu$.pipe(
         tap((v) => {

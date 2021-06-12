@@ -2,13 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   OnInit,
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
-import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
+import { GlobalState, GLOBAL_RX_STATE, PlayState } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
+import { Side } from '../../../types';
 import { CardActionEvent, CardActionItem } from '../../card/card.component';
 
 @Component({
@@ -19,6 +21,11 @@ import { CardActionEvent, CardActionItem } from '../../card/card.component';
   providers: [RxState],
 })
 export class HandComponent implements OnInit {
+  @Input()
+  set hand(value: PlayState['hand']) {
+    this.hand$.next(value);
+  }
+  @Input() side!: Side;
   /**
    * Constants
    */
@@ -45,7 +52,7 @@ export class HandComponent implements OnInit {
    * State
    */
   private readonly gs$ = this.globalState.select();
-  readonly hand$ = this.globalState.select('playState', 'hand');
+  readonly hand$ = new BehaviorSubject<PlayState['hand']>({ cardList: [] });
 
   /**
    * Events
@@ -85,6 +92,10 @@ export class HandComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.side == null) {
+      throw new Error('side is required!');
+    }
+    if (this.side === 'other') return;
     this.state.hold(
       this.onEntryAction$.pipe(
         tap((event) => {

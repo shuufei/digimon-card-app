@@ -2,15 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   OnInit,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 import { Digimon } from '../../../domain/digimon';
-import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
+import { GlobalState, GLOBAL_RX_STATE, PlayState } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
+import { Side } from '../../../types';
 import { AddEvolutionOriginDialogComponent } from '../../add-evolution-origin-dialog/add-evolution-origin-dialog.component';
 import { CardActionEvent, CardActionItem } from '../../card/card.component';
 
@@ -22,6 +24,11 @@ import { CardActionEvent, CardActionItem } from '../../card/card.component';
   providers: [RxState],
 })
 export class BattleAreaComponent implements OnInit {
+  @Input()
+  set battleArea(value: PlayState['battleArea']) {
+    this.battleArea$.next(value);
+  }
+  @Input() side!: Side;
   /**
    * Constants
    */
@@ -56,7 +63,9 @@ export class BattleAreaComponent implements OnInit {
    * State
    */
   private readonly gs$ = this.globalState.select();
-  readonly battleArea$ = this.globalState.select('playState', 'battleArea');
+  readonly battleArea$ = new BehaviorSubject<PlayState['battleArea']>({
+    digimonList: [],
+  });
 
   /**
    * Events
@@ -83,6 +92,10 @@ export class BattleAreaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.side == null) {
+      throw new Error('side is required!');
+    }
+    if (this.side === 'other') return;
     this.state.hold(
       this.onSubmitEvolutionFromHandToBattleArea$.pipe(
         tap(([digimon, modeState]) => {

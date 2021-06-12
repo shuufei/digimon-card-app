@@ -8,38 +8,60 @@
   <div class="other-side" *ngIf="gs.deck.cardList.length > 0">
     <digimon-card-app-security-open-area
       class="m-1"
+      [securityOpenArea]="gs.otherSidePlayState.securityOpenArea"
+      [side]="'other'"
     ></digimon-card-app-security-open-area>
-    <digimon-card-app-security-check-area
-      class="m-1"
-    ></digimon-card-app-security-check-area>
 
     <digimon-card-app-stack-open-area
       class="m-1"
+      [stackOpenArea]="gs.otherSidePlayState.stackOpenArea"
+      [side]="'other'"
     ></digimon-card-app-stack-open-area>
 
     <div class="flex">
       <div class="">
         <digimon-card-app-security-area
           class="m-1"
+          [securityArea]="gs.otherSidePlayState.securityArea"
+          [side]="'other'"
         ></digimon-card-app-security-area>
         <digimon-card-app-raising-area
           class="m-1"
+          [digitamaStack]="gs.otherSidePlayState.digitamaStack"
+          [standbyArea]="gs.otherSidePlayState.standbyArea"
+          [side]="'other'"
         ></digimon-card-app-raising-area>
       </div>
 
       <div class="flex-1 p-3">
         <digimon-card-app-battle-area
           class="m-1"
+          [battleArea]="gs.otherSidePlayState.battleArea"
+          [side]="'other'"
         ></digimon-card-app-battle-area>
-        <digimon-card-app-tamer-area class="m-1"></digimon-card-app-tamer-area>
+        <digimon-card-app-tamer-area
+          class="m-1"
+          [tamerArea]="gs.otherSidePlayState.tamerArea"
+          [side]="'other'"
+        ></digimon-card-app-tamer-area>
         <digimon-card-app-option-area
           class="m-1"
+          [optionArea]="gs.otherSidePlayState.optionArea"
+          [side]="'other'"
         ></digimon-card-app-option-area>
       </div>
 
       <div class="">
-        <digimon-card-app-stack class="m-1"></digimon-card-app-stack>
-        <digimon-card-app-trash-area class="m-1"></digimon-card-app-trash-area>
+        <digimon-card-app-stack
+          class="m-1"
+          [stack]="gs.otherSidePlayState.stack"
+          [side]="'other'"
+        ></digimon-card-app-stack>
+        <digimon-card-app-trash-area
+          class="m-1"
+          [trashArea]="gs.otherSidePlayState.trashArea"
+          [side]="'other'"
+        ></digimon-card-app-trash-area>
       </div>
     </div>
   </div>
@@ -66,41 +88,72 @@
   <div *ngIf="gs.deck.cardList.length > 0">
     <digimon-card-app-security-open-area
       class="m-1"
+      [securityOpenArea]="gs.playState.securityOpenArea"
+      [side]="'self'"
     ></digimon-card-app-security-open-area>
     <digimon-card-app-security-check-area
       class="m-1"
+      [securityCheckArea]="gs.playState.securityCheckArea"
+      [side]="'self'"
     ></digimon-card-app-security-check-area>
 
     <digimon-card-app-stack-open-area
       class="m-1"
+      [stackOpenArea]="gs.playState.stackOpenArea"
+      [side]="'self'"
     ></digimon-card-app-stack-open-area>
 
     <div class="flex">
       <div class="">
         <digimon-card-app-security-area
           class="m-1"
+          [securityArea]="gs.playState.securityArea"
+          [side]="'self'"
         ></digimon-card-app-security-area>
         <digimon-card-app-raising-area
           class="m-1"
+          [digitamaStack]="gs.playState.digitamaStack"
+          [standbyArea]="gs.playState.standbyArea"
+          [side]="'self'"
         ></digimon-card-app-raising-area>
       </div>
 
       <div class="flex-1 p-3">
         <digimon-card-app-battle-area
           class="m-1"
+          [battleArea]="gs.playState.battleArea"
+          [side]="'self'"
         ></digimon-card-app-battle-area>
-        <digimon-card-app-tamer-area class="m-1"></digimon-card-app-tamer-area>
+        <digimon-card-app-tamer-area
+          class="m-1"
+          [tamerArea]="gs.playState.tamerArea"
+          [side]="'self'"
+        ></digimon-card-app-tamer-area>
         <digimon-card-app-option-area
           class="m-1"
+          [optionArea]="gs.playState.optionArea"
+          [side]="'self'"
         ></digimon-card-app-option-area>
       </div>
 
       <div class="">
-        <digimon-card-app-stack class="m-1"></digimon-card-app-stack>
-        <digimon-card-app-trash-area class="m-1"></digimon-card-app-trash-area>
+        <digimon-card-app-stack
+          class="m-1"
+          [stack]="gs.playState.stack"
+          [side]="'self'"
+        ></digimon-card-app-stack>
+        <digimon-card-app-trash-area
+          class="m-1"
+          [trashArea]="gs.playState.trashArea"
+          [side]="'self'"
+        ></digimon-card-app-trash-area>
       </div>
     </div>
 
-    <digimon-card-app-hand class="m-1 mt-5"></digimon-card-app-hand>
+    <digimon-card-app-hand
+      class="m-1 mt-5"
+      [hand]="gs.playState.hand"
+      [side]="'self'"
+    ></digimon-card-app-hand>
   </div>
 </ng-container>

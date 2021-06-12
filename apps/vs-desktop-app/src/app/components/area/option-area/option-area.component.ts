@@ -2,13 +2,15 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
+  Input,
   OnInit,
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { GlobalState, GLOBAL_RX_STATE } from '../../../global-state';
+import { GlobalState, GLOBAL_RX_STATE, PlayState } from '../../../global-state';
 import { DispatchCardActionService } from '../../../services/dispatch-card-action/dispatch-card-action.service';
+import { Side } from '../../../types';
 import { CardActionEvent, CardActionItem } from '../../card/card.component';
 
 @Component({
@@ -19,6 +21,11 @@ import { CardActionEvent, CardActionItem } from '../../card/card.component';
   providers: [RxState],
 })
 export class OptionAreaComponent implements OnInit {
+  @Input()
+  set optionArea(value: PlayState['optionArea']) {
+    this.optionArea$.next(value);
+  }
+  @Input() side!: Side;
   /**
    * Constants
    */
@@ -36,7 +43,9 @@ export class OptionAreaComponent implements OnInit {
   /**
    * State
    */
-  readonly optionArea$ = this.globalState.select('playState', 'optionArea');
+  readonly optionArea$ = new BehaviorSubject<PlayState['optionArea']>({
+    cardList: [],
+  });
 
   /**
    * Events
@@ -50,6 +59,10 @@ export class OptionAreaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (this.side == null) {
+      throw new Error('side is required!');
+    }
+    if (this.side === 'other') return;
     this.state.hold(
       this.onAction$.pipe(
         tap((event) => {

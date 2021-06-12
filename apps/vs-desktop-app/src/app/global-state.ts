@@ -7,7 +7,7 @@ type AreaState = {
   cardList: Card[];
 };
 
-type PlayState = {
+export type PlayState = {
   stack: AreaState;
   digitamaStack: AreaState;
   hand: AreaState;
