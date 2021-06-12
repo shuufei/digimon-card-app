@@ -1,6 +1,14 @@
-import { Injectable } from '@angular/core';
+import { ApplicationRef, Inject, Injectable } from '@angular/core';
+import { RxState } from '@rx-angular/state';
 import { BehaviorSubject } from 'rxjs';
 import Peer, { DataConnection } from 'skyway-js';
+import {
+  deserializePlayState,
+  GlobalState,
+  GLOBAL_RX_STATE,
+  SerializedPlayState,
+} from '../global-state';
+import { Side } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +22,10 @@ export class PeerService {
   peerId$ = new BehaviorSubject<string | undefined>(undefined);
   dataConnection?: DataConnection;
 
-  constructor() {
+  constructor(
+    @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
+    private appRef: ApplicationRef
+  ) {
     this.peer.on('open', () => {
       console.log('open: ', this.peer.id);
       this.peerId$.next(this.peer.id);
@@ -28,8 +39,9 @@ export class PeerService {
       this.dataConnection.once('open', () => {
         console.log('---- connection open');
       });
-      this.dataConnection.on('data', (data) => {
-        console.log('[Recieved Message] ', data);
+      this.dataConnection.on('data', (event: PeerEvent) => {
+        console.log('[Recieved Message] ', event);
+        this.onReceivedPeerEvent(event);
       });
     });
   }
@@ -39,13 +51,68 @@ export class PeerService {
     this.dataConnection.once('open', () => {
       console.log('---- connection open');
     });
-    this.dataConnection.on('data', (data) => {
-      console.log('[Recieved Message] ', data);
+    this.dataConnection.on('data', (event) => {
+      console.log('[Recieved Message] ', event);
+      this.onReceivedPeerEvent(event);
+      // this.globalState.set(deserialize(event));
     });
   }
 
-  send(message: Record<string, unknown>) {
+  send(event: PeerEvent) {
     if (this.dataConnection == null) return;
-    this.dataConnection.send(message);
+    console.log('send: ', event);
+    this.dataConnection.send(event);
+  }
+
+  private onReceivedPeerEvent(event: PeerEvent) {
+    switch (event.type) {
+      case 'memory':
+        this.dispatchMemory(event.data);
+        return;
+      case 'playState':
+        this.dispatchOtherPlayState(event.data);
+        return;
+      default:
+        break;
+    }
+  }
+
+  private reverseMemorySide(side: Side): Side {
+    switch (side) {
+      case 'other':
+        return 'self';
+      case 'self':
+        return 'other';
+      default:
+        return side;
+    }
+  }
+
+  private dispatchMemory(data: MemoryPeerEvent['data']): void {
+    this.globalState.set('memory', () => {
+      return {
+        ...data,
+        side: this.reverseMemorySide(data.side),
+      };
+    });
+    this.appRef.tick();
+  }
+
+  private dispatchOtherPlayState(data: PlayStatePeerEvent['data']): void {
+    const deserializedPlayState = deserializePlayState(data);
+    this.globalState.set('otherSidePlayState', () => deserializedPlayState);
+    this.appRef.tick();
   }
 }
+
+export type PlayStatePeerEvent = {
+  type: 'playState';
+  data: SerializedPlayState;
+};
+
+export type MemoryPeerEvent = {
+  type: 'memory';
+  data: GlobalState['memory'];
+};
+
+export type PeerEvent = PlayStatePeerEvent | MemoryPeerEvent;
