@@ -47,10 +47,7 @@ export class AppComponent implements OnInit {
 
   remoteId = new FormControl();
   myPeerId$ = this.peerService.peerId$;
-  // peer = new Peer({
-  //   key: '508f4815-b594-4128-bb37-c01c9e23889b',
-  //   debug: 3,
-  // });
+  isConnected$ = this.peerService.isConnected$;
 
   constructor(
     private readonly state: RxState<State>,
@@ -136,30 +133,7 @@ export class AppComponent implements OnInit {
     this.globalState.set(() => initGlobalState);
   }
 
-  // private testPeer() {
-  //   this.peer.on('connection', (dataConnection) => {
-  //     console.log('connection');
-  //     dataConnection.once('open', () => {
-  //       console.log('connection open');
-  //       dataConnection.send('--- connection open send message');
-  //     });
-  //     dataConnection.on('data', (data) => {
-  //       console.log('remote: ', data);
-  //     });
-  //   });
-  //   this.peer.on('open', async () => {
-  //     console.log('--- this.peer id: ', this.peer.id);
-  //   });
-  // }
-
   connect() {
     this.peerService.connect(this.remoteId.value);
-    // const dataConnection = this.peer.connect(this.remoteId.value);
-    // dataConnection.once('open', async () => {
-    //   dataConnection.send(`hello ${new Date().valueOf()}`);
-    // });
-    // dataConnection.on('data', (data) => {
-    //   console.log('remote: ', data);
-    // });
   }
 }

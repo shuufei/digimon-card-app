@@ -19,7 +19,8 @@ export class PeerService {
     debug: 3,
   });
 
-  peerId$ = new BehaviorSubject<string | undefined>(undefined);
+  readonly peerId$ = new BehaviorSubject<string | undefined>(undefined);
+  readonly isConnected$ = new BehaviorSubject<boolean>(false);
   dataConnection?: DataConnection;
 
   constructor(
@@ -29,6 +30,7 @@ export class PeerService {
     this.peer.on('open', () => {
       console.log('open: ', this.peer.id);
       this.peerId$.next(this.peer.id);
+      this.appRef.tick();
     });
     this.listenConnection();
   }
@@ -38,10 +40,20 @@ export class PeerService {
       this.dataConnection = dataConnection;
       this.dataConnection.once('open', () => {
         console.log('---- connection open');
+        this.isConnected$.next(true);
+        this.appRef.tick();
       });
       this.dataConnection.on('data', (event: PeerEvent) => {
         console.log('[Recieved Message] ', event);
         this.onReceivedPeerEvent(event);
+      });
+      this.dataConnection.once('close', () => {
+        this.isConnected$.next(false);
+        this.appRef.tick();
+      });
+      this.dataConnection.once('error', () => {
+        this.isConnected$.next(false);
+        this.appRef.tick();
       });
     });
   }
@@ -50,11 +62,20 @@ export class PeerService {
     this.dataConnection = this.peer.connect(remotePeerId);
     this.dataConnection.once('open', () => {
       console.log('---- connection open');
+      this.isConnected$.next(true);
+      this.appRef.tick();
     });
     this.dataConnection.on('data', (event) => {
       console.log('[Recieved Message] ', event);
       this.onReceivedPeerEvent(event);
-      // this.globalState.set(deserialize(event));
+    });
+    this.dataConnection.once('close', () => {
+      this.isConnected$.next(false);
+      this.appRef.tick();
+    });
+    this.dataConnection.once('error', () => {
+      this.isConnected$.next(false);
+      this.appRef.tick();
     });
   }
 
