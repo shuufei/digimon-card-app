@@ -34,7 +34,13 @@ export class DispatchCardActionService {
 
   dispatch(action: StateAction): void {
     const state = this.createState(action);
-    this.globalState.set(state);
+    this.globalState.set({
+      ...state,
+      ui: {
+        ...state.ui,
+        modeState: undefined,
+      },
+    });
     this.peerService.send({
       type: 'playState',
       data: serializePlayState(state.playState),
