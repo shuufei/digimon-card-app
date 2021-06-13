@@ -1,9 +1,11 @@
 <ng-container *ngIf="battleArea$ | async as battleArea">
   <div class="flex flex-wrap justify-center">
-    <ng-container *ngFor="let digimon of battleArea.digimonList">
+    <ng-container
+      *ngFor="let digimon of battleArea.digimonList; trackBy: trackBy"
+    >
       <digimon-card-app-digimon
         [digimon]="digimon"
-        [actionList]="battleAreaCardActionList"
+        [actionList]="side === 'self' ? battleAreaCardActionList : []"
         (selected)="onSelectDigimonCard$.next(digimon)"
         (action)="onAction$.next($event)"
         class="w-14"

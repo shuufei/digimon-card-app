@@ -1,4 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  ApplicationRef,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  OnInit,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
@@ -34,7 +40,12 @@ export class AppComponent implements OnInit {
   /**
    * state
    */
-  readonly gs$ = this.globalState.select().pipe(tag('gs'));
+  readonly gs$ = this.globalState.select().pipe(
+    tag('gs'),
+    tap(() => {
+      this.detectChange();
+    })
+  );
 
   /**
    * Events
@@ -47,14 +58,18 @@ export class AppComponent implements OnInit {
 
   remoteId = new FormControl();
   myPeerId$ = this.peerService.peerId$;
-  isConnected$ = this.peerService.isConnected$;
+  isConnected$ = this.peerService.isConnected$.pipe(
+    tap(() => this.detectChange())
+  );
 
   constructor(
     private readonly state: RxState<State>,
     @Inject(GLOBAL_RX_STATE) private readonly globalState: RxState<GlobalState>,
     private readonly dispatchCardActionService: DispatchCardActionService,
     private readonly dialog: MatDialog,
-    private readonly peerService: PeerService
+    private readonly peerService: PeerService,
+    private cdRef: ChangeDetectorRef,
+    private appRef: ApplicationRef
   ) {
     this.globalState.set(INITIAL_GLOBAL_STATE);
   }
@@ -135,5 +150,16 @@ export class AppComponent implements OnInit {
 
   connect() {
     this.peerService.connect(this.remoteId.value);
+  }
+
+  private detectChange() {
+    // FIXME:
+    // 画面上のイベントを発火させないと、画面の描画が更新されないことがある。
+    // peerServiceでメッセージを受けとり、globalStateを更新したさには、画面描画が走らない。asyncPipeが反応してないように見える。
+    // ChangeDetectorRefのdetectChange実行でも画面が更新されない。
+    setTimeout(() => {
+      const button = document.querySelector('#dummy-btn') as HTMLButtonElement;
+      button.click();
+    });
   }
 }

@@ -140,4 +140,8 @@ export class BattleAreaComponent implements OnInit {
       )
     );
   }
+
+  trackBy(index: number, item: Digimon) {
+    return item.id && !!item.evolutionOiriginCardList.length;
+  }
 }

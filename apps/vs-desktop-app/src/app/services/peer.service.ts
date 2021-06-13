@@ -1,12 +1,13 @@
 import { ApplicationRef, Inject, Injectable } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import Peer, { DataConnection } from 'skyway-js';
 import {
   deserializePlayState,
   GlobalState,
   GLOBAL_RX_STATE,
   SerializedPlayState,
+  serializePlayState,
 } from '../global-state';
 import { Side } from '../types';
 
@@ -16,11 +17,12 @@ import { Side } from '../types';
 export class PeerService {
   readonly peer = new Peer({
     key: '',
-    debug: 3,
+    debug: 1,
   });
 
   readonly peerId$ = new BehaviorSubject<string | undefined>(undefined);
   readonly isConnected$ = new BehaviorSubject<boolean>(false);
+  readonly onReceiveMessage$ = new Subject();
   dataConnection?: DataConnection;
 
   constructor(
@@ -41,7 +43,11 @@ export class PeerService {
       this.dataConnection.once('open', () => {
         console.log('---- connection open');
         this.isConnected$.next(true);
-        this.appRef.tick();
+        this.send({
+          type: 'playState',
+          data: serializePlayState(this.globalState.get('playState')),
+        });
+        this.appRefTick();
       });
       this.dataConnection.on('data', (event: PeerEvent) => {
         console.log('[Recieved Message] ', event);
@@ -49,11 +55,11 @@ export class PeerService {
       });
       this.dataConnection.once('close', () => {
         this.isConnected$.next(false);
-        this.appRef.tick();
+        this.appRefTick();
       });
       this.dataConnection.once('error', () => {
         this.isConnected$.next(false);
-        this.appRef.tick();
+        this.appRefTick();
       });
     });
   }
@@ -63,7 +69,11 @@ export class PeerService {
     this.dataConnection.once('open', () => {
       console.log('---- connection open');
       this.isConnected$.next(true);
-      this.appRef.tick();
+      this.send({
+        type: 'playState',
+        data: serializePlayState(this.globalState.get('playState')),
+      });
+      this.appRefTick();
     });
     this.dataConnection.on('data', (event) => {
       console.log('[Recieved Message] ', event);
@@ -71,11 +81,11 @@ export class PeerService {
     });
     this.dataConnection.once('close', () => {
       this.isConnected$.next(false);
-      this.appRef.tick();
+      this.appRefTick();
     });
     this.dataConnection.once('error', () => {
       this.isConnected$.next(false);
-      this.appRef.tick();
+      this.appRefTick();
     });
   }
 
@@ -89,9 +99,11 @@ export class PeerService {
     switch (event.type) {
       case 'memory':
         this.dispatchMemory(event.data);
+        this.onReceiveMessage$.next();
         return;
       case 'playState':
         this.dispatchOtherPlayState(event.data);
+        this.onReceiveMessage$.next();
         return;
       default:
         break;
@@ -116,13 +128,19 @@ export class PeerService {
         side: this.reverseMemorySide(data.side),
       };
     });
-    this.appRef.tick();
+    this.appRefTick();
   }
 
   private dispatchOtherPlayState(data: PlayStatePeerEvent['data']): void {
     const deserializedPlayState = deserializePlayState(data);
     this.globalState.set('otherSidePlayState', () => deserializedPlayState);
-    this.appRef.tick();
+    this.appRefTick();
+  }
+
+  private appRefTick() {
+    // 画面の描画が更新されない。
+    // これを実行すると、相手のカードのダイアログ表示がうまくされない。MatDialog側の問題？
+    // this.appRef.tick();
   }
 }
 

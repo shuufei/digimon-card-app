@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
-import { Subject } from 'rxjs';
+import { merge, Subject } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
 import { Digimon } from '../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
@@ -41,21 +41,44 @@ export class ExpandCardViewDialogComponent implements OnInit, AfterViewInit {
     },
   ];
 
-  readonly evolutionOriginCardList$ = this.globalState.select('playState').pipe(
-    map((playState) => {
-      const digimon =
-        playState.battleArea.digimonList.find(
-          (v) => v.card.id === this.dialogData.cardId
-        ) ??
-        (playState.standbyArea.digimon?.card.id === this.dialogData.cardId
-          ? playState.standbyArea.digimon
-          : undefined);
-      return digimon;
-    }),
-    filter((digimon): digimon is Digimon => digimon != null),
-    map((v) => v.evolutionOiriginCardList),
-    startWith([])
-  );
+  readonly evolutionOriginCardListSelfSide$ = this.globalState
+    .select('playState')
+    .pipe(
+      map((playState) => {
+        const digimon =
+          playState.battleArea.digimonList.find(
+            (v) => v.card.id === this.dialogData.cardId
+          ) ??
+          (playState.standbyArea.digimon?.card.id === this.dialogData.cardId
+            ? playState.standbyArea.digimon
+            : undefined);
+        console.log('self side digimon: ', digimon);
+        return digimon;
+      }),
+      filter((digimon): digimon is Digimon => digimon != null),
+      map((v) => v.evolutionOiriginCardList)
+    );
+  readonly evolutionOriginCardListOtherSide$ = this.globalState
+    .select('otherSidePlayState')
+    .pipe(
+      map((playState) => {
+        const digimon =
+          playState.battleArea.digimonList.find(
+            (v) => v.card.id === this.dialogData.cardId
+          ) ??
+          (playState.standbyArea.digimon?.card.id === this.dialogData.cardId
+            ? playState.standbyArea.digimon
+            : undefined);
+        console.log(' other side digimon: ', digimon);
+        return digimon;
+      }),
+      filter((digimon): digimon is Digimon => digimon != null),
+      map((v) => v.evolutionOiriginCardList)
+    );
+  readonly evolutionOriginCardList$ = merge(
+    this.evolutionOriginCardListSelfSide$,
+    this.evolutionOriginCardListOtherSide$
+  ).pipe(startWith([]));
 
   readonly onAction$ = new Subject<CardActionEvent>();
 
@@ -63,7 +86,7 @@ export class ExpandCardViewDialogComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA)
     public dialogData: { src: string; cardId: Card['id'] },
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
-    readonly state: RxState<Record<string, never>>,
+    private readonly state: RxState<Record<string, never>>,
     readonly dispatchCardActionService: DispatchCardActionService
   ) {}
 
