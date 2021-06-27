@@ -4,13 +4,18 @@ import {
   Inject,
   OnInit,
 } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
-import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
 import { DispatchCardActionService } from '../../services/dispatch-card-action/dispatch-card-action.service';
+import { Side } from '../../types';
 import { CardActionEvent, CardActionItem } from '../card/card.component';
+
+type State = {
+  side: Side;
+};
 
 @Component({
   selector: 'digimon-card-app-trash-confirm-dialog',
@@ -41,7 +46,25 @@ export class TrashConfirmDialogComponent implements OnInit {
   /**
    * State
    */
-  readonly trashArea$ = this.globalState.select('playState', 'trashArea');
+  readonly trashArea$ = this.state.select('side').pipe(
+    switchMap((side) => {
+      switch (side) {
+        case 'other':
+          return this.otherSideTrashArea$;
+        case 'self':
+        default:
+          return this.selfSideTrashArea$;
+      }
+    })
+  );
+  readonly selfSideTrashArea$ = this.globalState.select(
+    'playState',
+    'trashArea'
+  );
+  readonly otherSideTrashArea$ = this.globalState.select(
+    'otherSidePlayState',
+    'trashArea'
+  );
 
   /**
    * Events
@@ -60,11 +83,18 @@ export class TrashConfirmDialogComponent implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<TrashConfirmDialogComponent>,
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
-    private state: RxState<Record<string, never>>,
-    private dispatchCardActionService: DispatchCardActionService
-  ) {}
+    private state: RxState<State>,
+    private dispatchCardActionService: DispatchCardActionService,
+    @Inject(MAT_DIALOG_DATA) public dialogData: { side: Side }
+  ) {
+    this.state.set({ side: dialogData.side });
+  }
 
   ngOnInit(): void {
+    this.state.hold(
+      this.onAddToEvolutionOrigin$.pipe(tap(() => this.dialogRef.close()))
+    );
+    if (this.state.get('side') === 'other') return;
     this.state.hold(
       this.onAction$.pipe(
         tap((event) => {
@@ -90,9 +120,6 @@ export class TrashConfirmDialogComponent implements OnInit {
           },
         },
       })
-    );
-    this.state.hold(
-      this.onAddToEvolutionOrigin$.pipe(tap(() => this.dialogRef.close()))
     );
   }
 }

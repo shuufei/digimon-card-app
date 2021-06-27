@@ -51,13 +51,15 @@ export class TrashAreaComponent implements OnInit {
     if (this.side == null) {
       throw new Error('side is required!');
     }
-    if (this.side === 'other') return;
     this.state.hold(
       this.onClick$.pipe(
         tap(() => {
           this.dialog.open(TrashConfirmDialogComponent, {
             width: '70%',
             height: '80%',
+            data: {
+              side: this.side,
+            },
           });
         })
       )
