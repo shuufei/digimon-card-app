@@ -64,6 +64,8 @@ export class StackOpenAreaComponent implements OnInit {
    * Event
    */
   readonly onAction$ = new Subject<CardActionEvent>();
+  readonly onBulkTrash$ = new Subject<void>();
+  readonly onBulkAddToBottomStack$ = new Subject<void>();
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
@@ -84,6 +86,36 @@ export class StackOpenAreaComponent implements OnInit {
             area: 'stackOpenArea',
             card: event.card,
           });
+        })
+      )
+    );
+    this.state.hold(
+      this.onBulkTrash$.pipe(
+        tap(() => {
+          this.globalState
+            .get('playState', 'stackOpenArea')
+            .cardList.forEach((card) => {
+              this.dispatchCardActionService.dispatch({
+                type: 'trash',
+                area: 'stackOpenArea',
+                card,
+              });
+            });
+        })
+      )
+    );
+    this.state.hold(
+      this.onBulkAddToBottomStack$.pipe(
+        tap(() => {
+          this.globalState
+            .get('playState', 'stackOpenArea')
+            .cardList.forEach((card) => {
+              this.dispatchCardActionService.dispatch({
+                type: 'addToBottomOfStack',
+                area: 'stackOpenArea',
+                card,
+              });
+            });
         })
       )
     );

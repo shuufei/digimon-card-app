@@ -1,6 +1,14 @@
 <ng-container *ngIf="stackOpenArea$ | async as stackOpenArea">
   <div *ngIf="stackOpenArea.cardList.length > 0" class="">
-    <div class="flex justify-end flex-wrap">
+    <div class="flex justify-end">
+      <button mat-stroked-button (click)="onBulkTrash$.next()">全て破棄</button>
+      <div class="ml-2">
+        <button mat-stroked-button (click)="onBulkAddToBottomStack$.next()">
+          全て山札の一番下に加える
+        </button>
+      </div>
+    </div>
+    <div class="flex justify-end flex-wrap mt-1">
       <ng-container *ngFor="let card of stackOpenArea.cardList">
         <digimon-card-app-card
           [card]="card"

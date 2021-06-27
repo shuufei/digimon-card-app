@@ -53,6 +53,7 @@ export class SecurityCheckAreaComponent implements OnInit {
    * Event
    */
   readonly onAction$ = new Subject<CardActionEvent>();
+  readonly onBulkReturn$ = new Subject<void>();
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
@@ -73,6 +74,21 @@ export class SecurityCheckAreaComponent implements OnInit {
             area: 'securityCheckArea',
             card: event.card,
           });
+        })
+      )
+    );
+    this.state.hold(
+      this.onBulkReturn$.pipe(
+        tap(() => {
+          this.globalState
+            .get('playState', 'securityCheckArea')
+            .cardList.forEach((card) => {
+              this.dispatchCardActionService.dispatch({
+                type: 'return',
+                area: 'securityCheckArea',
+                card,
+              });
+            });
         })
       )
     );

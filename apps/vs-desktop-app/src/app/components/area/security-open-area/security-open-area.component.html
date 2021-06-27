@@ -1,6 +1,9 @@
 <ng-container *ngIf="securityOpenArea$ | async as securityOpenArea">
   <div *ngIf="securityOpenArea.cardList.length > 0" class="">
-    <div class="flex flex-wrap">
+    <div class="flex justify-start">
+      <button mat-stroked-button (click)="onBulkTrash$.next()">全て破棄</button>
+    </div>
+    <div class="flex flex-wrap mt-1">
       <ng-container *ngFor="let card of securityOpenArea.cardList">
         <digimon-card-app-card
           [card]="card"
