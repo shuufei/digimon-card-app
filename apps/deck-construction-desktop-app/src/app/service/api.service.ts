@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-  Color,
-  COLOR,
-  Category,
   ApiResponse,
   ApiResponseColor,
   CardInfo,
+  Category,
+  Color,
+  COLOR,
 } from '../types';
 
 @Injectable({
@@ -24,6 +24,8 @@ export class ApiService {
     const bt04Cards$ = this.listCardInfoByCategory('BT04');
     const bt05Cards$ = this.listCardInfoByCategory('BT05');
     const bt06Cards$ = this.listCardInfoByCategory('BT06');
+    const bt07Cards$ = this.listCardInfoByCategory('BT07');
+    const ex01Cards$ = this.listCardInfoByCategory('EX01');
     const st01Cards$ = this.listCardInfoByCategory('ST01');
     const st02Cards$ = this.listCardInfoByCategory('ST02');
     const st03Cards$ = this.listCardInfoByCategory('ST03');
@@ -32,6 +34,7 @@ export class ApiService {
     const st06Cards$ = this.listCardInfoByCategory('ST06');
     const st07Cards$ = this.listCardInfoByCategory('ST07');
     const st08Cards$ = this.listCardInfoByCategory('ST08');
+    const proCards$ = this.listCardInfoByCategory('PRO');
     return combineLatest([
       bt01Cards$,
       bt02Cards$,
@@ -39,6 +42,8 @@ export class ApiService {
       bt04Cards$,
       bt05Cards$,
       bt06Cards$,
+      bt07Cards$,
+      ex01Cards$,
       st01Cards$,
       st02Cards$,
       st03Cards$,
@@ -47,6 +52,7 @@ export class ApiService {
       st06Cards$,
       st07Cards$,
       st08Cards$,
+      proCards$,
     ]).pipe(
       map((response) => {
         return response.flat();
