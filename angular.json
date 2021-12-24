@@ -222,7 +222,8 @@
               "browserTarget": "vs-desktop-app:build:production"
             },
             "development": {
-              "browserTarget": "vs-desktop-app:build:development"
+              "browserTarget": "vs-desktop-app:build:development",
+              "port": 4201
             }
           },
           "defaultConfiguration": "development"

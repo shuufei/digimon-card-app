@@ -25,7 +25,9 @@ export class ApiService {
     const bt05Cards$ = this.listCardInfoByCategory('BT05');
     const bt06Cards$ = this.listCardInfoByCategory('BT06');
     const bt07Cards$ = this.listCardInfoByCategory('BT07');
+    const bt08Cards$ = this.listCardInfoByCategory('BT08');
     const ex01Cards$ = this.listCardInfoByCategory('EX01');
+    const ex02Cards$ = this.listCardInfoByCategory('EX02');
     const st01Cards$ = this.listCardInfoByCategory('ST01');
     const st02Cards$ = this.listCardInfoByCategory('ST02');
     const st03Cards$ = this.listCardInfoByCategory('ST03');
@@ -43,7 +45,9 @@ export class ApiService {
       bt05Cards$,
       bt06Cards$,
       bt07Cards$,
+      bt08Cards$,
       ex01Cards$,
+      ex02Cards$,
       st01Cards$,
       st02Cards$,
       st03Cards$,
