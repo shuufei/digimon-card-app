@@ -41,3 +41,5 @@ Thumbs.db
 # Digimon Card Info Assets
 **/assets/cardInfo
 **/assets/images
+
+**/.env

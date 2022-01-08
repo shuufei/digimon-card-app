@@ -16,7 +16,7 @@ import { Side } from '../types';
 })
 export class PeerService {
   readonly peer = new Peer({
-    key: '',
+    key: process.env.NX_PEER_SERVER_KEY ?? '',
     debug: 1,
   });
 

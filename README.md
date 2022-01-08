@@ -1,5 +1,10 @@
 # Digimon Card App
 
+## Setup
+
+1. node v12
+1. npm install
+
 ## Deck Construction App
 
 ## 起動方法
