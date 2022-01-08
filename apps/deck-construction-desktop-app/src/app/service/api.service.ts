@@ -95,6 +95,8 @@ export class ApiService {
         return COLOR['6_purple'];
       case 'white':
         return COLOR['7_white'];
+      default:
+        return COLOR['8_multicolor'];
     }
   }
 }

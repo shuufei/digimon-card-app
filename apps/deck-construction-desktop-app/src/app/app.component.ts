@@ -1,18 +1,11 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { RxState } from '@rx-angular/state';
+import * as _ from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
-import { GLOBAL_RX_STATE, GlobalState } from './global-state';
+import { GlobalState, GLOBAL_RX_STATE } from './global-state';
 import { ApiService } from './service/api.service';
-import { RxState } from '@rx-angular/state';
-import { COLOR, CARD_TYPE, LV, CATEGORY, Deck } from './types';
-import * as _ from 'lodash';
+import { CARD_TYPE, CATEGORY, COLOR, Color, Deck, LV } from './types';
 
 type State = Record<string, never>;
 
@@ -34,7 +27,10 @@ export class AppComponent implements OnInit {
   readonly filteredCards$ = combineLatest([this.cards$, this.filter$]).pipe(
     map(([cards, filterValues]) => {
       const filtered = cards.filter((card) => {
-        const isColorMatch = filterValues.colorList.includes(card.color);
+        const color: Color = card.color.includes('multicolor')
+          ? '8_multicolor'
+          : card.color;
+        const isColorMatch = filterValues.colorList.includes(color);
         const isCardTypeMatch = filterValues.cardTypeList.includes(
           card.cardtype
         );

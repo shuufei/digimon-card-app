@@ -6,6 +6,7 @@ export const COLOR = {
   '5_black': '5_black',
   '6_purple': '6_purple',
   '7_white': '7_white',
+  '8_multicolor': '8_multicolor',
 } as const;
 
 export type Color = keyof typeof COLOR;

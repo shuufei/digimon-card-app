@@ -160,6 +160,8 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       const button = document.querySelector('#dummy-btn') as HTMLButtonElement;
       button.click();
+      // これだと、相手のデジモン詳細ダイアログがうまく機能しない
+      // this.cdRef.detectChanges();
     });
   }
 }
