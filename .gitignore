@@ -42,4 +42,4 @@ Thumbs.db
 **/assets/cardInfo
 **/assets/images
 
-**/.env
+**/env.ts

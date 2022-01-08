@@ -2,6 +2,7 @@ import { ApplicationRef, Inject, Injectable } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { BehaviorSubject, Subject } from 'rxjs';
 import Peer, { DataConnection } from 'skyway-js';
+import { NX_PEER_SERVER_KEY } from '../../../env';
 import {
   deserializePlayState,
   GlobalState,
@@ -16,7 +17,7 @@ import { Side } from '../types';
 })
 export class PeerService {
   readonly peer = new Peer({
-    key: process.env.NX_PEER_SERVER_KEY ?? '',
+    key: NX_PEER_SERVER_KEY,
     debug: 1,
   });
 
