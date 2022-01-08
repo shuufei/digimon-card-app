@@ -20,6 +20,10 @@
 
 ## VS App
 
+1. apps/vs-desktop-app/.env ファイルを作成
+   ```
+   NX_PEER_SERVER_KEY=${値は別途共有}
+   ```
 1. apps/vs-desktop-app/src/assets 配下に下記を展開。  
    ※assets ファイルは digimon-card-data-fetch を利用して取得する
    - cardInfo
