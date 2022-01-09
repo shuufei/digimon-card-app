@@ -186,6 +186,24 @@ export class DeckDetailComponent implements OnInit {
     })
   );
 
+  readonly lvNoneDeckCardList$: Observable<DeckCardList> = this.deckCards$.pipe(
+    map((deckCards) => {
+      return deckCards.filter(
+        (deckCard) =>
+          deckCard.cardInfo.lv === undefined &&
+          deckCard.cardInfo.cardtype === 'デジモン'
+      );
+    })
+  );
+
+  readonly lvNoneDeckCardCount$: Observable<number> = this.lvNoneDeckCardList$.pipe(
+    map((deckCards) => {
+      return deckCards.reduce((acc, curr) => {
+        return acc + curr.count;
+      }, 0);
+    })
+  );
+
   readonly addCard$ = new Subject<CardInfo['imgFileName']>();
   readonly removeCard$ = new Subject<CardInfo['imgFileName']>();
   readonly deleteDeck$ = new Subject<void>();

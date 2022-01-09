@@ -18,6 +18,14 @@
   ></digimon-card-app-deck-cardtype-card-list>
 
   <digimon-card-app-deck-cardtype-card-list
+    [deckCardList]="(lvNoneDeckCardList$ | async) || []"
+    [count]="(lvNoneDeckCardCount$ | async) || 0"
+    [cardtype]="'Lv. None'"
+    (add)="addCard$.next($event)"
+    (remove)="removeCard$.next($event)"
+  ></digimon-card-app-deck-cardtype-card-list>
+
+  <digimon-card-app-deck-cardtype-card-list
     [deckCardList]="(lv3DeckCardList$ | async) || []"
     [count]="(lv3Count$ | async) || 0"
     [cardtype]="'Lv.3'"
