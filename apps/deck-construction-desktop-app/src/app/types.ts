@@ -50,6 +50,7 @@ export const CATEGORY = {
   ST06: 'ST06',
   ST07: 'ST07',
   ST08: 'ST08',
+  ST09: 'ST09',
   PRO: 'PRO',
 } as const;
 

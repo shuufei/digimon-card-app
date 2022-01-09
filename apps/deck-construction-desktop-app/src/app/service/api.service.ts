@@ -36,6 +36,7 @@ export class ApiService {
     const st06Cards$ = this.listCardInfoByCategory('ST06');
     const st07Cards$ = this.listCardInfoByCategory('ST07');
     const st08Cards$ = this.listCardInfoByCategory('ST08');
+    const st09Cards$ = this.listCardInfoByCategory('ST09');
     const proCards$ = this.listCardInfoByCategory('PRO');
     return combineLatest([
       bt01Cards$,
@@ -56,6 +57,7 @@ export class ApiService {
       st06Cards$,
       st07Cards$,
       st08Cards$,
+      st09Cards$,
       proCards$,
     ]).pipe(
       map((response) => {
