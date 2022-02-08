@@ -43,3 +43,6 @@ Thumbs.db
 **/assets/images
 
 **/env.ts
+
+# construction
+**/*.pem
