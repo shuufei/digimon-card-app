@@ -278,6 +278,56 @@
           }
         }
       }
+    },
+    "api-get-credentials": {
+      "root": "apps/api/get-credentials",
+      "sourceRoot": "apps/api/get-credentials/src",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/api/get-credentials",
+            "main": "apps/api/get-credentials/src/main.ts",
+            "tsConfig": "apps/api/get-credentials/tsconfig.app.json",
+            "assets": ["apps/api/get-credentials/src/assets"]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/get-credentials/src/environments/environment.ts",
+                  "with": "apps/api/get-credentials/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api-get-credentials:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/api/get-credentials/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/api/get-credentials"],
+          "options": {
+            "jestConfig": "apps/api/get-credentials/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
     }
   }
 }

@@ -32,6 +32,9 @@
     "vs-desktop-app-e2e": {
       "tags": [],
       "implicitDependencies": ["vs-desktop-app"]
+    },
+    "api-get-credentials": {
+      "tags": []
     }
   }
 }
