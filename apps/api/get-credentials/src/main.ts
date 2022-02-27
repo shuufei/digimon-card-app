@@ -4,7 +4,7 @@ type Body = {
   credentials: string;
 };
 
-const handler = async () => {
+export const handler = async () => {
   const stdout = execSync(`sh ${__dirname}/assets/scripts/sign.sh`);
   const credentials = stdout.toString();
   const body: Body = {
@@ -18,5 +18,3 @@ const handler = async () => {
   console.info('response: ', response);
   return response;
 };
-
-handler();
