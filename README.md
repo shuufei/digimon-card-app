@@ -34,3 +34,11 @@
    ```
    npx nx run vs-desktop-app:serve
    ```
+
+## ホスティング画像取得用 Credential 取得方法
+
+下記コマンドを実行する
+
+```
+npx nx run api-get-credentials:serve
+```
