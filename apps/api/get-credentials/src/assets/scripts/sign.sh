@@ -7,8 +7,6 @@ readonly EXPIRED=$(($(date +%s) + 60*60*24))
 readonly POLICY_STATEMENT="{\"Statement\":[{\"Resource\":\"${DISTRIBUTION_ENDPOINT}/*\",\"Condition\":{\"DateLessThan\":{\"AWS:EpochTime\":${EXPIRED}}}}]}"
 readonly PRIVATE_KEY="$(dirname $0)/key-pair/private_key.pem"
 
-echo $POLICY_STATEMENT
-
 readonly POLICY=$(echo $POLICY_STATEMENT | base64 | tr -- '+=/' '-_~')
 readonly SIGNATURE=$(echo $POLICY_STATEMENT | openssl sha1 -sign $PRIVATE_KEY| openssl base64 -A | tr -- '+=/' '-_~')
 
