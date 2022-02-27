@@ -310,7 +310,8 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "options": {
-            "buildTarget": "api-get-credentials:build"
+            "buildTarget": "api-get-credentials:build",
+            "watch": false
           }
         },
         "lint": {
