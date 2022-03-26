@@ -68,6 +68,7 @@
     "@nrwl/cli": "12.3.5",
     "@nrwl/cypress": "12.3.5",
     "@nrwl/eslint-plugin-nx": "12.3.5",
+    "@nrwl/expo": "^13.9.0",
     "@nrwl/jest": "12.3.5",
     "@nrwl/linter": "12.3.5",
     "@nrwl/nest": "^12.3.5",
