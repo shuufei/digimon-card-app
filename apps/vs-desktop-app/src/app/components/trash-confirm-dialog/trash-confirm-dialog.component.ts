@@ -41,6 +41,10 @@ export class TrashConfirmDialogComponent implements OnInit {
       action: 'addToEvolutionOrigin',
       displayText: '進化元に追加',
     },
+    {
+      action: 'recovery',
+      displayText: 'リカバリー',
+    },
   ];
 
   /**

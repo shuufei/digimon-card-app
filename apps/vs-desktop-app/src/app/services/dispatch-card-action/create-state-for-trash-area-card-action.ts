@@ -16,9 +16,24 @@ export const createStateForTrashAreaCardAction = (
       return onEntry(action, currentState);
     case 'addToEvolutionOrigin':
       return onAddToEvolutionOrigin(action, currentState);
+    case 'recovery':
+      return onRecovery(action, currentState);
     default:
       return currentState;
   }
+};
+
+const onRecovery = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  return produce(currentState, (draft) => {
+    const card = action.card;
+    if (card != null) {
+      _.remove(draft.playState.trashArea.cardList, (v) => v.id === card.id);
+      draft.playState.securityArea.cardList.push(card);
+    }
+  });
 };
 
 const onDraw = (
