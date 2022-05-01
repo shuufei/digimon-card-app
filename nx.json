@@ -19,6 +19,12 @@
     }
   },
   "projects": {
+    "api-get-credentials": {
+      "tags": []
+    },
+    "api-tutorial-riki": {
+      "tags": []
+    },
     "deck-construction-desktop-app": {
       "tags": []
     },
@@ -32,9 +38,6 @@
     "vs-desktop-app-e2e": {
       "tags": [],
       "implicitDependencies": ["vs-desktop-app"]
-    },
-    "api-get-credentials": {
-      "tags": []
     }
   }
 }
