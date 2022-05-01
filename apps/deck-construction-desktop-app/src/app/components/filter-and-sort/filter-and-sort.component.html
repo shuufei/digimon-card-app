@@ -20,9 +20,7 @@
   <mat-form-field appearance="fill">
     <mat-label>Lv</mat-label>
     <mat-select [formControlName]="'lv'" multiple>
-      <mat-option *ngFor="let lv of lvList" [value]="lv">{{
-        lv
-      }}</mat-option>
+      <mat-option *ngFor="let lv of lvList" [value]="lv">{{ lv }}</mat-option>
     </mat-select>
   </mat-form-field>
 

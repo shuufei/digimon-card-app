@@ -8,9 +8,8 @@ describe('TamerAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TamerAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [TamerAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

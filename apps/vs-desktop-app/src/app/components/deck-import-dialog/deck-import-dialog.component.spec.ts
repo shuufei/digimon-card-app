@@ -8,9 +8,8 @@ describe('DeckImportDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DeckImportDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [DeckImportDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

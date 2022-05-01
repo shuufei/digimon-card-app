@@ -24,15 +24,17 @@ export class FilterDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.filter.valueChanges.pipe(
-      tap(values => {
-        console.log(values);
-        // this.globalState.set('filter', () => {
-        //   return {
-        //     colorList: values.color
-        //   }
-        // })
-      })
-    ).subscribe();
+    this.filter.valueChanges
+      .pipe(
+        tap((values) => {
+          console.log(values);
+          // this.globalState.set('filter', () => {
+          //   return {
+          //     colorList: values.color
+          //   }
+          // })
+        })
+      )
+      .subscribe();
   }
 }

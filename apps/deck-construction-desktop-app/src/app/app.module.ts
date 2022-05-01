@@ -44,12 +44,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { GlobalState, GLOBAL_RX_STATE } from './global-state';
-import {RxState} from '@rx-angular/state';
+import { RxState } from '@rx-angular/state';
 import { DeckPanelComponent } from './components/deck-panel/deck-panel.component';
 import { DeckDetailComponent } from './components/deck-detail/deck-detail.component';
 import { CardImgComponent } from './components/card-img/card-img.component';
 import { DeckCardtypeCardListComponent } from './components/deck-cardtype-card-list/deck-cardtype-card-list.component';
-import { ExpandCardViewDialogComponent } from './components/expand-card-view-dialog/expand-card-view-dialog.component'
+import { ExpandCardViewDialogComponent } from './components/expand-card-view-dialog/expand-card-view-dialog.component';
 
 @NgModule({
   declarations: [
@@ -110,9 +110,9 @@ import { ExpandCardViewDialogComponent } from './components/expand-card-view-dia
   providers: [
     {
       provide: GLOBAL_RX_STATE,
-      useFactory: () => new RxState<GlobalState>()
-    }
+      useFactory: () => new RxState<GlobalState>(),
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

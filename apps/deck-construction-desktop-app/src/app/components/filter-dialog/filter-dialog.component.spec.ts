@@ -8,9 +8,8 @@ describe('FilterDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FilterDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [FilterDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

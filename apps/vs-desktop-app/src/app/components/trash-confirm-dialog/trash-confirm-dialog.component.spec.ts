@@ -8,9 +8,8 @@ describe('TrashConfirmDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrashConfirmDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [TrashConfirmDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

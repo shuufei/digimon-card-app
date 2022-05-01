@@ -8,9 +8,8 @@ describe('SecurityAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SecurityAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [SecurityAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('AddEvolutionOriginDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddEvolutionOriginDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [AddEvolutionOriginDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

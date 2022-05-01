@@ -8,9 +8,8 @@ describe('DigimonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DigimonComponent ]
-    })
-    .compileComponents();
+      declarations: [DigimonComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

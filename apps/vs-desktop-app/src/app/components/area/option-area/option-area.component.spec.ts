@@ -8,9 +8,8 @@ describe('OptionAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OptionAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [OptionAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,9 +8,8 @@ describe('RaisingAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RaisingAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [RaisingAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

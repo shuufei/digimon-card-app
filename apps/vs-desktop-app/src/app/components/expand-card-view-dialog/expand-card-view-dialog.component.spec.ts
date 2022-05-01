@@ -8,9 +8,8 @@ describe('ExpandCardViewDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ExpandCardViewDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [ExpandCardViewDialogComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

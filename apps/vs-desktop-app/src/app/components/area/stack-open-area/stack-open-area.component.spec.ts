@@ -8,9 +8,8 @@ describe('StackOpenAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StackOpenAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [StackOpenAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

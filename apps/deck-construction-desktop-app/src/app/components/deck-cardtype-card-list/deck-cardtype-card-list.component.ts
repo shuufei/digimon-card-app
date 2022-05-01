@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { DeckCardList, CardInfo } from '../../types';
 
 @Component({
@@ -13,5 +20,4 @@ export class DeckCardtypeCardListComponent {
   @Input() cardtype = '';
   @Output() add = new EventEmitter<CardInfo['imgFileName']>();
   @Output() remove = new EventEmitter<CardInfo['imgFileName']>();
-
 }

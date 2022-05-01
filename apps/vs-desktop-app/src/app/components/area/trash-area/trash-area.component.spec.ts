@@ -8,9 +8,8 @@ describe('TrashAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TrashAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [TrashAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

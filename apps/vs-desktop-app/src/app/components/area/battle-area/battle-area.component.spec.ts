@@ -8,9 +8,8 @@ describe('BattleAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BattleAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [BattleAreaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
