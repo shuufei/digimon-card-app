@@ -182,6 +182,160 @@
       "tags": [],
       "implicitDependencies": ["deck-construction-desktop-app"]
     },
+    "mobile-app": {
+      "root": "apps/mobile-app",
+      "sourceRoot": "apps/mobile-app/src",
+      "projectType": "application",
+      "architect": {
+        "start": {
+          "builder": "@nrwl/expo:start",
+          "options": {
+            "port": 8081
+          }
+        },
+        "web": {
+          "builder": "@nrwl/expo:start",
+          "options": {
+            "port": 8081,
+            "webpack": true
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "command": "nx start mobile-app"
+          }
+        },
+        "run-ios": {
+          "builder": "@nrwl/expo:run",
+          "options": {
+            "platform": "ios"
+          }
+        },
+        "run-android": {
+          "builder": "@nrwl/expo:run",
+          "options": {
+            "platform": "android"
+          }
+        },
+        "build-ios": {
+          "builder": "@nrwl/expo:build-ios",
+          "options": {}
+        },
+        "build-android": {
+          "builder": "@nrwl/expo:build-android",
+          "options": {}
+        },
+        "build-web": {
+          "builder": "@nrwl/expo:build-web",
+          "options": {}
+        },
+        "build-status": {
+          "builder": "@nrwl/expo:build-web",
+          "options": {}
+        },
+        "sync-deps": {
+          "builder": "@nrwl/expo:sync-deps",
+          "options": {}
+        },
+        "ensure-symlink": {
+          "builder": "@nrwl/expo:ensure-symlink",
+          "options": {}
+        },
+        "publish": {
+          "builder": "@nrwl/expo:publish",
+          "options": {}
+        },
+        "publish-set": {
+          "builder": "@nrwl/expo:publish-set",
+          "options": {}
+        },
+        "rollback": {
+          "builder": "@nrwl/expo:rollback",
+          "options": {}
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/mobile-app/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/mobile-app"],
+          "options": {
+            "jestConfig": "apps/mobile-app/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "mobile-app-e2e": {
+      "root": "apps/mobile-app-e2e",
+      "sourceRoot": "apps/mobile-app-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "build-ios": {
+          "builder": "@nrwl/detox:build",
+          "options": {
+            "detoxConfiguration": "ios.sim.debug"
+          },
+          "configurations": {
+            "production": {
+              "detoxConfiguration": "ios.sim.release"
+            }
+          }
+        },
+        "test-ios": {
+          "builder": "@nrwl/detox:test",
+          "options": {
+            "detoxConfiguration": "ios.sim.debug",
+            "buildTarget": "mobile-app-e2e:build-ios"
+          },
+          "configurations": {
+            "production": {
+              "detoxConfiguration": "ios.sim.release",
+              "buildTarget": "mobile-app-e2e:build-ios:prod"
+            }
+          }
+        },
+        "build-android": {
+          "builder": "@nrwl/detox:build",
+          "options": {
+            "detoxConfiguration": "android.emu.debug"
+          },
+          "configurations": {
+            "production": {
+              "detoxConfiguration": "android.emu.release"
+            }
+          }
+        },
+        "test-android": {
+          "builder": "@nrwl/detox:test",
+          "options": {
+            "detoxConfiguration": "android.emu.debug",
+            "buildTarget": "mobile-app-e2e:build-android"
+          },
+          "configurations": {
+            "production": {
+              "detoxConfiguration": "android.emu.release",
+              "buildTarget": "mobile-app-e2e:build-android:prod"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/mobile-app-e2e/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["mobile-app"]
+    },
     "vs-desktop-app": {
       "projectType": "application",
       "root": "apps/vs-desktop-app",
