@@ -17,6 +17,7 @@ type Deck = {
   cards: Card[];
 };
 
+
 let DeckData = [
   {
     id : '00',
@@ -30,6 +31,12 @@ let DeckData = [
   }
 ]
 
+
+
+app.get('/api', (req, res) => {
+  res.status(400).send({ message: 'Welcome to api/tutorial-riki!!!' });
+});
+
 app.get('/api', (req, res)=>{
   let DeckNameList : string[] ;
   DeckData.forEach((value, index, arr)=> {
@@ -39,9 +46,6 @@ app.get('/api', (req, res)=>{
 });
 
 
-app.get('/api', (req, res) => {
-  res.status(400).send({ message: 'Welcome to api/tutorial-riki!!!' });
-});
 
 const port = process.env.port || 3333;
 const server = app.listen(port, () => {
