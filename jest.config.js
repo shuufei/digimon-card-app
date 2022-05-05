@@ -1,7 +1,3 @@
-module.exports = {
-  projects: [
-    '<rootDir>/apps/deck-construction-desktop-app',
-    '<rootDir>/apps/vs-desktop-app',
-    '<rootDir>/apps/api/get-credentials',
-  ],
-};
+const { getJestProjects } = require('@nrwl/jest');
+
+module.exports = { projects: getJestProjects() };

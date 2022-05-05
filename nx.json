@@ -19,6 +19,9 @@
     }
   },
   "projects": {
+    "api-get-credentials": {
+      "tags": []
+    },
     "deck-construction-desktop-app": {
       "tags": []
     },
@@ -32,9 +35,14 @@
     "vs-desktop-app-e2e": {
       "tags": [],
       "implicitDependencies": ["vs-desktop-app"]
-    },
-    "api-get-credentials": {
-      "tags": []
     }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
   }
 }
