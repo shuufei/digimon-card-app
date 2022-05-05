@@ -47,7 +47,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/api/get-credentials"],
           "options": {
-            "jestConfig": "apps/api/get-credentials/jest.config.js",
+            "jestConfig": "apps/api/get-credentials/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -144,7 +144,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/deck-construction-desktop-app"],
           "options": {
-            "jestConfig": "apps/deck-construction-desktop-app/jest.config.js",
+            "jestConfig": "apps/deck-construction-desktop-app/jest.config.ts",
             "passWithNoTests": true
           }
         }
@@ -273,7 +273,7 @@
           "builder": "@nrwl/jest:jest",
           "outputs": ["coverage/apps/vs-desktop-app"],
           "options": {
-            "jestConfig": "apps/vs-desktop-app/jest.config.js",
+            "jestConfig": "apps/vs-desktop-app/jest.config.ts",
             "passWithNoTests": true
           }
         }

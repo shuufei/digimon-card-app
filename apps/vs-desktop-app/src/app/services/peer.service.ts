@@ -8,7 +8,7 @@ import {
   GlobalState,
   GLOBAL_RX_STATE,
   SerializedPlayState,
-  serializePlayState,
+  serializePlayState
 } from '../global-state';
 import { Side } from '../types';
 
@@ -23,7 +23,7 @@ export class PeerService {
 
   readonly peerId$ = new BehaviorSubject<string | undefined>(undefined);
   readonly isConnected$ = new BehaviorSubject<boolean>(false);
-  readonly onReceiveMessage$ = new Subject();
+  readonly onReceiveMessage$ = new Subject<void>();
   dataConnection?: DataConnection;
 
   constructor(
