@@ -1,38 +1,5 @@
 {
   "version": 1,
-  "cli": {
-    "defaultCollection": "@nrwl/angular"
-  },
-  "defaultProject": "deck-construction-desktop-app",
-  "schematics": {
-    "@nrwl/angular": {
-      "application": {
-        "linter": "eslint"
-      },
-      "library": {
-        "linter": "eslint"
-      },
-      "storybook-configuration": {
-        "linter": "eslint"
-      }
-    },
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss",
-      "changeDetection": "OnPush",
-      "displayBlock": true
-    }
-  },
   "projects": {
     "api-get-credentials": {
       "root": "apps/api/get-credentials",
@@ -40,7 +7,7 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/apps/api/get-credentials",
@@ -63,7 +30,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "api-get-credentials:build",
             "watch": false
@@ -84,7 +51,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "deck-construction-desktop-app": {
       "projectType": "application",
@@ -180,7 +148,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "deck-construction-desktop-app-e2e": {
       "root": "apps/deck-construction-desktop-app-e2e",
@@ -209,7 +178,9 @@
           },
           "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["deck-construction-desktop-app"]
     },
     "vs-desktop-app": {
       "projectType": "application",
@@ -306,7 +277,8 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "tags": []
     },
     "vs-desktop-app-e2e": {
       "root": "apps/vs-desktop-app-e2e",
@@ -333,7 +305,9 @@
           },
           "outputs": ["{options.outputFile}"]
         }
-      }
+      },
+      "tags": [],
+      "implicitDependencies": ["vs-desktop-app"]
     }
   }
 }

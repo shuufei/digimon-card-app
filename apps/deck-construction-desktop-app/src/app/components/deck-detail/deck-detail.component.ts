@@ -4,7 +4,7 @@ import {
   ElementRef,
   Inject,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { remove, RxState, update } from '@rx-angular/state';
@@ -311,8 +311,8 @@ export class DeckDetailComponent implements OnInit {
           const content = JSON.stringify(cardList);
           const blob = new Blob([content], { type: 'application/json' });
           const fileName = `${this.titleForm.value}.json`;
-          if (window.navigator.msSaveBlob) {
-            window.navigator.msSaveBlob(blob, fileName);
+          if ((window.navigator as any).msSaveBlob) {
+            (window.navigator as any).msSaveBlob(blob, fileName);
           } else {
             if (this.downloadLinkEl?.nativeElement == null) return;
             const el = this.downloadLinkEl.nativeElement as HTMLElement;

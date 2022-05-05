@@ -14,27 +14,9 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "parallel": 1
       }
-    }
-  },
-  "projects": {
-    "api-get-credentials": {
-      "tags": []
-    },
-    "deck-construction-desktop-app": {
-      "tags": []
-    },
-    "deck-construction-desktop-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["deck-construction-desktop-app"]
-    },
-    "vs-desktop-app": {
-      "tags": []
-    },
-    "vs-desktop-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["vs-desktop-app"]
     }
   },
   "targetDependencies": {
@@ -44,5 +26,37 @@
         "projects": "dependencies"
       }
     ]
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "deck-construction-desktop-app",
+  "generators": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss",
+      "changeDetection": "OnPush",
+      "displayBlock": true
+    }
   }
 }
