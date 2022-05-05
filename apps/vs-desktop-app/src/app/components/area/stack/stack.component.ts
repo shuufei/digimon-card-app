@@ -4,7 +4,7 @@ import {
   Inject,
   Input,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { BehaviorSubject, merge, Subject } from 'rxjs';
@@ -61,7 +61,7 @@ export class StackComponent implements OnInit {
    * Events
    */
   readonly onContextMenu$ = new Subject<Event>();
-  readonly onClick$ = new Subject();
+  readonly onClick$ = new Subject<void>();
   readonly onAction$ = new Subject<CardActionItem>();
   private readonly onShuffle$ = this.onAction$.pipe(
     filter((v) => v.action === 'shuffle')

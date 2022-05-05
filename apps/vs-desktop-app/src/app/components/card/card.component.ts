@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { RxState } from '@rx-angular/state';
@@ -30,7 +30,7 @@ export class CardComponent implements OnInit {
   @ViewChild(CustomMenueTriggerDirective) trigger?: CustomMenueTriggerDirective;
 
   readonly onContextMenu$ = new Subject<Event>();
-  readonly onClick$ = new Subject();
+  readonly onClick$ = new Subject<void>();
   readonly onAction$ = new Subject<CardActionItem>();
 
   constructor(

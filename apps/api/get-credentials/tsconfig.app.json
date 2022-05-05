@@ -7,6 +7,6 @@
     "target": "ES2015",
     "importHelpers": false
   },
-  "exclude": ["**/*.spec.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "jest.config.ts"],
   "include": ["**/*.ts"]
 }
