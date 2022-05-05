@@ -8,7 +8,7 @@ import * as express from 'express';
 const app = express();
 
 app.get('/api', (req, res) => {
-  res.status(400).send({ message: 'Welcome to api/tutorial-riki!' });
+  res.status(400).send({ message: 'Welcome to api/tutorial-riki!!!' });
 });
 
 const port = process.env.port || 3333;
