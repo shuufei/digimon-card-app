@@ -58,7 +58,7 @@
       "projectType": "application",
       "root": "apps/deck-construction-desktop-app",
       "sourceRoot": "apps/deck-construction-desktop-app/src",
-      "prefix": "digimon-card-app",
+      "prefix": "spotted-seal",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -340,7 +340,7 @@
       "projectType": "application",
       "root": "apps/vs-desktop-app",
       "sourceRoot": "apps/vs-desktop-app/src",
-      "prefix": "digimon-card-app",
+      "prefix": "spotted-seal",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
