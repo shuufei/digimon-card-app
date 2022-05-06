@@ -1,4 +1,4 @@
-# Digimon Card App
+# Spotted Seal
 
 ## Setup
 
@@ -10,7 +10,7 @@
 ## 起動方法
 
 1. apps/deck-construction-desktop-app/src/assets 配下に下記を展開。  
-   ※assets ファイルは digimon-card-data-fetch を利用して取得する
+   ※assets ファイルは data-fetch を利用して取得する
    - cardInfo
    - images
 1. 下記コマンドを実行
@@ -25,7 +25,7 @@
    NX_PEER_SERVER_KEY=${値は別途共有}
    ```
 1. apps/vs-desktop-app/src/assets 配下に下記を展開。  
-   ※assets ファイルは digimon-card-data-fetch を利用して取得する
+   ※assets ファイルは data-fetch を利用して取得する
    - cardInfo
    - images
 1. apps/vs-desktop-app/src/app/services/peer.service.ts の peer key を指定。
