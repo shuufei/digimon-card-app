@@ -13,6 +13,7 @@ export type CardProps = {
   width: number;
   padding?: number;
   isPressable?: boolean;
+  isLongPressable?: boolean;
   signedQueryStrings?: string;
 };
 
@@ -35,24 +36,37 @@ const CardImage: FC<CardProps> = ({
       alt={`${card.name}`}
       m={padding}
     />
-  ) : (
-    <></>
-  );
+  ) : null;
 };
 export const Card: FC<CardProps> = React.memo(
-  ({ card, height, width, padding, isPressable = true }) => {
+  ({
+    card,
+    height,
+    width,
+    padding,
+    isPressable = true,
+    isLongPressable = false,
+  }) => {
     const { navigate } = useNavigation<NavigationProp<RootParamList>>();
     const signedQueryStrings = useSelector(
       authStore.selectors.signedQueryStringsSelector
     );
     return signedQueryStrings != null ? (
-      isPressable ? (
+      isPressable || isLongPressable ? (
         <Pressable
           onPress={() => {
-            navigate('CardModal', {
-              name: card.name,
-              cardImageSrc: getCardImageSrc(card, signedQueryStrings),
-            });
+            isPressable &&
+              navigate('CardModal', {
+                name: card.name,
+                cardImageSrc: getCardImageSrc(card, signedQueryStrings),
+              });
+          }}
+          onLongPress={() => {
+            isLongPressable &&
+              navigate('CardModal', {
+                name: card.name,
+                cardImageSrc: getCardImageSrc(card, signedQueryStrings),
+              });
           }}
         >
           <CardImage

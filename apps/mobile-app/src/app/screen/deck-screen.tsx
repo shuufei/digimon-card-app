@@ -248,6 +248,7 @@ export const DeckScreen = () => {
             style={{
               width: 200,
             }}
+            appearance={'light'}
             onValueChange={(value) => {
               dispatch(
                 deckStore.actions.setTab({
