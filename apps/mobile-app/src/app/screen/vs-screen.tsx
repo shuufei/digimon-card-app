@@ -1,12 +1,11 @@
-import { View, Text, HStack, Image, Menu, Pressable } from 'native-base';
+import { API } from 'aws-amplify';
+import { Button, HStack, Image, Menu, Pressable, View } from 'native-base';
+import { FC, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Card } from '../components/presentation/card';
 import { ALL_CARD_LIST } from '../configs/all-card-list';
-import { Dimensions } from 'react-native';
-import { cardImageAspectRate } from '../domains/card';
 import { ENDPOINT } from '../configs/distribution';
-import { FC, useEffect, useState } from 'react';
-import { API } from 'aws-amplify';
-import { useDispatch, useSelector } from 'react-redux';
+import { cardImageAspectRate } from '../domains/card';
 import * as authStore from '../store/auth-store';
 
 const cardSample = ALL_CARD_LIST[10];
@@ -37,7 +36,7 @@ const useCustomMenuProps = () => {
   return [menuProps, triggerStyleProps];
 };
 
-const CardWithMenu: FC<{ signedQueryStrings: string }> = ({
+const DeckArea: FC<{ signedQueryStrings: string }> = ({
   signedQueryStrings,
 }) => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
@@ -66,8 +65,8 @@ const CardWithMenu: FC<{ signedQueryStrings: string }> = ({
         }}
         {...menuProps}
       >
-        <Menu.Item>アタック</Menu.Item>
-        <Menu.Item>レスト</Menu.Item>
+        <Menu.Item>ドロー</Menu.Item>
+        <Menu.Item>シャッフル</Menu.Item>
       </Menu>
     </View>
   );
@@ -127,9 +126,6 @@ const SecurityArea: FC<{ signedQueryStrings: string }> = ({
 };
 
 export const VSScreen = () => {
-  const window = Dimensions.get('window');
-  console.log('--- window: ', window);
-
   // TODO: custom hooks
   const dispatch = useDispatch();
   useEffect(() => {
@@ -155,22 +151,28 @@ export const VSScreen = () => {
 
   return (
     <View>
-      <Text>VS</Text>
-      <HStack justifyContent={'space-between'}>
+      <HStack justifyContent={'space-between'} mt={4}>
         <View>
           <View marginLeft={'-8'}>
             <SecurityArea signedQueryStrings={signedQueryStrings ?? ''} />
           </View>
         </View>
-        <Card
-          card={cardSample}
-          width={cardWidth}
-          height={cardHeight}
-          padding={0}
-        />
+        <View>
+          <Card
+            card={cardSample}
+            width={cardWidth}
+            height={cardHeight}
+            padding={0}
+            isPressable={false}
+            isLongPressable={true}
+          />
+          <Button size={'xs'} mt={1} colorScheme="gray" variant="outline">
+            選択
+          </Button>
+        </View>
         <View>
           <View marginRight={'-6'}>
-            <CardWithMenu signedQueryStrings={signedQueryStrings ?? ''} />
+            <DeckArea signedQueryStrings={signedQueryStrings ?? ''} />
           </View>
         </View>
       </HStack>
