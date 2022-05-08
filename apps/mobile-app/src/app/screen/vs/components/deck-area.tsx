@@ -4,6 +4,7 @@ import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import { CARD_WIDTH, CARD_HEIGHT } from '../configs/card-style';
 import { getVsAssetsImageSrc } from '../utils/get-vs-assets-image-src';
+import { CountLabel } from './presentation/count-label';
 
 const DUMMY_DECK_CARD_LIST = new Array(50)
   .fill(null)
@@ -36,21 +37,7 @@ export const DeckArea: FC<{ signedQueryStrings: string }> = ({
                   alt={`card_back`}
                 />
               </View>
-              <Flex
-                justifyContent={'center'}
-                alignItems={'center'}
-                width={5}
-                height={5}
-                backgroundColor={'gray.600'}
-                borderRadius={'xl'}
-                position={'absolute'}
-                top={'-4'}
-                left={'-4'}
-              >
-                <Text color={'white'} fontSize="9">
-                  {cardList.length}
-                </Text>
-              </Flex>
+              <CountLabel count={cardList.length} />
             </Pressable>
           );
         }}
