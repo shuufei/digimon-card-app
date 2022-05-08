@@ -4,10 +4,11 @@ import { ALL_CARD_LIST } from '../../configs/all-card-list';
 import { useDispatchSetSigendQueryStrings } from '../../hooks/use-dispatch-set-signed-query-strings';
 import { DeckArea } from './components/deck-area';
 import { DeckOpenArea } from './components/deck-open-area';
+import { DigitamaArea } from './components/digitama-area';
 import { SecurityArea } from './components/security-area';
+import { SecurityOpenArea } from './components/security-open-area';
 import { TrashArea } from './components/trash-area';
 import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
-import { SecurityOpenArea } from './components/security-open-area';
 
 const cardSample = ALL_CARD_LIST[10];
 
@@ -25,11 +26,14 @@ export const VSScreen = () => {
         </HStack>
       </VStack>
       <HStack justifyContent={'space-between'} mt={4}>
-        <View>
+        <VStack>
           <View marginLeft={'-8'}>
             <SecurityArea />
           </View>
-        </View>
+          <View marginLeft={'-4'} marginTop={2}>
+            <DigitamaArea />
+          </View>
+        </VStack>
         <View>
           <Card
             card={cardSample}

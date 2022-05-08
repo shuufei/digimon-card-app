@@ -1,7 +1,14 @@
 import { FC } from 'react';
 import { Flex, Text } from 'native-base';
 
-export const CountLabel: FC<{ count: number }> = ({ count }) => {
+export const CountLabel: FC<{
+  count: number;
+  position?: 'topLeft' | 'topRight';
+}> = ({ count, position = 'topLeft' }) => {
+  const positionStyle =
+    position === 'topLeft'
+      ? { top: '-4', left: '-4' }
+      : { top: '-4', right: '-4' };
   return (
     <Flex
       justifyContent={'center'}
@@ -11,8 +18,7 @@ export const CountLabel: FC<{ count: number }> = ({ count }) => {
       backgroundColor={'gray.600'}
       borderRadius={'xl'}
       position={'absolute'}
-      top={'-4'}
-      left={'-4'}
+      {...positionStyle}
     >
       <Text color={'white'} fontSize="9">
         {count}
