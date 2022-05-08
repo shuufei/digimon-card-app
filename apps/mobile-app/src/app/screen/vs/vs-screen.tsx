@@ -1,78 +1,17 @@
 import { API } from 'aws-amplify';
-import {
-  Button,
-  HStack,
-  Image,
-  Menu,
-  Pressable,
-  ScrollView,
-  View,
-  VStack,
-} from 'native-base';
-import { FC, useEffect } from 'react';
+import { Button, HStack, ScrollView, View, VStack } from 'native-base';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from '../../components/presentation/card';
 import { ALL_CARD_LIST } from '../../configs/all-card-list';
-import { useCustomMenuProps } from '../../hooks/use-custom-menu-props';
 import * as authStore from '../../store/auth-store';
 import { DeckArea } from './components/deck-area';
 import { DeckOpenArea } from './components/deck-open-area';
+import { SecurityArea } from './components/security-area';
 import { TrashArea } from './components/trash-area';
 import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
-import { getVsAssetsImageSrc } from './utils/get-vs-assets-image-src';
 
 const cardSample = ALL_CARD_LIST[10];
-
-const SecurityArea: FC<{ signedQueryStrings: string }> = ({
-  signedQueryStrings,
-}) => {
-  const [menuProps, triggerStyleProps] = useCustomMenuProps();
-  return (
-    <Menu
-      placement={'left top'}
-      {...menuProps}
-      trigger={(triggerProps) => {
-        return (
-          <Pressable {...triggerProps}>
-            <View {...triggerStyleProps}>
-              <Image
-                source={{
-                  uri: getVsAssetsImageSrc(
-                    'back_rotate90.png',
-                    signedQueryStrings ?? ''
-                  ),
-                }}
-                resizeMode="contain"
-                width={CARD_HEIGHT}
-                height={CARD_WIDTH}
-                alt={`card_back`}
-                zIndex={2}
-              />
-              <Image
-                source={{
-                  uri: getVsAssetsImageSrc(
-                    'back_rotate90.png',
-                    signedQueryStrings ?? ''
-                  ),
-                }}
-                resizeMode="contain"
-                width={CARD_HEIGHT}
-                height={CARD_WIDTH}
-                alt={`card_back`}
-                marginTop={-12}
-                zIndex={1}
-              />
-            </View>
-          </Pressable>
-        );
-      }}
-    >
-      <Menu.Item>オープン</Menu.Item>
-      <Menu.Item>確認</Menu.Item>
-      <Menu.Item>シャッフル</Menu.Item>
-    </Menu>
-  );
-};
 
 export const VSScreen = () => {
   // TODO: custom hooks
@@ -108,7 +47,7 @@ export const VSScreen = () => {
       <HStack justifyContent={'space-between'} mt={4}>
         <View>
           <View marginLeft={'-8'}>
-            <SecurityArea signedQueryStrings={signedQueryStrings ?? ''} />
+            <SecurityArea />
           </View>
         </View>
         <View>
