@@ -9,7 +9,7 @@ import { CardModalScreen } from '../screen/card-modal-screen';
 import { DeckScreen } from '../screen/deck-screen';
 import { SignInScreen } from '../screen/sign-in-screen';
 import { SignOutScreen } from '../screen/sign-out-screen';
-import { VSScreen } from '../screen/vs-screen';
+import { VSScreen } from '../screen/vs/vs-screen';
 import * as authStore from '../store/auth-store';
 
 export type RootParamList = {

@@ -2,11 +2,11 @@ import { API } from 'aws-amplify';
 import { Button, HStack, Image, Menu, Pressable, View } from 'native-base';
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card } from '../components/presentation/card';
-import { ALL_CARD_LIST } from '../configs/all-card-list';
-import { ENDPOINT } from '../configs/distribution';
-import { cardImageAspectRate } from '../domains/card';
-import * as authStore from '../store/auth-store';
+import { Card } from '../../components/presentation/card';
+import { ALL_CARD_LIST } from '../../configs/all-card-list';
+import { ENDPOINT } from '../../configs/distribution';
+import { cardImageAspectRate } from '../../domains/card';
+import * as authStore from '../../store/auth-store';
 
 const cardSample = ALL_CARD_LIST[10];
 
