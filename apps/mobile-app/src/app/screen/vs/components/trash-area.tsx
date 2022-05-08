@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import { View } from 'native-base';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { VsScreenCard } from './presentation/vs-screen-card';
+import { VsScreenCard } from './vs-screen-card';
 import { last } from 'lodash';
 import { CountLabel } from './presentation/count-label';
 

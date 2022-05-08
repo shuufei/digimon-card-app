@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, ScrollView, Text, View } from 'native-base';
 import { FC, useState } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { DeckOpenAreaCard } from './presentation/deck-open-area-card';
+import { DeckOpenAreaCard } from './deck-open-area-card';
 
 const DUMMY_DECK_OPEN_CARD_LIST = new Array(10)
   .fill(null)

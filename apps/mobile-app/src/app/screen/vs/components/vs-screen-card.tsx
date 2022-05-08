@@ -2,13 +2,13 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { IMenuProps, Menu, Pressable, View } from 'native-base';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import { Card } from '../../../../components/presentation/card';
-import { CardInfo } from '../../../../domains/card';
-import { useCustomMenuProps } from '../../../../hooks/use-custom-menu-props';
-import { RootParamList } from '../../../../navigation/index';
-import * as authStore from '../../../../store/auth-store';
-import { getCardImageSrc } from '../../../../utils/get-card-image-src';
-import { CARD_HEIGHT, CARD_WIDTH } from '../../configs/card-style';
+import { Card } from '../../../components/presentation/card';
+import { CardInfo } from '../../../domains/card';
+import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
+import { RootParamList } from '../../../navigation/index';
+import * as authStore from '../../../store/auth-store';
+import { getCardImageSrc } from '../../../utils/get-card-image-src';
+import { CARD_HEIGHT, CARD_WIDTH } from '../configs/card-style';
 
 export type MenuProps = {
   label: string;

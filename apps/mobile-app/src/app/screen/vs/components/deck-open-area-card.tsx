@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { CardInfo } from '../../../../domains/card';
+import { CardInfo } from '../../../domains/card';
 import { MenuProps, VsScreenCard } from './vs-screen-card';
 
 const DECK_OPEN_AREA_MENU: MenuProps[] = [

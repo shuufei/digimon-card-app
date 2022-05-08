@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import { CountLabel } from './presentation/count-label';
-import { VsAssetsImage } from './presentation/vs-assets-image';
+import { VsAssetsImage } from './vs-assets-image';
 
 const DUMMY_DECK_CARD_LIST = new Array(50)
   .fill(null)
