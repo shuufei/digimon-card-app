@@ -79,7 +79,7 @@ app.post('/api/newdeck', function(req, res){
 let DirectedId2 : string = '02';
 let ChangedCards : Card[] = require('/Users/hanakappa/Library/Mobile Documents/com~apple~CloudDocs/20210529_digimon-card-game/deck/deck_riki/ロードナイトモン-2.json');
 
-app.put('/api/put', function(req, res){
+app.put('/api/deck_change', function(req, res){
   DeckData.forEach((value, index, arr)=>{
     if(value.id === DirectedId2){
       value.cards = ChangedCards;
@@ -88,6 +88,14 @@ app.put('/api/put', function(req, res){
   DeckNameList = GetDeckName(DeckData);
   res.json(DeckNameList);
 });
+
+let DirectedId3 : string = '01';
+app.delete('/api/delete', function(req, res){
+  DeckData = DeckData.filter(item => item.id.match(DirectedId3)==null);
+  DeckNameList = GetDeckName(DeckData);
+  res.json(DeckNameList);
+});
+
 
 
 
