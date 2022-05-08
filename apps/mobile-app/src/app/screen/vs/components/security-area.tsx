@@ -27,7 +27,7 @@ export const SecurityArea: FC = () => {
                   <View
                     key={i}
                     zIndex={securityCount - i}
-                    mt={i === 0 ? 0 : -6}
+                    mt={i === 0 ? 0 : -8}
                   >
                     <VsAssetsImage
                       imageFileName="back_rotate90.png"
