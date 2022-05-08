@@ -2,18 +2,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, ScrollView, Text, View } from 'native-base';
 import { FC, useState } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { DeckOpenAreaCard } from './deck-open-area-card';
+import { SecurityOpenAreaCard } from './security-open-area-card';
 
-const DUMMY_DECK_OPEN_CARD_LIST = new Array(5)
+const DUMMY_SECURITY_OPEN_CARD_LIST = new Array(5)
   .fill(null)
-  .map((_, i) => ALL_CARD_LIST[i + 150]);
+  .map((_, i) => ALL_CARD_LIST[i + 250]);
 
-export const DeckOpenArea: FC = () => {
-  const [cardList, setCardList] = useState(DUMMY_DECK_OPEN_CARD_LIST);
+export const SecurityOpenArea: FC = () => {
+  const [cardList, setCardList] = useState(DUMMY_SECURITY_OPEN_CARD_LIST);
   return (
     <View p={1}>
       <HStack justifyContent={'space-between'} alignItems={'center'}>
-        <Text fontSize={'xs'}>山札オープン: {cardList.length}</Text>
+        <Text fontSize={'xs'}>セキュリティオープン: {cardList.length}</Text>
         <Menu
           placement="bottom right"
           trigger={(triggerProps) => {
@@ -45,7 +45,7 @@ export const DeckOpenArea: FC = () => {
       <ScrollView horizontal={true} mt={2} overflow={'visible'}>
         <HStack space={1} overflow={'visible'}>
           {cardList.map((card) => {
-            return <DeckOpenAreaCard key={card.imgFileName} card={card} />;
+            return <SecurityOpenAreaCard key={card.imgFileName} card={card} />;
           })}
         </HStack>
       </ScrollView>

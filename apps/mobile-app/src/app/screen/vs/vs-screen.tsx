@@ -7,6 +7,7 @@ import { DeckOpenArea } from './components/deck-open-area';
 import { SecurityArea } from './components/security-area';
 import { TrashArea } from './components/trash-area';
 import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
+import { SecurityOpenArea } from './components/security-open-area';
 
 const cardSample = ALL_CARD_LIST[10];
 
@@ -16,6 +17,9 @@ export const VSScreen = () => {
   return (
     <ScrollView>
       <VStack>
+        <HStack justifyContent={'flex-start'} p={2}>
+          <SecurityOpenArea />
+        </HStack>
         <HStack justifyContent={'flex-end'} p={2}>
           <DeckOpenArea />
         </HStack>

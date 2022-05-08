@@ -1,9 +1,9 @@
 import { Image } from 'native-base';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
-import * as authStore from '../../../../store/auth-store';
-import { CARD_HEIGHT, CARD_WIDTH } from '../../configs/card-style';
-import { getVsAssetsImageSrc } from '../../utils/get-vs-assets-image-src';
+import * as authStore from '../../../store/auth-store';
+import { CARD_HEIGHT, CARD_WIDTH } from '../configs/card-style';
+import { getVsAssetsImageSrc } from '../utils/get-vs-assets-image-src';
 
 export const VsAssetsImage: FC<{
   imageFileName: string;
