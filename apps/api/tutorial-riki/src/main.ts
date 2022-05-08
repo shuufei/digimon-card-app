@@ -4,6 +4,7 @@
  */
 
 import * as express from 'express';
+import { __values } from 'tslib';
 
 const app = express();
 
@@ -15,6 +16,10 @@ type Deck = {
   id: string;
   name: string;
   cards: Card[];
+};
+type DeckList = {
+  id: string;
+  deckname: string;
 };
 
 
@@ -34,15 +39,49 @@ let DeckData = [
 
 
 app.get('/api', (req, res) => {
-  res.status(400).send({ message: 'Welcome to api/tutorial-riki!!!' });
+  res.status(400).send({ message: 'Welcome to api/tutorial-riki!' });
 });
 
-app.get('/api', (req, res)=>{
-  let DeckNameList : string[] ;
+let DeckNameList : DeckList[] ;
+app.get('/api/decklist', (req, res)=>{
   DeckData.forEach((value, index, arr)=> {
-    DeckNameList[index] = value.name ;
+    DeckNameList[index] = {id : value.id, deckname : value.name} ;
   });
-  res.send({message: DeckNameList});
+  res.json(DeckNameList);
+});
+
+let DirectedId : string = '01';
+app.get('/api/deckname', (req, res) =>{
+  DeckData.forEach((value, index, arr) => {
+    if (value.id === DirectedId){
+      res.send(value.name);
+    };
+  });
+});
+
+const NewDeck : Deck = {
+  id : '02',
+  name : 'シャウトモン',
+  cards : require('/Users/hanakappa/Library/Mobile Documents/com~apple~CloudDocs/20210529_digimon-card-game/deck/deck_riki/シャウトモン.json')
+};
+
+app.post('/api/newdeck', function(req, res){
+  DeckData.push(NewDeck);
+  DeckNameList.push({id: NewDeck.id, deckname: NewDeck.name});
+  res.json(DeckNameList);
+});
+
+let DirectedId2 : string = '02';
+let ChangedCards : Card[] = require('/Users/hanakappa/Library/Mobile Documents/com~apple~CloudDocs/20210529_digimon-card-game/deck/deck_riki/ロードナイトモン-2.json');
+
+app.put('/api/put', function(req, res){
+  DeckData.forEach((value, index, arr)=>{
+    if(value.id === DirectedId2){
+      value.cards = ChangedCards;
+      DeckNameList[index].deckname = value.name;
+    };
+  });
+  res.json(DeckNameList);
 });
 
 
