@@ -5,6 +5,7 @@ import {
   Image,
   Menu,
   Pressable,
+  ScrollView,
   View,
   VStack,
 } from 'native-base';
@@ -15,10 +16,10 @@ import { ALL_CARD_LIST } from '../../configs/all-card-list';
 import { useCustomMenuProps } from '../../hooks/use-custom-menu-props';
 import * as authStore from '../../store/auth-store';
 import { DeckArea } from './components/deck-area';
+import { DeckOpenArea } from './components/deck-open-area';
+import { TrashArea } from './components/trash-area';
 import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
 import { getVsAssetsImageSrc } from './utils/get-vs-assets-image-src';
-import { DeckOpenArea } from './components/deck-open-area';
-import { ScrollView } from 'native-base';
 
 const cardSample = ALL_CARD_LIST[10];
 
@@ -129,9 +130,10 @@ export const VSScreen = () => {
           </Button>
         </View>
         <View>
-          <View marginRight={'-6'}>
+          <VStack marginRight={'-4'} space={2}>
             <DeckArea signedQueryStrings={signedQueryStrings ?? ''} />
-          </View>
+            <TrashArea />
+          </VStack>
         </View>
       </HStack>
     </ScrollView>

@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Menu, Pressable, View } from 'native-base';
+import { IMenuProps, Menu, Pressable, View } from 'native-base';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../../components/presentation/card';
@@ -15,10 +15,11 @@ export type MenuProps = {
   onPress?: () => void;
 };
 
-export const VsScreenCard: FC<{ card: CardInfo; menuList: MenuProps[] }> = ({
-  card,
-  menuList,
-}) => {
+export const VsScreenCard: FC<{
+  card: CardInfo;
+  menuList: MenuProps[];
+  menuPlacement?: IMenuProps['placement'];
+}> = ({ card, menuList, menuPlacement = 'bottom left' }) => {
   const signedQueryStrings = useSelector(
     authStore.selectors.signedQueryStringsSelector
   );
@@ -28,6 +29,7 @@ export const VsScreenCard: FC<{ card: CardInfo; menuList: MenuProps[] }> = ({
   return signedQueryStrings ? (
     <Menu
       {...menuProps}
+      placement={menuPlacement}
       trigger={(triggerProps) => {
         return (
           <Pressable
@@ -53,7 +55,11 @@ export const VsScreenCard: FC<{ card: CardInfo; menuList: MenuProps[] }> = ({
       }}
     >
       {menuList.map((menu) => {
-        return <Menu.Item onPress={menu.onPress}>{menu.label}</Menu.Item>;
+        return (
+          <Menu.Item key={menu.label} onPress={menu.onPress}>
+            {menu.label}
+          </Menu.Item>
+        );
       })}
     </Menu>
   ) : null;
