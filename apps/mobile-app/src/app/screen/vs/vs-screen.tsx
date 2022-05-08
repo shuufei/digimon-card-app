@@ -28,9 +28,7 @@ const SecurityArea: FC<{ signedQueryStrings: string }> = ({
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
   return (
     <Menu
-      w={180}
       placement={'left top'}
-      offset={8}
       {...menuProps}
       trigger={(triggerProps) => {
         return (

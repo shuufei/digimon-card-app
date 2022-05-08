@@ -18,9 +18,7 @@ export const DeckArea: FC<{ signedQueryStrings: string }> = ({
   return (
     <View>
       <Menu
-        w={190}
         placement={'left top'}
-        offset={8}
         trigger={(triggerProps) => {
           return (
             <Pressable accessibilityLabel="more options menu" {...triggerProps}>
