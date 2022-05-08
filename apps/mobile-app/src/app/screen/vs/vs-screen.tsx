@@ -1,10 +1,7 @@
-import { API } from 'aws-amplify';
 import { Button, HStack, ScrollView, View, VStack } from 'native-base';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Card } from '../../components/presentation/card';
 import { ALL_CARD_LIST } from '../../configs/all-card-list';
-import * as authStore from '../../store/auth-store';
+import { useDispatchSetSigendQueryStrings } from '../../hooks/use-dispatch-set-signed-query-strings';
 import { DeckArea } from './components/deck-area';
 import { DeckOpenArea } from './components/deck-open-area';
 import { SecurityArea } from './components/security-area';
@@ -14,24 +11,7 @@ import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
 const cardSample = ALL_CARD_LIST[10];
 
 export const VSScreen = () => {
-  // TODO: custom hooks
-  const dispatch = useDispatch();
-  useEffect(() => {
-    const setSignedQueryStrings = async () => {
-      const res: { credentials: string } = await API.get(
-        'v1',
-        '/v1/credentials',
-        {}
-      );
-      console.log('--- signed query strings: ', res.credentials);
-      dispatch(
-        authStore.actions.setSignedQueryString({
-          signedQueryStrings: res.credentials,
-        })
-      );
-    };
-    setSignedQueryStrings();
-  }, [dispatch]);
+  useDispatchSetSigendQueryStrings();
 
   return (
     <ScrollView>
