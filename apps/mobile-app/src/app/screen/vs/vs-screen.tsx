@@ -1,76 +1,16 @@
 import { API } from 'aws-amplify';
 import { Button, HStack, Image, Menu, Pressable, View } from 'native-base';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from '../../components/presentation/card';
 import { ALL_CARD_LIST } from '../../configs/all-card-list';
-import { ENDPOINT } from '../../configs/distribution';
-import { cardImageAspectRate } from '../../domains/card';
+import { useCustomMenuProps } from '../../hooks/use-custom-menu-props';
 import * as authStore from '../../store/auth-store';
+import { DeckArea } from './components/deck-area';
+import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
+import { getVsAssetsImageSrc } from './utils/get-vs-assets-image-src';
 
 const cardSample = ALL_CARD_LIST[10];
-
-const getCardImageSrc = (fileName: string, signedQueryStrings: string) => {
-  const url = `${ENDPOINT}/vs-assets/${fileName}?${signedQueryStrings}`;
-  return url;
-};
-
-const cardWidth = 54;
-const cardHeight = cardWidth * cardImageAspectRate;
-
-const useCustomMenuProps = () => {
-  const [isOpened, setOpened] = useState(false);
-  const menuProps = {
-    onOpen: () => {
-      setOpened(true);
-    },
-    onClose: () => {
-      setOpened(false);
-    },
-  };
-  // TODO: animation
-  const triggerStyleProps = {
-    shadow: isOpened ? 9 : 0,
-    // marginTop: isOpened ? -4 : 0
-  };
-  return [menuProps, triggerStyleProps];
-};
-
-const DeckArea: FC<{ signedQueryStrings: string }> = ({
-  signedQueryStrings,
-}) => {
-  const [menuProps, triggerStyleProps] = useCustomMenuProps();
-  return (
-    <View>
-      <Menu
-        w={190}
-        placement={'left'}
-        offset={8}
-        trigger={(triggerProps) => {
-          return (
-            <Pressable accessibilityLabel="more options menu" {...triggerProps}>
-              <View {...triggerStyleProps}>
-                <Image
-                  source={{
-                    uri: getCardImageSrc('back.png', signedQueryStrings ?? ''),
-                  }}
-                  resizeMode="contain"
-                  width={cardWidth}
-                  height={cardHeight}
-                  alt={`card_back`}
-                />
-              </View>
-            </Pressable>
-          );
-        }}
-        {...menuProps}
-      >
-        <Menu.Item>ドロー</Menu.Item>
-        <Menu.Item>シャッフル</Menu.Item>
-      </Menu>
-    </View>
-  );
-};
 
 const SecurityArea: FC<{ signedQueryStrings: string }> = ({
   signedQueryStrings,
@@ -88,27 +28,27 @@ const SecurityArea: FC<{ signedQueryStrings: string }> = ({
             <View {...triggerStyleProps}>
               <Image
                 source={{
-                  uri: getCardImageSrc(
+                  uri: getVsAssetsImageSrc(
                     'back_rotate90.png',
                     signedQueryStrings ?? ''
                   ),
                 }}
                 resizeMode="contain"
-                width={cardHeight}
-                height={cardWidth}
+                width={CARD_HEIGHT}
+                height={CARD_WIDTH}
                 alt={`card_back`}
                 zIndex={2}
               />
               <Image
                 source={{
-                  uri: getCardImageSrc(
+                  uri: getVsAssetsImageSrc(
                     'back_rotate90.png',
                     signedQueryStrings ?? ''
                   ),
                 }}
                 resizeMode="contain"
-                width={cardHeight}
-                height={cardWidth}
+                width={CARD_HEIGHT}
+                height={CARD_WIDTH}
                 alt={`card_back`}
                 marginTop={-12}
                 zIndex={1}
@@ -160,8 +100,8 @@ export const VSScreen = () => {
         <View>
           <Card
             card={cardSample}
-            width={cardWidth}
-            height={cardHeight}
+            width={CARD_WIDTH}
+            height={CARD_HEIGHT}
             padding={0}
             isPressable={false}
             isLongPressable={true}
