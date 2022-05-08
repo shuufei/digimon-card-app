@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CardList } from '../components/container/card-list';
 import { DeckList } from '../components/container/deck-list';
 import { DeckScreenSheet } from '../components/container/deck-screen-sheet';
-import { useValueRef } from '../components/hooks/use-value-ref';
+import { useValueRef } from '../hooks/use-value-ref';
 import { ALL_CARD_LIST } from '../configs/all-card-list';
 import { DECK_SCREEN_TAB } from '../configs/deck-screen-tabs';
 import { storageKeys } from '../configs/storage';

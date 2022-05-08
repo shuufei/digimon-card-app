@@ -5,7 +5,7 @@ import { Dimensions, FlatList, ListRenderItemInfo } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { cardImageAspectRate, CardInfo } from '../../domains/card';
 import * as deckStore from '../../store/deck-store';
-import { useValueRef } from '../hooks/use-value-ref';
+import { useValueRef } from '../../hooks/use-value-ref';
 import { Card } from '../presentation/card';
 
 const RenderItem: FC<{
