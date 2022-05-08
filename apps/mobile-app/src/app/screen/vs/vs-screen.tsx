@@ -119,7 +119,6 @@ export const VSScreen = () => {
             height={CARD_HEIGHT}
             padding={0}
             isPressable={false}
-            isLongPressable={true}
           />
           <Button
             size={'xs'}

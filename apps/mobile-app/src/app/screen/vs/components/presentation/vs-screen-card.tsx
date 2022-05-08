@@ -16,7 +16,6 @@ export const VsScreenCard: FC<{ card: CardInfo }> = ({ card }) => {
       height={CARD_HEIGHT}
       width={CARD_WIDTH}
       isPressable={false}
-      isLongPressable={false}
       signedQueryStrings={signedQueryStrings}
     />
   );
