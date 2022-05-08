@@ -32,6 +32,7 @@ export const SecurityArea: FC = () => {
                     <VsAssetsImage
                       imageFileName="back_rotate90.png"
                       alt="security card"
+                      direction="side"
                     />
                   </View>
                 );

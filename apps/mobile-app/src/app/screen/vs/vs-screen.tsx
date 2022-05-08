@@ -33,10 +33,6 @@ export const VSScreen = () => {
     setSignedQueryStrings();
   }, [dispatch]);
 
-  const signedQueryStrings = useSelector(
-    authStore.selectors.signedQueryStringsSelector
-  );
-
   return (
     <ScrollView>
       <VStack>
@@ -70,7 +66,7 @@ export const VSScreen = () => {
         </View>
         <View>
           <VStack marginRight={'-4'} space={2}>
-            <DeckArea signedQueryStrings={signedQueryStrings ?? ''} />
+            <DeckArea />
             <TrashArea />
           </VStack>
         </View>

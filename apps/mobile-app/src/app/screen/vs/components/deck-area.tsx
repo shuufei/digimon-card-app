@@ -1,18 +1,15 @@
-import { Image, Menu, Pressable, View, Text, Flex } from 'native-base';
+import { Menu, Pressable, View } from 'native-base';
 import { FC, useState } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
-import { CARD_WIDTH, CARD_HEIGHT } from '../configs/card-style';
-import { getVsAssetsImageSrc } from '../utils/get-vs-assets-image-src';
 import { CountLabel } from './presentation/count-label';
+import { VsAssetsImage } from './presentation/vs-assets-image';
 
 const DUMMY_DECK_CARD_LIST = new Array(50)
   .fill(null)
   .map((_, i) => ALL_CARD_LIST[i]);
 
-export const DeckArea: FC<{ signedQueryStrings: string }> = ({
-  signedQueryStrings,
-}) => {
+export const DeckArea: FC = () => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
   const [cardList, setCardList] = useState(DUMMY_DECK_CARD_LIST);
 
@@ -24,18 +21,7 @@ export const DeckArea: FC<{ signedQueryStrings: string }> = ({
           return (
             <Pressable accessibilityLabel="more options menu" {...triggerProps}>
               <View {...triggerStyleProps}>
-                <Image
-                  source={{
-                    uri: getVsAssetsImageSrc(
-                      'back.png',
-                      signedQueryStrings ?? ''
-                    ),
-                  }}
-                  resizeMode="contain"
-                  width={CARD_WIDTH}
-                  height={CARD_HEIGHT}
-                  alt={`card_back`}
-                />
+                <VsAssetsImage imageFileName="back.png" alt="deck card" />
               </View>
               <CountLabel count={cardList.length} />
             </Pressable>
