@@ -166,7 +166,13 @@ export const VSScreen = () => {
             isPressable={false}
             isLongPressable={true}
           />
-          <Button size={'xs'} mt={1} colorScheme="gray" variant="outline">
+          <Button
+            size={'xs'}
+            mt={1}
+            colorScheme="gray"
+            variant="outline"
+            _pressed={{ borderWidth: '1', borderColor: '#000000' }}
+          >
             選択
           </Button>
         </View>
