@@ -31,6 +31,8 @@ const getCardKey = (card: CardInfo): keyof CardsGroupedByLvAndCardTypeAndNo => {
           return 'Lv.6';
         case 'Lv.7':
           return 'Lv.7';
+        default:
+          return '-';
       }
     case '1_デジタマ':
       return 'Lv.2';
