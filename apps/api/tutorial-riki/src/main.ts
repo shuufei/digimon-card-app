@@ -4,7 +4,6 @@
  */
 
 import * as express from 'express';
-import { __values } from 'tslib';
 
 const app = express();
 
@@ -42,11 +41,17 @@ app.get('/api', (req, res) => {
   res.status(400).send({ message: 'Welcome to api/tutorial-riki!' });
 });
 
-let DeckNameList : DeckList[] ;
-app.get('/api/decklist', (req, res)=>{
+function GetDeckName(DeckList : Deck[]){
+  let DeckNameList : DeckList[] = new Array();
   DeckData.forEach((value, index, arr)=> {
-    DeckNameList[index] = {id : value.id, deckname : value.name} ;
+    DeckNameList.push({id : value.id, deckname : value.name}) ;
   });
+  return DeckNameList
+}
+
+let DeckNameList : DeckList[] = new Array();
+app.get('/api/decklist', (req, res)=>{
+  DeckNameList = GetDeckName(DeckData);
   res.json(DeckNameList);
 });
 
@@ -78,9 +83,9 @@ app.put('/api/put', function(req, res){
   DeckData.forEach((value, index, arr)=>{
     if(value.id === DirectedId2){
       value.cards = ChangedCards;
-      DeckNameList[index].deckname = value.name;
     };
   });
+  DeckNameList = GetDeckName(DeckData);
   res.json(DeckNameList);
 });
 
