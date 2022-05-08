@@ -7,6 +7,7 @@ import { DeckOpenArea } from './components/deck-open-area';
 import { DigitamaArea } from './components/digitama-area';
 import { SecurityArea } from './components/security-area';
 import { SecurityOpenArea } from './components/security-open-area';
+import { TrainingArea } from './components/training-area';
 import { TrashArea } from './components/trash-area';
 import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
 
@@ -30,9 +31,10 @@ export const VSScreen = () => {
           <View marginLeft={'-8'}>
             <SecurityArea />
           </View>
-          <View marginLeft={'-4'} marginTop={2}>
+          <VStack marginLeft={'-4'} marginTop={2} space={1}>
             <DigitamaArea />
-          </View>
+            <TrainingArea />
+          </VStack>
         </VStack>
         <View>
           <Card
