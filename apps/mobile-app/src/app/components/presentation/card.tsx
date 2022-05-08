@@ -54,20 +54,20 @@ export const Card: FC<CardProps> = React.memo(
     return signedQueryStrings != null ? (
       isPressable || isLongPressable ? (
         <Pressable
-          onPress={() => {
-            isPressable &&
-              navigate('CardModal', {
-                name: card.name,
-                cardImageSrc: getCardImageSrc(card, signedQueryStrings),
-              });
-          }}
-          onLongPress={() => {
-            isLongPressable &&
-              navigate('CardModal', {
-                name: card.name,
-                cardImageSrc: getCardImageSrc(card, signedQueryStrings),
-              });
-          }}
+        // onPress={() => {
+        //   isPressable &&
+        //     navigate('CardModal', {
+        //       name: card.name,
+        //       cardImageSrc: getCardImageSrc(card, signedQueryStrings),
+        //     });
+        // }}
+        // onLongPress={() => {
+        //   isLongPressable &&
+        //     navigate('CardModal', {
+        //       name: card.name,
+        //       cardImageSrc: getCardImageSrc(card, signedQueryStrings),
+        //     });
+        // }}
         >
           <CardImage
             card={card}
@@ -88,8 +88,6 @@ export const Card: FC<CardProps> = React.memo(
           />
         </View>
       )
-    ) : (
-      <></>
-    );
+    ) : null;
   }
 );

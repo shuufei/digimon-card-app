@@ -5,7 +5,9 @@ import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import { CARD_WIDTH, CARD_HEIGHT } from '../configs/card-style';
 import { getVsAssetsImageSrc } from '../utils/get-vs-assets-image-src';
 
-const DUMMY_DECK_CARD_LIST = new Array(50).map((_, i) => ALL_CARD_LIST[i]);
+const DUMMY_DECK_CARD_LIST = new Array(50)
+  .fill(null)
+  .map((_, i) => ALL_CARD_LIST[i]);
 
 export const DeckArea: FC<{ signedQueryStrings: string }> = ({
   signedQueryStrings,

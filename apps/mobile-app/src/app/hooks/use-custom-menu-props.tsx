@@ -3,6 +3,8 @@ import { useState } from 'react';
 export const useCustomMenuProps = () => {
   const [isOpened, setOpened] = useState(false);
   const menuProps = {
+    w: 190,
+    offset: 8,
     onOpen: () => {
       setOpened(true);
     },

@@ -1,5 +1,13 @@
 import { API } from 'aws-amplify';
-import { Button, HStack, Image, Menu, Pressable, View } from 'native-base';
+import {
+  Button,
+  HStack,
+  Image,
+  Menu,
+  Pressable,
+  View,
+  VStack,
+} from 'native-base';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Card } from '../../components/presentation/card';
@@ -9,6 +17,8 @@ import * as authStore from '../../store/auth-store';
 import { DeckArea } from './components/deck-area';
 import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
 import { getVsAssetsImageSrc } from './utils/get-vs-assets-image-src';
+import { DeckOpenArea } from './components/deck-open-area';
+import { ScrollView } from 'native-base';
 
 const cardSample = ALL_CARD_LIST[10];
 
@@ -90,7 +100,12 @@ export const VSScreen = () => {
   );
 
   return (
-    <View>
+    <ScrollView>
+      <VStack>
+        <HStack justifyContent={'flex-end'} p={2}>
+          <DeckOpenArea />
+        </HStack>
+      </VStack>
       <HStack justifyContent={'space-between'} mt={4}>
         <View>
           <View marginLeft={'-8'}>
@@ -122,6 +137,6 @@ export const VSScreen = () => {
           </View>
         </View>
       </HStack>
-    </View>
+    </ScrollView>
   );
 };
