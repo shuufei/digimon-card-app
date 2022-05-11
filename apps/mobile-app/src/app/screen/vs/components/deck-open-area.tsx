@@ -44,8 +44,10 @@ export const DeckOpenArea: FC = memo(() => {
       </HStack>
       <ScrollView horizontal={true} mt={2} overflow={'visible'}>
         <HStack space={1} overflow={'visible'}>
-          {cardList.map((card) => {
-            return <DeckOpenAreaCard key={card.imgFileName} card={card} />;
+          {cardList.map((card, i) => {
+            return (
+              <DeckOpenAreaCard key={`${card.imgFileName}-${i}`} card={card} />
+            );
           })}
         </HStack>
       </ScrollView>
