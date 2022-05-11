@@ -66,7 +66,7 @@ export const BattleArea: FC = memo(() => {
   }, [cardList]);
 
   return (
-    <VStack px={2} pb={20}>
+    <VStack px={2}>
       <View marginTop={5}>
         <CardList
           cardList={digimonCardList}
