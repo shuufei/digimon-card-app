@@ -39,10 +39,10 @@ const CardList: FC<{
 }> = ({ cardList, CardComponent }) => {
   return (
     <HStack flexWrap={'wrap'} space={1} justifyContent={'center'}>
-      {cardList.map((card) => {
+      {cardList.map((card, i) => {
         return (
-          <View paddingBottom={4}>
-            <CardComponent key={card.imgFileName} card={card} />
+          <View key={`${card.imgFileName}-${i}`} paddingBottom={4}>
+            <CardComponent card={card} />
           </View>
         );
       })}
