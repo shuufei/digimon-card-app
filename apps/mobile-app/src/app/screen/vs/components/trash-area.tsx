@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, memo } from 'react';
 import { View } from 'native-base';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { VsScreenCard } from './vs-screen-card';
@@ -9,7 +9,7 @@ const DUMMY_TRASH_CARD_LIST = new Array(20)
   .fill(null)
   .map((_, i) => ALL_CARD_LIST[i]);
 
-export const TrashArea: FC = () => {
+export const TrashArea: FC = memo(() => {
   const [cardList, setCardList] = useState(DUMMY_TRASH_CARD_LIST);
   const lastCard = last(cardList);
 
@@ -23,4 +23,4 @@ export const TrashArea: FC = () => {
       <CountLabel count={cardList.length} />
     </View>
   ) : null;
-};
+});

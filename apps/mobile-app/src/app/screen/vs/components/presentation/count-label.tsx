@@ -1,10 +1,10 @@
-import { FC } from 'react';
 import { Flex, Text } from 'native-base';
+import { FC, memo } from 'react';
 
 export const CountLabel: FC<{
   count: number;
   position?: 'topLeft' | 'topRight';
-}> = ({ count, position = 'topLeft' }) => {
+}> = memo(({ count, position = 'topLeft' }) => {
   const positionStyle =
     position === 'topLeft'
       ? { top: '-4', left: '-4' }
@@ -25,4 +25,4 @@ export const CountLabel: FC<{
       </Text>
     </Flex>
   );
-};
+});

@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, ScrollView, Text, View } from 'native-base';
-import { FC, useState } from 'react';
+import { FC, useState, memo } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { DeckOpenAreaCard } from './deck-open-area-card';
 
@@ -8,7 +8,7 @@ const DUMMY_DECK_OPEN_CARD_LIST = new Array(5)
   .fill(null)
   .map((_, i) => ALL_CARD_LIST[i + 150]);
 
-export const DeckOpenArea: FC = () => {
+export const DeckOpenArea: FC = memo(() => {
   const [cardList, setCardList] = useState(DUMMY_DECK_OPEN_CARD_LIST);
   return (
     <View p={1}>
@@ -51,4 +51,4 @@ export const DeckOpenArea: FC = () => {
       </ScrollView>
     </View>
   );
-};
+});

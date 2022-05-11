@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { CardInfo } from '../../../domains/card';
 import { MenuProps, VsScreenCard } from './vs-screen-card';
 
@@ -13,6 +13,6 @@ const DECK_OPEN_AREA_MENU: MenuProps[] = [
   { label: 'セキュリティに追加' },
 ];
 
-export const DeckOpenAreaCard: FC<{ card: CardInfo }> = ({ card }) => {
+export const DeckOpenAreaCard: FC<{ card: CardInfo }> = memo(({ card }) => {
   return <VsScreenCard card={card} menuList={DECK_OPEN_AREA_MENU} />;
-};
+});

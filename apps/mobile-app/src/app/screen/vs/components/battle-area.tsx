@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, View, VStack } from 'native-base';
-import { FC, useMemo, useState } from 'react';
+import { FC, useMemo, useState, memo } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { CardInfo } from '../../../domains/card';
 import { BattleAreaDigimonCard } from './battle-area-digimon-card';
@@ -50,7 +50,7 @@ const CardList: FC<{
   );
 };
 
-export const BattleArea: FC = () => {
+export const BattleArea: FC = memo(() => {
   const [cardList, setCardList] = useState(DUMMY_BATTLE_CARD_LIST);
 
   const digimonCardList = useMemo(() => {
@@ -114,4 +114,4 @@ export const BattleArea: FC = () => {
       </HStack>
     </VStack>
   );
-};
+});

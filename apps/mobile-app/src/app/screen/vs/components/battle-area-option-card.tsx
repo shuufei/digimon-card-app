@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { CardInfo } from '../../../domains/card';
 import { MenuProps, VsScreenCard } from './vs-screen-card';
 
@@ -9,7 +9,7 @@ const BATTLE_AREA_OPTION_MENU: MenuProps[] = [
   { label: 'セキュリティに追加' },
 ];
 
-export const BattleAreaOptionCard: FC<{ card: CardInfo }> = ({ card }) => {
+export const BattleAreaOptionCard: FC<{ card: CardInfo }> = memo(({ card }) => {
   return (
     <VsScreenCard
       card={card}
@@ -17,4 +17,4 @@ export const BattleAreaOptionCard: FC<{ card: CardInfo }> = ({ card }) => {
       menuPlacement={'right'}
     />
   );
-};
+});

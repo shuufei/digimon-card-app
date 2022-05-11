@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { CardInfo } from '../../../domains/card';
 import { MenuProps, VsScreenCard } from './vs-screen-card';
 
@@ -15,12 +15,14 @@ const BATTLE_AREA_DIGIMON_MENU: MenuProps[] = [
   { label: 'セキュリティに追加' },
 ];
 
-export const BattleAreaDigimonCard: FC<{ card: CardInfo }> = ({ card }) => {
-  return (
-    <VsScreenCard
-      card={card}
-      menuList={BATTLE_AREA_DIGIMON_MENU}
-      menuPlacement={'right'}
-    />
-  );
-};
+export const BattleAreaDigimonCard: FC<{ card: CardInfo }> = memo(
+  ({ card }) => {
+    return (
+      <VsScreenCard
+        card={card}
+        menuList={BATTLE_AREA_DIGIMON_MENU}
+        menuPlacement={'right'}
+      />
+    );
+  }
+);

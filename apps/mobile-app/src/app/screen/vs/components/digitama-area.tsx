@@ -1,5 +1,5 @@
 import { Menu, Pressable, View } from 'native-base';
-import { FC, useState } from 'react';
+import { FC, useState, memo } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import { CountLabel } from './presentation/count-label';
@@ -9,7 +9,7 @@ const DUMMY_DIGITAMA_CARD_LIST = new Array(5)
   .fill(null)
   .map((_, i) => ALL_CARD_LIST[i]);
 
-export const DigitamaArea: FC = () => {
+export const DigitamaArea: FC = memo(() => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
   const [cardList, setCardList] = useState(DUMMY_DIGITAMA_CARD_LIST);
 
@@ -38,4 +38,4 @@ export const DigitamaArea: FC = () => {
       </Menu>
     </View>
   );
-};
+});

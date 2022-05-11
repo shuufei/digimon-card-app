@@ -1,5 +1,5 @@
 import { Menu, Pressable, View } from 'native-base';
-import { FC, useState } from 'react';
+import { FC, useState, memo } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import { VsAssetsImage } from './vs-assets-image';
@@ -8,7 +8,7 @@ const DUMMY_DECK_CARD_LIST = new Array(5)
   .fill(null)
   .map((_, i) => ALL_CARD_LIST[i + 10]);
 
-export const SecurityArea: FC = () => {
+export const SecurityArea: FC = memo(() => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
   const [cardList, setCardList] = useState(DUMMY_DECK_CARD_LIST);
 
@@ -47,4 +47,4 @@ export const SecurityArea: FC = () => {
       <Menu.Item>シャッフル</Menu.Item>
     </Menu>
   );
-};
+});

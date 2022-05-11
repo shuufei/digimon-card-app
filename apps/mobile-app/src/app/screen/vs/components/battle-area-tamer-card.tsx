@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { CardInfo } from '../../../domains/card';
 import { MenuProps, VsScreenCard } from './vs-screen-card';
 
@@ -12,7 +12,7 @@ const BATTLE_AREA_TAMER_MENU: MenuProps[] = [
   { label: '山札の下に戻す' },
 ];
 
-export const BattleAreaTamerCard: FC<{ card: CardInfo }> = ({ card }) => {
+export const BattleAreaTamerCard: FC<{ card: CardInfo }> = memo(({ card }) => {
   return (
     <VsScreenCard
       card={card}
@@ -20,4 +20,4 @@ export const BattleAreaTamerCard: FC<{ card: CardInfo }> = ({ card }) => {
       menuPlacement={'right'}
     />
   );
-};
+});

@@ -1,6 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { IMenuProps, Menu, Pressable, View } from 'native-base';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../components/presentation/card';
 import { CardInfo } from '../../../domains/card';
@@ -19,7 +19,7 @@ export const VsScreenCard: FC<{
   card: CardInfo;
   menuList: MenuProps[];
   menuPlacement?: IMenuProps['placement'];
-}> = ({ card, menuList, menuPlacement = 'bottom left' }) => {
+}> = memo(({ card, menuList, menuPlacement = 'bottom left' }) => {
   const signedQueryStrings = useSelector(
     authStore.selectors.signedQueryStringsSelector
   );
@@ -63,4 +63,4 @@ export const VsScreenCard: FC<{
       })}
     </Menu>
   ) : null;
-};
+});
