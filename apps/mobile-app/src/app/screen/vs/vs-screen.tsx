@@ -1,7 +1,6 @@
-import { Button, HStack, ScrollView, View, VStack } from 'native-base';
-import { Card } from '../../components/presentation/card';
-import { ALL_CARD_LIST } from '../../configs/all-card-list';
+import { HStack, ScrollView, View, VStack } from 'native-base';
 import { useDispatchSetSigendQueryStrings } from '../../hooks/use-dispatch-set-signed-query-strings';
+import { BattleArea } from './components/battle-area';
 import { DeckArea } from './components/deck-area';
 import { DeckOpenArea } from './components/deck-open-area';
 import { DigitamaArea } from './components/digitama-area';
@@ -9,9 +8,6 @@ import { SecurityArea } from './components/security-area';
 import { SecurityOpenArea } from './components/security-open-area';
 import { TrainingArea } from './components/training-area';
 import { TrashArea } from './components/trash-area';
-import { CARD_HEIGHT, CARD_WIDTH } from './configs/card-style';
-
-const cardSample = ALL_CARD_LIST[10];
 
 export const VSScreen = () => {
   useDispatchSetSigendQueryStrings();
@@ -36,23 +32,8 @@ export const VSScreen = () => {
             <TrainingArea />
           </VStack>
         </VStack>
-        <View>
-          <Card
-            card={cardSample}
-            width={CARD_WIDTH}
-            height={CARD_HEIGHT}
-            padding={0}
-            isPressable={false}
-          />
-          <Button
-            size={'xs'}
-            mt={1}
-            colorScheme="gray"
-            variant="outline"
-            _pressed={{ borderWidth: '1', borderColor: '#000000' }}
-          >
-            選択
-          </Button>
+        <View flex={1}>
+          <BattleArea />
         </View>
         <View>
           <VStack marginRight={'-4'} space={2}>
