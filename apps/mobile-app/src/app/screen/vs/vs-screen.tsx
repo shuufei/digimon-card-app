@@ -6,6 +6,7 @@ import { DeckOpenArea } from './components/deck-open-area';
 import { DigitamaArea } from './components/digitama-area';
 import { HandAreaSheet } from './components/hand-area-sheet';
 import { SecurityArea } from './components/security-area';
+import { SecurityCheckAreaSheet } from './components/security-check-area-sheet';
 import { SecurityOpenArea } from './components/security-open-area';
 import { TrainingArea } from './components/training-area';
 import { TrashArea } from './components/trash-area';
@@ -46,6 +47,7 @@ export const VSScreen = () => {
         </HStack>
       </ScrollView>
       <HandAreaSheet />
+      <SecurityCheckAreaSheet />
     </>
   );
 };
