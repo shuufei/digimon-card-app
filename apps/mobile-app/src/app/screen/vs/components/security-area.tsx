@@ -1,7 +1,9 @@
 import { Menu, Pressable, View } from 'native-base';
-import { FC, useState, memo } from 'react';
+import { FC, memo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
+import * as vsStore from '../../../store/vs-store';
 import { VsAssetsImage } from './vs-assets-image';
 
 const DUMMY_DECK_CARD_LIST = new Array(5)
@@ -11,6 +13,7 @@ const DUMMY_DECK_CARD_LIST = new Array(5)
 export const SecurityArea: FC = memo(() => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
   const [cardList, setCardList] = useState(DUMMY_DECK_CARD_LIST);
+  const dispatch = useDispatch();
 
   const securityCount = cardList.length;
 
@@ -43,7 +46,17 @@ export const SecurityArea: FC = memo(() => {
       }}
     >
       <Menu.Item>オープン</Menu.Item>
-      <Menu.Item>確認</Menu.Item>
+      <Menu.Item
+        onPress={() => {
+          dispatch(
+            vsStore.actions.setShouldShowSecurityCheckView({
+              shouldShowSecurityCheckView: true,
+            })
+          );
+        }}
+      >
+        確認
+      </Menu.Item>
       <Menu.Item>シャッフル</Menu.Item>
     </Menu>
   );
