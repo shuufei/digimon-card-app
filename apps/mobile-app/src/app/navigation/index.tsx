@@ -11,11 +11,14 @@ import { SignInScreen } from '../screen/sign-in-screen';
 import { SignOutScreen } from '../screen/sign-out-screen';
 import { VSScreen } from '../screen/vs/vs-screen';
 import * as authStore from '../store/auth-store';
+import { VsCard } from '../screen/vs/domains/vs-card';
+import { VsCardModalScreen } from '../screen/vs-card-modal-screen';
 
 export type RootParamList = {
   Main: undefined;
   DeckFilterModal: undefined;
   CardModal: { cardImageSrc: string; name: string };
+  VsCardModal: { card: VsCard };
   SignIn: undefined;
 };
 
@@ -53,7 +56,7 @@ export const Navigation = () => {
       }
     };
     checkSignedIn();
-  }, []);
+  }, [dispatch]);
 
   return (
     <NavigationContainer>
@@ -79,6 +82,11 @@ export const Navigation = () => {
         <Stack.Screen
           name="CardModal"
           component={CardModalScreen}
+          options={{ presentation: 'modal' }}
+        />
+        <Stack.Screen
+          name="VsCardModal"
+          component={VsCardModalScreen}
           options={{ presentation: 'modal' }}
         />
       </Stack.Navigator>

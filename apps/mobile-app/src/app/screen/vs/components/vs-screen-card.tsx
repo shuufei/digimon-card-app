@@ -1,5 +1,6 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { IMenuProps, Menu, Pressable, View } from 'native-base';
+import { reverse } from 'lodash';
+import { HStack, Image, IMenuProps, Menu, Pressable, View } from 'native-base';
 import { FC, memo } from 'react';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../components/presentation/card';
@@ -9,6 +10,7 @@ import { RootParamList } from '../../../navigation/index';
 import * as authStore from '../../../store/auth-store';
 import { getCardImageSrc } from '../../../utils/get-card-image-src';
 import { CARD_HEIGHT, CARD_WIDTH } from '../configs/card-style';
+import { isVsCard, VsCard } from '../domains/vs-card';
 
 export type MenuProps = {
   label: string;
@@ -16,7 +18,7 @@ export type MenuProps = {
 };
 
 export const VsScreenCard: FC<{
-  card: CardInfo;
+  card: VsCard | CardInfo;
   menuList: MenuProps[];
   menuPlacement?: IMenuProps['placement'];
 }> = memo(({ card, menuList, menuPlacement = 'bottom left' }) => {
@@ -31,7 +33,50 @@ export const VsScreenCard: FC<{
       {...menuProps}
       placement={menuPlacement}
       trigger={(triggerProps) => {
-        return (
+        return isVsCard(card) ? (
+          <Pressable
+            {...triggerProps}
+            onLongPress={() => {
+              navigate('VsCardModal', {
+                card,
+              });
+            }}
+          >
+            <View {...triggerStyleProps} width={CARD_WIDTH}>
+              <Card
+                card={card.data}
+                height={CARD_HEIGHT}
+                width={CARD_WIDTH}
+                isPressable={false}
+                signedQueryStrings={signedQueryStrings}
+              />
+              {card.evolutionarySources.length > 0 && (
+                <HStack flexWrap={'wrap'} space={0} mt={1}>
+                  {reverse([...card.evolutionarySources]).map(
+                    (evolutionarySource, i) => {
+                      return (
+                        <Image
+                          key={`${evolutionarySource.imgFileName}-${i}`}
+                          source={{
+                            uri: getCardImageSrc(
+                              evolutionarySource,
+                              signedQueryStrings
+                            ),
+                            cache: 'force-cache',
+                          }}
+                          resizeMode="center"
+                          height={4}
+                          width={4}
+                          alt={`${evolutionarySource.name}`}
+                        />
+                      );
+                    }
+                  )}
+                </HStack>
+              )}
+            </View>
+          </Pressable>
+        ) : (
           <Pressable
             {...triggerProps}
             onLongPress={() => {
@@ -41,7 +86,7 @@ export const VsScreenCard: FC<{
               });
             }}
           >
-            <View {...triggerStyleProps}>
+            <View {...triggerStyleProps} width={CARD_WIDTH}>
               <Card
                 card={card}
                 height={CARD_HEIGHT}
