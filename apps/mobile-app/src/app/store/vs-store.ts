@@ -3,12 +3,14 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 export type State = {
   ui: {
     shouldShowSecurityCheckView: boolean;
+    shouldShowTrashCheckView: boolean;
   };
 };
 
 const initialState: State = {
   ui: {
     shouldShowSecurityCheckView: false,
+    shouldShowTrashCheckView: false,
   },
 };
 
@@ -22,6 +24,14 @@ const vsSlice = createSlice({
     ) => {
       state.ui.shouldShowSecurityCheckView =
         action.payload.shouldShowSecurityCheckView;
+      return state;
+    },
+    setShouldShowTrashCheckView: (
+      state,
+      action: PayloadAction<Pick<State['ui'], 'shouldShowTrashCheckView'>>
+    ) => {
+      state.ui.shouldShowTrashCheckView =
+        action.payload.shouldShowTrashCheckView;
       return state;
     },
   },

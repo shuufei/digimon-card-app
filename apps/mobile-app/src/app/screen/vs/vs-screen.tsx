@@ -10,6 +10,7 @@ import { SecurityCheckAreaSheet } from './components/security-check-area-sheet';
 import { SecurityOpenArea } from './components/security-open-area';
 import { TrainingArea } from './components/training-area';
 import { TrashArea } from './components/trash-area';
+import { TrashCheckAreaSheet } from './components/trash-check-area-sheet';
 
 export const VSScreen = () => {
   useDispatchSetSigendQueryStrings();
@@ -48,6 +49,7 @@ export const VSScreen = () => {
       </ScrollView>
       <HandAreaSheet />
       <SecurityCheckAreaSheet />
+      <TrashCheckAreaSheet />
     </>
   );
 };
