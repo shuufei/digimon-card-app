@@ -1,11 +1,10 @@
 import BottomSheet from '@gorhom/bottom-sheet';
-import { HStack, View, Text, ScrollView, Button } from 'native-base';
-import { FC, useMemo, useState, useEffect, useRef } from 'react';
+import { Button, HStack, ScrollView, Text, View } from 'native-base';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { HandAreaCard } from './hand-area-card';
 import * as vsStore from '../../../store/vs-store';
-import { useSelector, useDispatch } from 'react-redux';
 import { SecurityCheckAreaCard } from './security-check-area-card';
 
 const DUMMY_SECURITY_CHECK_CARD_LIST = new Array(5)
