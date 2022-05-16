@@ -1,7 +1,7 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { reverse } from 'lodash';
 import { HStack, Image, IMenuProps, Menu, Pressable, View } from 'native-base';
-import { FC, memo } from 'react';
+import { FC, memo, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Card } from '../../../components/presentation/card';
 import { CardInfo } from '../../../domains/card';
@@ -28,6 +28,11 @@ export const VsScreenCard: FC<{
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
   const { navigate } = useNavigation<NavigationProp<RootParamList>>();
 
+  const cardViewWidth = useMemo(
+    () => (isVsCard(card) && card.isRest ? CARD_HEIGHT : CARD_WIDTH),
+    [card]
+  );
+
   return signedQueryStrings ? (
     <Menu
       {...menuProps}
@@ -42,14 +47,16 @@ export const VsScreenCard: FC<{
               });
             }}
           >
-            <View {...triggerStyleProps} width={CARD_WIDTH}>
-              <Card
-                card={card.data}
-                height={CARD_HEIGHT}
-                width={CARD_WIDTH}
-                isPressable={false}
-                signedQueryStrings={signedQueryStrings}
-              />
+            <View {...triggerStyleProps} width={cardViewWidth}>
+              <View style={card.isRest && { transform: [{ rotate: '90deg' }] }}>
+                <Card
+                  card={card.data}
+                  height={CARD_HEIGHT}
+                  width={CARD_WIDTH}
+                  isPressable={false}
+                  signedQueryStrings={signedQueryStrings}
+                />
+              </View>
               {card.evolutionarySources.length > 0 && (
                 <HStack flexWrap={'wrap'} space={0} mt={1}>
                   {reverse([...card.evolutionarySources]).map(

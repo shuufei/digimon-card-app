@@ -44,12 +44,12 @@ const DUMMY_BATTLE_CARD_LIST: VsCard[] = [
           ALL_CARD_LIST[33],
           ALL_CARD_LIST[34],
         ],
-        isRest: false,
+        isRest: true,
       }
     : {
         data: card,
         evolutionarySources: [],
-        isRest: false,
+        isRest: i % 2 === 0,
       };
 });
 
