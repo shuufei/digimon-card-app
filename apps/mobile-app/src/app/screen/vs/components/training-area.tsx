@@ -1,5 +1,5 @@
 import { View } from 'native-base';
-import { FC, useState, memo } from 'react';
+import { FC, memo, useState } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { VsCard } from '../domains/vs-card';
 import { TrainingAreaCard } from './training-area-card';

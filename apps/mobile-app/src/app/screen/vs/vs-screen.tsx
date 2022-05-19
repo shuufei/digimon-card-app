@@ -5,6 +5,7 @@ import { HandAreaSheet } from './components/hand-area-sheet';
 import { Memory } from './components/memory';
 import { SecurityCheckAreaSheet } from './components/security-check-area-sheet';
 import { TrashCheckAreaSheet } from './components/trash-check-area-sheet';
+import { BoardContext } from './context/board-context';
 
 export const VSScreen = () => {
   useDispatchSetSigendQueryStrings();
@@ -12,12 +13,19 @@ export const VSScreen = () => {
   return (
     <>
       <ScrollView>
-        <VStack>
+        <VStack pb={'240'}>
+          <View style={{ transform: [{ rotate: '180deg' }] }}>
+            <BoardContext.Provider value={{ side: 'opponent' }}>
+              <Board />
+            </BoardContext.Provider>
+          </View>
           <View p={2}>
             <Memory />
           </View>
           <View>
-            <Board />
+            <BoardContext.Provider value={{ side: 'myself' }}>
+              <Board />
+            </BoardContext.Provider>
           </View>
         </VStack>
       </ScrollView>

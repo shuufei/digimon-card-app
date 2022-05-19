@@ -20,7 +20,7 @@ export const Board: FC = () => {
           <DeckOpenArea />
         </HStack>
       </VStack>
-      <HStack justifyContent={'space-between'} mt={4} pb={'240'}>
+      <HStack justifyContent={'space-between'} mt={4} pb={4}>
         <VStack>
           <View marginLeft={'-8'}>
             <SecurityArea />

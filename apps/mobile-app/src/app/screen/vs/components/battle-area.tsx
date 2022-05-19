@@ -1,11 +1,12 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, View, VStack } from 'native-base';
-import { FC, memo, useMemo, useState } from 'react';
+import { FC, memo, useMemo, useState, useContext } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { VsCard } from '../domains/vs-card';
 import { BattleAreaDigimonCard } from './battle-area-digimon-card';
 import { BattleAreaOptionCard } from './battle-area-option-card';
 import { BattleAreaTamerCard } from './battle-area-tamer-card';
+import { BoardContext } from '../context/board-context';
 
 const DUMMY_BATTLE_CARD_LIST: VsCard[] = [
   ALL_CARD_LIST[10],
@@ -85,6 +86,8 @@ export const BattleArea: FC = memo(() => {
     return cardList.filter((v) => v.data.cardtype === '4_オプション');
   }, [cardList]);
 
+  const boardContext = useContext(BoardContext);
+
   return (
     <VStack px={2}>
       <View marginTop={5}>
@@ -106,31 +109,33 @@ export const BattleArea: FC = memo(() => {
         />
       </View>
       <HStack justifyContent={'center'}>
-        <Menu
-          placement="top"
-          trigger={(triggerProps) => {
-            return (
-              <Button
-                size="xs"
-                variant="ghost"
-                _pressed={{
-                  background: '#f0f0f0',
-                }}
-                colorScheme="blue"
-                {...triggerProps}
-              >
-                <Ionicons
-                  name="ellipsis-horizontal-circle-outline"
-                  size={20}
-                  color={'#000000'}
-                />
-              </Button>
-            );
-          }}
-        >
-          <Menu.Item>全てレスト</Menu.Item>
-          <Menu.Item>全てアクティブ</Menu.Item>
-        </Menu>
+        {boardContext.side === 'myself' && (
+          <Menu
+            placement="top"
+            trigger={(triggerProps) => {
+              return (
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  _pressed={{
+                    background: '#f0f0f0',
+                  }}
+                  colorScheme="blue"
+                  {...triggerProps}
+                >
+                  <Ionicons
+                    name="ellipsis-horizontal-circle-outline"
+                    size={20}
+                    color={'#000000'}
+                  />
+                </Button>
+              );
+            }}
+          >
+            <Menu.Item>全てレスト</Menu.Item>
+            <Menu.Item>全てアクティブ</Menu.Item>
+          </Menu>
+        )}
       </HStack>
     </VStack>
   );

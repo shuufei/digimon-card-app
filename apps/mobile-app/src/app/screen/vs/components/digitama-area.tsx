@@ -1,9 +1,10 @@
 import { Menu, Pressable, View } from 'native-base';
-import { FC, useState, memo } from 'react';
+import { FC, useState, memo, useContext } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import { CountLabel } from './presentation/count-label';
 import { VsAssetsImage } from './vs-assets-image';
+import { BoardContext } from '../context/board-context';
 
 const DUMMY_DIGITAMA_CARD_LIST = new Array(5)
   .fill(null)
@@ -12,6 +13,7 @@ const DUMMY_DIGITAMA_CARD_LIST = new Array(5)
 export const DigitamaArea: FC = memo(() => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
   const [cardList, setCardList] = useState(DUMMY_DIGITAMA_CARD_LIST);
+  const boardContext = useContext(BoardContext);
 
   return (
     <View>
@@ -19,7 +21,10 @@ export const DigitamaArea: FC = memo(() => {
         placement={'left top'}
         trigger={(triggerProps) => {
           return (
-            <Pressable accessibilityLabel="more options menu" {...triggerProps}>
+            <Pressable
+              accessibilityLabel="more options menu"
+              {...(boardContext.side === 'myself' ? triggerProps : {})}
+            >
               <View {...triggerStyleProps}>
                 <VsAssetsImage
                   imageFileName="back_digitama.png"
