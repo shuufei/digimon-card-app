@@ -18,7 +18,7 @@ export const CardModalScreen: FC = () => {
     setOptions({
       title,
     });
-  }, [title]);
+  }, [setOptions, title]);
 
   return (
     <View justifyContent="center">

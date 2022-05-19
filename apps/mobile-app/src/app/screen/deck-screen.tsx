@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SegmentControl from '@react-native-segmented-control/segmented-control';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { API } from 'aws-amplify';
 import { Button, Menu, Text, View } from 'native-base';
 import { FC, useEffect, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
@@ -10,14 +9,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CardList } from '../components/container/card-list';
 import { DeckList } from '../components/container/deck-list';
 import { DeckScreenSheet } from '../components/container/deck-screen-sheet';
-import { useValueRef } from '../components/hooks/use-value-ref';
 import { ALL_CARD_LIST } from '../configs/all-card-list';
 import { DECK_SCREEN_TAB } from '../configs/deck-screen-tabs';
 import { storageKeys } from '../configs/storage';
 import { Category } from '../domains/card';
 import { Deck } from '../domains/deck';
+import { useDispatchSetSigendQueryStrings } from '../hooks/use-dispatch-set-signed-query-strings';
+import { useValueRef } from '../hooks/use-value-ref';
 import { RootParamList } from '../navigation';
-import * as authStore from '../store/auth-store';
 import {
   actions as cardListFilterStoreActions,
   selectors as cardListFilterStoreSelectors,
@@ -219,22 +218,7 @@ export const DeckScreen = () => {
     saveDecks();
   }, [decks]);
 
-  useEffect(() => {
-    const setSignedQueryStrings = async () => {
-      const res: { credentials: string } = await API.get(
-        'v1',
-        '/v1/credentials',
-        {}
-      );
-      console.log('--- signed query strings: ', res.credentials);
-      dispatch(
-        authStore.actions.setSignedQueryString({
-          signedQueryStrings: res.credentials,
-        })
-      );
-    };
-    setSignedQueryStrings();
-  }, [dispatch]);
+  useDispatchSetSigendQueryStrings();
 
   useEffect(() => {
     setOptions({
