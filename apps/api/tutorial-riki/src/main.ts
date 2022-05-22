@@ -16,13 +16,13 @@ type Deck = {
   name: string;
   cards: Card[];
 };
-type DeckList = {
+type DeckObject = {
   id: string;
   deckname: string;
 };
 
 
-let DeckData = [
+let Deck_Data = [
   {
     id : '00',
     name : 'アルファモン',
@@ -41,60 +41,60 @@ app.get('/api', (req, res) => {
   res.status(400).send({ message: 'Welcome to api/tutorial-riki!' });
 });
 
-function GetDeckName(DeckList : Deck[]){
-  let DeckNameList : DeckList[] = new Array();
-  DeckData.forEach((value, index, arr)=> {
-    DeckNameList.push({id : value.id, deckname : value.name}) ;
+function getDeckName(Deck_Data : Deck[]) : string[]{
+  const deckNameList : string[] = [] ;
+  Deck_Data.map((value, index)=> {
+    deckNameList.push(value.name) ;
   });
-  return DeckNameList
+  return deckNameList
 }
 
-let DeckNameList : DeckList[] = new Array();
-app.get('/api/decklist', (req, res)=>{
-  DeckNameList = GetDeckName(DeckData);
-  res.json(DeckNameList);
+let deckNameList : string[] = getDeckName(Deck_Data);
+app.get('/decks', (req, res)=>{
+  deckNameList = getDeckName(Deck_Data);
+  res.send(deckNameList);
 });
 
-let DirectedId : string = '01';
-app.get('/api/deckname', (req, res) =>{
-  DeckData.forEach((value, index, arr) => {
-    if (value.id === DirectedId){
-      res.send(value.name);
+app.get('/decks/:id', (req, res) =>{
+  Deck_Data.map((value, index) => {
+    if (value.id === req.params.id){
+      res.send(value.cards);
     };
   });
 });
 
-const NewDeck : Deck = {
+const New_Deck : Deck = {
   id : '02',
   name : 'シャウトモン',
   cards : require('/Users/hanakappa/Library/Mobile Documents/com~apple~CloudDocs/20210529_digimon-card-game/deck/deck_riki/シャウトモン.json')
 };
 
-app.post('/api/newdeck', function(req, res){
-  DeckData.push(NewDeck);
-  DeckNameList.push({id: NewDeck.id, deckname: NewDeck.name});
-  res.json(DeckNameList);
+app.post('/decks', function(req, res){
+  Deck_Data.push(New_Deck);
+  deckNameList.push(New_Deck.name);
+  console.log(req.body);
+  res.json(req.body);
 });
 
-let DirectedId2 : string = '02';
-let ChangedCards : Card[] = require('/Users/hanakappa/Library/Mobile Documents/com~apple~CloudDocs/20210529_digimon-card-game/deck/deck_riki/ロードナイトモン-2.json');
+let changedCards : Card[] = require('/Users/hanakappa/Library/Mobile Documents/com~apple~CloudDocs/20210529_digimon-card-game/deck/deck_riki/ロードナイトモン-2.json');
 
-app.put('/api/deck_change', function(req, res){
-  DeckData.forEach((value, index, arr)=>{
-    if(value.id === DirectedId2){
-      value.cards = ChangedCards;
+app.put('/decks/:id', function(req, res){
+  Deck_Data.map((value, index)=>{
+    if(value.id === req.params.id){
+      value.cards = changedCards;
     };
   });
-  DeckNameList = GetDeckName(DeckData);
-  res.json(DeckNameList);
+  deckNameList = getDeckName(Deck_Data);
+  res.send(deckNameList);
 });
 
-let DirectedId3 : string = '01';
-app.delete('/api/delete', function(req, res){
-  DeckData = DeckData.filter(item => item.id.match(DirectedId3)==null);
-  DeckNameList = GetDeckName(DeckData);
-  res.json(DeckNameList);
+
+app.delete('/decks/:id', function(req, res){
+  Deck_Data = Deck_Data.filter(item => item.id.match(req.params.id)==null);
+  deckNameList = getDeckName(Deck_Data);
+  res.send(deckNameList);
 });
+
 
 
 
