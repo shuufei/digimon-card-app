@@ -5,7 +5,11 @@
 
 import * as express from 'express';
 
+
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 
 type Card = {
   id: string;
@@ -36,11 +40,6 @@ let Deck_Data = [
 ]
 
 
-
-app.get('/api', (req, res) => {
-  res.status(400).send({ message: 'Welcome to api/tutorial-riki!' });
-});
-
 function getDeckName(Deck_Data : Deck[]) : string[]{
   const deckNameList : string[] = [] ;
   Deck_Data.map((value, index)=> {
@@ -70,10 +69,9 @@ const New_Deck : Deck = {
 };
 
 app.post('/decks', function(req, res){
-  Deck_Data.push(New_Deck);
-  deckNameList.push(New_Deck.name);
-  console.log(req.body);
-  res.json(req.body);
+  Deck_Data.push(req.body);
+  deckNameList.push(req.body.name);
+  res.send(deckNameList);
 });
 
 let changedCards : Card[] = require('/Users/hanakappa/Library/Mobile Documents/com~apple~CloudDocs/20210529_digimon-card-game/deck/deck_riki/ロードナイトモン-2.json');
