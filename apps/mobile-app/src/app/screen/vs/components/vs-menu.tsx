@@ -1,9 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, Menu } from 'native-base';
-import { FC } from 'react';
+import { FC, memo } from 'react';
 import { MenuItem } from '../../../components/presentation/menu-item';
 
-export const VsMenu: FC = () => {
+export const VsMenu: FC = memo(() => {
   return (
     <Menu
       trigger={(triggerProps) => {
@@ -25,9 +25,10 @@ export const VsMenu: FC = () => {
       px={2}
       mr={4}
     >
+      <MenuItem label="対戦相手と接続" />
       <MenuItem label="デッキを選択" />
       <MenuItem label="対戦セットアップ" />
       <MenuItem label="接続を切断" color="red.600" />
     </Menu>
   );
-};
+});

@@ -12,7 +12,7 @@ import { TrashCheckAreaSheet } from './components/trash-check-area-sheet';
 import { VsMenu } from './components/vs-menu';
 import { BoardContext } from './context/board-context';
 
-export const VSScreen = () => {
+export const VsBoardScreen = () => {
   useDispatchSetSigendQueryStrings();
 
   const { setOptions } = useNavigation<NavigationProp<RootParamList>>();
