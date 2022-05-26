@@ -13,12 +13,16 @@ import { VsCardModalScreen } from '../screen/vs-card-modal-screen';
 import { VsCard } from '../screen/vs/domains/vs-card';
 import { VsBoardScreen } from '../screen/vs/vs-board-screen';
 import * as authStore from '../store/auth-store';
+import { ConnectOpponentModalScreen } from '../screen/connect-opponent-modal-screen';
+import { SelectDeckModalScreen } from '../screen/select-deck-modal-screen';
 
 export type RootParamList = {
   Main: undefined;
   DeckFilterModal: undefined;
   CardModal: { cardImageSrc: string; name: string };
   VsCardModal: { card: VsCard };
+  ConnectOpponentModal: undefined;
+  SelectDeckModal: undefined;
   SignIn: undefined;
 };
 
@@ -112,6 +116,16 @@ export const Navigation = () => {
           name="VsCardModal"
           component={VsCardModalScreen}
           options={{ presentation: 'modal' }}
+        />
+        <Stack.Screen
+          name="ConnectOpponentModal"
+          component={ConnectOpponentModalScreen}
+          options={{ presentation: 'modal', title: '対戦相手と接続' }}
+        />
+        <Stack.Screen
+          name="SelectDeckModal"
+          component={SelectDeckModalScreen}
+          options={{ presentation: 'modal', title: 'デッキを選択' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
