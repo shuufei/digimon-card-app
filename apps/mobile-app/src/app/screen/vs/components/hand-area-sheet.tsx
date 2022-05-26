@@ -11,7 +11,7 @@ const DUMMY_HAND_CARD_LIST = new Array(30)
 
 export const HandAreaSheet: FC = () => {
   const [cardList, setCardList] = useState(DUMMY_HAND_CARD_LIST);
-  const snapPoints = useMemo(() => ['30%', '50%', '75%'], []);
+  const snapPoints = useMemo(() => ['20%', '50%', '75%'], []);
 
   return (
     <BottomSheet index={0} snapPoints={snapPoints} style={styles.bottonSheet}>
