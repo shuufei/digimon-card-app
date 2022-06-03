@@ -142,6 +142,7 @@ export const CATEGORY = {
   BT07: 'BT07',
   BT08: 'BT08',
   BT09: 'BT09',
+  BT10: 'BT10',
   EX01: 'EX01',
   EX02: 'EX02',
   ST01: 'ST01',
@@ -155,6 +156,8 @@ export const CATEGORY = {
   ST09: 'ST09',
   ST10: 'ST10',
   ST11: 'ST11',
+  ST12: 'ST12',
+  ST13: 'ST13',
   PRO: 'PRO',
 } as const;
 
@@ -182,6 +185,8 @@ export const convertToDisplayCategoryFromCategory = (
       return 'BT-08 ニューヒーロー';
     case 'BT09':
       return 'BT-09 Xレコード';
+    case 'BT10':
+      return 'BT-10 クロスエンカウンター';
     case 'EX01':
       return 'EX-01 クラシックコレクション';
     case 'EX02':
@@ -208,6 +213,10 @@ export const convertToDisplayCategoryFromCategory = (
       return 'ST-10 異世界の軍師';
     case 'ST11':
       return 'ST-11 スペシャルエントリーセット';
+    case 'ST12':
+      return 'ST-12 ジエスモン';
+    case 'ST13':
+      return 'ST-13 ラグナロードモン';
     case 'PRO':
       return 'PRO プロモーション';
     default:
