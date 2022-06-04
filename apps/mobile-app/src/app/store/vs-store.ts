@@ -1,18 +1,31 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Deck } from '../domains/deck';
+import {
+  convertToVsCardListFromDeck,
+  initVsBoard,
+  VsBoard,
+} from '../domains/vs-board';
 
 export type State = {
   ui: {
     shouldShowSecurityCheckView: boolean;
     shouldShowTrashCheckView: boolean;
   };
-  selectedDeck?: Deck;
+  board: {
+    myself: VsBoard;
+    opponent: VsBoard;
+  };
+  selectedDeckId?: Deck['id'];
 };
 
 const initialState: State = {
   ui: {
     shouldShowSecurityCheckView: false,
     shouldShowTrashCheckView: false,
+  },
+  board: {
+    myself: initVsBoard,
+    opponent: initVsBoard,
   },
 };
 
@@ -36,8 +49,12 @@ const vsSlice = createSlice({
         action.payload.shouldShowTrashCheckView;
       return state;
     },
-    selectDeck: (state, action: PayloadAction<Pick<State, 'selectedDeck'>>) => {
-      state.selectedDeck = action.payload.selectedDeck;
+    selectDeck: (state, action: PayloadAction<{ deck: Deck | undefined }>) => {
+      state.board.myself.deck =
+        action.payload.deck != null
+          ? convertToVsCardListFromDeck(action.payload.deck)
+          : [];
+      state.selectedDeckId = action.payload.deck?.id;
       return state;
     },
   },
@@ -51,7 +68,13 @@ export const name = vsSlice.name;
 
 const selectSelf = (state: { [name]: State }) => state[name];
 const uiStateSelector = createSelector(selectSelf, (state) => state.ui);
+const myselfDeckSelector = createSelector(
+  selectSelf,
+  (state) => state.board.myself.deck
+);
+
 export const selectors = {
   selectSelf,
   uiStateSelector,
+  myselfDeckSelector,
 };
