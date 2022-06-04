@@ -57,6 +57,11 @@ const vsSlice = createSlice({
       state.selectedDeckId = action.payload.deck?.id;
       return state;
     },
+    draw: (state) => {
+      const drawCard = state.board.myself.deck.pop();
+      drawCard && state.board.myself.hand.push(drawCard);
+      return state;
+    },
   },
 });
 
@@ -72,9 +77,14 @@ const myselfDeckSelector = createSelector(
   selectSelf,
   (state) => state.board.myself.deck
 );
+const myselfHandSelector = createSelector(
+  selectSelf,
+  (state) => state.board.myself.hand
+);
 
 export const selectors = {
   selectSelf,
   uiStateSelector,
   myselfDeckSelector,
+  myselfHandSelector,
 };

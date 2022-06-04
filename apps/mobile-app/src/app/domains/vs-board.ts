@@ -5,10 +5,12 @@ import { VsCard } from './vs-card';
 
 export type VsBoard = {
   deck: VsCard[];
+  hand: VsCard[];
 };
 
 export const initVsBoard: VsBoard = {
   deck: [],
+  hand: [],
 };
 
 export const convertToVsCardListFromDeck = (deck: Deck): VsCard[] => {
