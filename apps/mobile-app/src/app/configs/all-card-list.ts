@@ -7,6 +7,7 @@ import BT06 from '../../assets/cardInfo/BT06.json';
 import BT07 from '../../assets/cardInfo/BT07.json';
 import BT08 from '../../assets/cardInfo/BT08.json';
 import BT09 from '../../assets/cardInfo/BT09.json';
+import BT10 from '../../assets/cardInfo/BT10.json';
 import EX01 from '../../assets/cardInfo/EX01.json';
 import EX02 from '../../assets/cardInfo/EX02.json';
 import PRO from '../../assets/cardInfo/PRO.json';
@@ -21,6 +22,8 @@ import ST08 from '../../assets/cardInfo/ST08.json';
 import ST09 from '../../assets/cardInfo/ST09.json';
 import ST10 from '../../assets/cardInfo/ST10.json';
 import ST11 from '../../assets/cardInfo/ST11.json';
+import ST12 from '../../assets/cardInfo/ST12.json';
+import ST13 from '../../assets/cardInfo/ST13.json';
 import { CardInfo, COLOR, Color, CardType, Lv } from '../domains/card';
 
 export const convertFromApiColorToColor = (color: string): Color => {
@@ -86,6 +89,7 @@ export const ALL_CARD_LIST: CardInfo[] = [
   ...BT07.cardInfoList.map((v) => ({ ...v, category: 'BT07' })),
   ...BT08.cardInfoList.map((v) => ({ ...v, category: 'BT08' })),
   ...BT09.cardInfoList.map((v) => ({ ...v, category: 'BT09' })),
+  ...BT10.cardInfoList.map((v) => ({ ...v, category: 'BT10' })),
   ...EX01.cardInfoList.map((v) => ({ ...v, category: 'EX01' })),
   ...EX02.cardInfoList.map((v) => ({ ...v, category: 'EX02' })),
   ...PRO.cardInfoList.map((v) => ({ ...v, category: 'PRO' })),
@@ -100,6 +104,8 @@ export const ALL_CARD_LIST: CardInfo[] = [
   ...ST09.cardInfoList.map((v) => ({ ...v, category: 'ST09' })),
   ...ST10.cardInfoList.map((v) => ({ ...v, category: 'ST10' })),
   ...ST11.cardInfoList.map((v) => ({ ...v, category: 'ST11' })),
+  ...ST12.cardInfoList.map((v) => ({ ...v, category: 'ST12' })),
+  ...ST13.cardInfoList.map((v) => ({ ...v, category: 'ST13' })),
 ].map((v) => ({
   ...v,
   color: convertFromApiColorToColor(v.color),

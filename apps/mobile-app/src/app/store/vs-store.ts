@@ -1,10 +1,12 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Deck } from '../domains/deck';
 
 export type State = {
   ui: {
     shouldShowSecurityCheckView: boolean;
     shouldShowTrashCheckView: boolean;
   };
+  selectedDeck?: Deck;
 };
 
 const initialState: State = {
@@ -32,6 +34,10 @@ const vsSlice = createSlice({
     ) => {
       state.ui.shouldShowTrashCheckView =
         action.payload.shouldShowTrashCheckView;
+      return state;
+    },
+    selectDeck: (state, action: PayloadAction<Pick<State, 'selectedDeck'>>) => {
+      state.selectedDeck = action.payload.selectedDeck;
       return state;
     },
   },

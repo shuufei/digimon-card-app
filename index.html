@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>HTTP Sample</h1>
+    <button id="post-button">post request</button>
+    <script>
+      const el = document.querySelector('#post-button');
+      el.onclick = () => {
+        console.log('click post button');
+        // fetch('https://developer.mozilla.org/ja/', {
+        //   method: 'POST',
+        //   body: JSON.stringify({
+        //     id: 1,
+        //     title: 'hoge',
+        //   }),
+        // }).then((res) => {
+        //   console.log('--- res:', res);
+        // });
+      };
+    </script>
+  </body>
+</html>

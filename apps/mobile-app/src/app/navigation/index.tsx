@@ -9,17 +9,45 @@ import { CardModalScreen } from '../screen/card-modal-screen';
 import { DeckScreen } from '../screen/deck-screen';
 import { SignInScreen } from '../screen/sign-in-screen';
 import { SignOutScreen } from '../screen/sign-out-screen';
-import { VSScreen } from '../screen/vs/vs-screen';
-import * as authStore from '../store/auth-store';
-import { VsCard } from '../screen/vs/domains/vs-card';
 import { VsCardModalScreen } from '../screen/vs-card-modal-screen';
+import { VsCard } from '../screen/vs/domains/vs-card';
+import { VsBoardScreen } from '../screen/vs/vs-board-screen';
+import * as authStore from '../store/auth-store';
+import { ConnectOpponentModalScreen } from '../screen/connect-opponent-modal-screen';
+import { SelectDeckModalScreen } from '../screen/select-deck-modal-screen';
 
 export type RootParamList = {
   Main: undefined;
   DeckFilterModal: undefined;
   CardModal: { cardImageSrc: string; name: string };
   VsCardModal: { card: VsCard };
+  ConnectOpponentModal: undefined;
+  SelectDeckModal: undefined;
   SignIn: undefined;
+};
+
+export type VsParamList = {
+  VsConnect: undefined;
+  VsBoard: undefined;
+};
+
+const VsStack = createNativeStackNavigator<VsParamList>();
+
+const VsStackNavigator: FC = () => {
+  return (
+    <VsStack.Navigator initialRouteName="VsBoard">
+      {/* <VsStack.Screen
+        name="VsConnect"
+        component={VsConnectScreen}
+        options={{ headerShown: true, title: '対戦 接続' }}
+      /> */}
+      <VsStack.Screen
+        name="VsBoard"
+        component={VsBoardScreen}
+        options={{ headerShown: false }}
+      />
+    </VsStack.Navigator>
+  );
 };
 
 const Drawer = createDrawerNavigator();
@@ -30,8 +58,8 @@ export const DrawerNavigator: FC = () => {
       <Drawer.Screen name="Deck" component={DeckScreen} />
       <Drawer.Screen
         name="VS"
-        component={VSScreen}
-        options={{ title: '対戦' }}
+        component={VsStackNavigator}
+        options={{ title: '対戦', headerShown: false }}
       />
       <Drawer.Screen name="SignOut" component={SignOutScreen} />
     </Drawer.Navigator>
@@ -88,6 +116,16 @@ export const Navigation = () => {
           name="VsCardModal"
           component={VsCardModalScreen}
           options={{ presentation: 'modal' }}
+        />
+        <Stack.Screen
+          name="ConnectOpponentModal"
+          component={ConnectOpponentModalScreen}
+          options={{ presentation: 'modal', title: '対戦相手と接続' }}
+        />
+        <Stack.Screen
+          name="SelectDeckModal"
+          component={SelectDeckModalScreen}
+          options={{ presentation: 'modal', title: 'デッキを選択' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
