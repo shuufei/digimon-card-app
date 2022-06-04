@@ -66,10 +66,10 @@ export const VsScreenCard: FC<{
                     (evolutionarySource, i) => {
                       return (
                         <Image
-                          key={`${evolutionarySource.imgFileName}-${i}`}
+                          key={`${evolutionarySource.id}-${i}`}
                           source={{
                             uri: getCardImageSrc(
-                              evolutionarySource,
+                              evolutionarySource.data,
                               signedQueryStrings
                             ),
                             cache: 'force-cache',
@@ -77,7 +77,7 @@ export const VsScreenCard: FC<{
                           resizeMode="center"
                           height={4}
                           width={4}
-                          alt={`${evolutionarySource.name}`}
+                          alt={`${evolutionarySource.data.name}`}
                         />
                       );
                     }

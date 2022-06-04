@@ -35,19 +35,21 @@ const DUMMY_BATTLE_CARD_LIST: VsBattleCard[] = [
 ].map((card, i) => {
   return i === 2
     ? {
+        id: '',
         data: card,
         evolutionarySources: [
-          ALL_CARD_LIST[10],
-          ALL_CARD_LIST[20],
-          ALL_CARD_LIST[30],
-          ALL_CARD_LIST[31],
-          ALL_CARD_LIST[32],
-          ALL_CARD_LIST[33],
-          ALL_CARD_LIST[34],
+          { id: '', data: ALL_CARD_LIST[10] },
+          { id: '', data: ALL_CARD_LIST[20] },
+          { id: '', data: ALL_CARD_LIST[30] },
+          { id: '', data: ALL_CARD_LIST[31] },
+          { id: '', data: ALL_CARD_LIST[32] },
+          { id: '', data: ALL_CARD_LIST[33] },
+          { id: '', data: ALL_CARD_LIST[34] },
         ],
         isRest: true,
       }
     : {
+        id: '',
         data: card,
         evolutionarySources: [],
         isRest: i % 2 === 0,

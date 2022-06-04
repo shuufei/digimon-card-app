@@ -1,9 +1,15 @@
 import { CardInfo } from './card';
 
 export type VsBattleCard = {
+  id: string;
   data: CardInfo;
-  evolutionarySources: CardInfo[];
+  evolutionarySources: VsCard[];
   isRest: boolean;
+};
+
+export type VsCard = {
+  id: string;
+  data: CardInfo;
 };
 
 export const isVsBattleCard = (

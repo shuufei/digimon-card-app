@@ -57,8 +57,11 @@ export const VsCardModalScreen: FC = () => {
             <Pressable
               onLongPress={() => {
                 navigate('CardModal', {
-                  name: card.name,
-                  cardImageSrc: getCardImageSrc(card, signedQueryStrings ?? ''),
+                  name: card.data.name,
+                  cardImageSrc: getCardImageSrc(
+                    card.data,
+                    signedQueryStrings ?? ''
+                  ),
                 });
               }}
               key={i}
@@ -67,7 +70,7 @@ export const VsCardModalScreen: FC = () => {
             >
               <Image
                 source={{
-                  uri: getCardImageSrc(card, signedQueryStrings ?? ''),
+                  uri: getCardImageSrc(card.data, signedQueryStrings ?? ''),
                 }}
                 resizeMode="contain"
                 height={cardHeight}
