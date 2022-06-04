@@ -10,7 +10,7 @@ import { DeckScreen } from '../screen/deck-screen';
 import { SignInScreen } from '../screen/sign-in-screen';
 import { SignOutScreen } from '../screen/sign-out-screen';
 import { VsCardModalScreen } from '../screen/vs-card-modal-screen';
-import { VsCard } from '../domains/vs-card';
+import { VsBattleCard } from '../domains/vs-card';
 import { VsBoardScreen } from '../screen/vs/vs-board-screen';
 import * as authStore from '../store/auth-store';
 import { ConnectOpponentModalScreen } from '../screen/connect-opponent-modal-screen';
@@ -20,7 +20,7 @@ export type RootParamList = {
   Main: undefined;
   DeckFilterModal: undefined;
   CardModal: { cardImageSrc: string; name: string };
-  VsCardModal: { card: VsCard };
+  VsCardModal: { card: VsBattleCard };
   ConnectOpponentModal: undefined;
   SelectDeckModal: undefined;
   SignIn: undefined;

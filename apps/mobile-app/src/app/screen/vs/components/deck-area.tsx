@@ -5,6 +5,8 @@ import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import { CountLabel } from './presentation/count-label';
 import { VsAssetsImage } from './vs-assets-image';
 import { BoardContext } from '../context/board-context';
+import { useSelector } from 'react-redux';
+import * as vsStore from '../../../store/vs-store';
 
 const DUMMY_DECK_CARD_LIST = new Array(50)
   .fill(null)
@@ -12,7 +14,7 @@ const DUMMY_DECK_CARD_LIST = new Array(50)
 
 export const DeckArea: FC = memo(() => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
-  const [cardList, setCardList] = useState(DUMMY_DECK_CARD_LIST);
+  const cardList = useSelector(vsStore.selectors.myselfDeckSelector);
 
   const boardContext = useContext(BoardContext);
 

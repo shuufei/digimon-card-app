@@ -2,13 +2,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, View, VStack } from 'native-base';
 import { FC, memo, useMemo, useState, useContext } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { VsCard } from '../../../domains/vs-card';
+import { VsBattleCard } from '../../../domains/vs-card';
 import { BattleAreaDigimonCard } from './battle-area-digimon-card';
 import { BattleAreaOptionCard } from './battle-area-option-card';
 import { BattleAreaTamerCard } from './battle-area-tamer-card';
 import { BoardContext } from '../context/board-context';
 
-const DUMMY_BATTLE_CARD_LIST: VsCard[] = [
+const DUMMY_BATTLE_CARD_LIST: VsBattleCard[] = [
   ALL_CARD_LIST[10],
   ALL_CARD_LIST[20],
   ALL_CARD_LIST[21],
@@ -55,8 +55,8 @@ const DUMMY_BATTLE_CARD_LIST: VsCard[] = [
 });
 
 const CardList: FC<{
-  cardList: VsCard[];
-  CardComponent: FC<{ card: VsCard }>;
+  cardList: VsBattleCard[];
+  CardComponent: FC<{ card: VsBattleCard }>;
 }> = ({ cardList, CardComponent }) => {
   return (
     <HStack flexWrap={'wrap'} space={1} justifyContent={'center'}>

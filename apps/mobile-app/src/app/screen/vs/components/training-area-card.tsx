@@ -1,10 +1,10 @@
 import { FC, memo } from 'react';
-import { VsCard } from '../../../domains/vs-card';
+import { VsBattleCard } from '../../../domains/vs-card';
 import { MenuProps, VsScreenCard } from './vs-screen-card';
 
 const TRAINING_AREA_MENU: MenuProps[] = [{ label: '登場' }];
 
-export const TrainingAreaCard: FC<{ card: VsCard }> = memo(({ card }) => {
+export const TrainingAreaCard: FC<{ card: VsBattleCard }> = memo(({ card }) => {
   return (
     <VsScreenCard
       card={card}
