@@ -1,6 +1,6 @@
 import { Menu, Pressable, View } from 'native-base';
 import { FC, memo, useState, useContext } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
 import * as vsStore from '../../../store/vs-store';
@@ -13,7 +13,7 @@ const DUMMY_DECK_CARD_LIST = new Array(5)
 
 export const SecurityArea: FC = memo(() => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
-  const [cardList, setCardList] = useState(DUMMY_DECK_CARD_LIST);
+  const cardList = useSelector(vsStore.selectors.myselfSecuritySelector);
   const dispatch = useDispatch();
 
   const boardContext = useContext(BoardContext);

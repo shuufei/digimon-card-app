@@ -7,12 +7,14 @@ export type VsBoard = {
   deck: VsCard[];
   deckOpen: VsCard[];
   hand: VsCard[];
+  security: VsCard[];
 };
 
 export const initVsBoard: VsBoard = {
   deck: [],
   deckOpen: [],
   hand: [],
+  security: [],
 };
 
 export const convertToVsCardListFromDeck = (deck: Deck): VsCard[] => {

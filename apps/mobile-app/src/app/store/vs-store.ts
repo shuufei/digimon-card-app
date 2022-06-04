@@ -67,6 +67,11 @@ const vsSlice = createSlice({
       openCard && state.board.myself.deckOpen.push(openCard);
       return state;
     },
+    recovery: (state) => {
+      const recoveryCard = state.board.myself.deck.pop();
+      recoveryCard && state.board.myself.security.push(recoveryCard);
+      return state;
+    },
   },
 });
 
@@ -90,6 +95,10 @@ const myselfDeckOpenSelector = createSelector(
   selectSelf,
   (state) => state.board.myself.deckOpen
 );
+const myselfSecuritySelector = createSelector(
+  selectSelf,
+  (state) => state.board.myself.security
+);
 
 export const selectors = {
   selectSelf,
@@ -97,4 +106,5 @@ export const selectors = {
   myselfDeckSelector,
   myselfDeckOpenSelector,
   myselfHandSelector,
+  myselfSecuritySelector,
 };
