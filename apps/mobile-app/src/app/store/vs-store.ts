@@ -1,5 +1,6 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { WritableDraft } from '@reduxjs/toolkit/node_modules/immer/dist/internal';
+import { shuffle } from 'lodash';
 import { Deck } from '../domains/deck';
 import {
   convertToVsCardListFromDeck,
@@ -75,6 +76,13 @@ const vsSlice = createSlice({
     },
     trashFromDeck: (state) => {
       return popDeckAndPushTo(state, 'trash');
+    },
+    shuffleDeck: (state) => {
+      const cardList = new Array(5)
+        .fill(null)
+        .reduce((acc) => shuffle(acc), shuffle([...state.board.myself.deck]));
+      state.board.myself.deck = cardList;
+      return state;
     },
   },
 });

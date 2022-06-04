@@ -31,6 +31,10 @@ export const DeckArea: FC = memo(() => {
     dispatch(vsStore.actions.trashFromDeck());
   }, [dispatch]);
 
+  const shuffle = useCallback(() => {
+    dispatch(vsStore.actions.shuffleDeck());
+  }, [dispatch]);
+
   return (
     <View>
       <Menu
@@ -54,7 +58,7 @@ export const DeckArea: FC = memo(() => {
         <Menu.Item onPress={open}>オープン</Menu.Item>
         <Menu.Item onPress={recovery}>リカバリー</Menu.Item>
         <Menu.Item onPress={trash}>上から1枚破棄</Menu.Item>
-        <Menu.Item>シャッフル</Menu.Item>
+        <Menu.Item onPress={shuffle}>シャッフル</Menu.Item>
       </Menu>
     </View>
   );
