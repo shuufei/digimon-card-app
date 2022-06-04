@@ -1,4 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { WritableDraft } from '@reduxjs/toolkit/node_modules/immer/dist/internal';
 import { Deck } from '../domains/deck';
 import {
   convertToVsCardListFromDeck,
@@ -27,6 +28,12 @@ const initialState: State = {
     myself: initVsBoard,
     opponent: initVsBoard,
   },
+};
+
+const popDeckAndPushTo = (state: WritableDraft<State>, to: keyof VsBoard) => {
+  const openCard = state.board.myself.deck.pop();
+  openCard && state.board.myself[to].push(openCard);
+  return state;
 };
 
 const vsSlice = createSlice({
@@ -58,19 +65,13 @@ const vsSlice = createSlice({
       return state;
     },
     draw: (state) => {
-      const drawCard = state.board.myself.deck.pop();
-      drawCard && state.board.myself.hand.push(drawCard);
-      return state;
+      return popDeckAndPushTo(state, 'hand');
     },
     deckOpen: (state) => {
-      const openCard = state.board.myself.deck.pop();
-      openCard && state.board.myself.deckOpen.push(openCard);
-      return state;
+      return popDeckAndPushTo(state, 'deckOpen');
     },
     recovery: (state) => {
-      const recoveryCard = state.board.myself.deck.pop();
-      recoveryCard && state.board.myself.security.push(recoveryCard);
-      return state;
+      return popDeckAndPushTo(state, 'security');
     },
   },
 });
