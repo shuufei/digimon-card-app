@@ -31,8 +31,8 @@ const initialState: State = {
 };
 
 const popDeckAndPushTo = (state: WritableDraft<State>, to: keyof VsBoard) => {
-  const openCard = state.board.myself.deck.pop();
-  openCard && state.board.myself[to].push(openCard);
+  const card = state.board.myself.deck.pop();
+  card && state.board.myself[to].push(card);
   return state;
 };
 
@@ -73,6 +73,9 @@ const vsSlice = createSlice({
     recovery: (state) => {
       return popDeckAndPushTo(state, 'security');
     },
+    trashFromDeck: (state) => {
+      return popDeckAndPushTo(state, 'trash');
+    },
   },
 });
 
@@ -100,6 +103,10 @@ const myselfSecuritySelector = createSelector(
   selectSelf,
   (state) => state.board.myself.security
 );
+const myselfTrashSelector = createSelector(
+  selectSelf,
+  (state) => state.board.myself.trash
+);
 
 export const selectors = {
   selectSelf,
@@ -108,4 +115,5 @@ export const selectors = {
   myselfDeckOpenSelector,
   myselfHandSelector,
   myselfSecuritySelector,
+  myselfTrashSelector,
 };

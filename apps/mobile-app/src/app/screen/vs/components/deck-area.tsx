@@ -27,6 +27,10 @@ export const DeckArea: FC = memo(() => {
     dispatch(vsStore.actions.recovery());
   }, [dispatch]);
 
+  const trash = useCallback(() => {
+    dispatch(vsStore.actions.trashFromDeck());
+  }, [dispatch]);
+
   return (
     <View>
       <Menu
@@ -49,7 +53,7 @@ export const DeckArea: FC = memo(() => {
         <Menu.Item onPress={draw}>ドロー</Menu.Item>
         <Menu.Item onPress={open}>オープン</Menu.Item>
         <Menu.Item onPress={recovery}>リカバリー</Menu.Item>
-        <Menu.Item>上から1枚破棄</Menu.Item>
+        <Menu.Item onPress={trash}>上から1枚破棄</Menu.Item>
         <Menu.Item>シャッフル</Menu.Item>
       </Menu>
     </View>

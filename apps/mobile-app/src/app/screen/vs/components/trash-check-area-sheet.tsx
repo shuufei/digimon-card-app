@@ -1,18 +1,13 @@
 import BottomSheet from '@gorhom/bottom-sheet';
 import { Button, HStack, ScrollView, Text, View } from 'native-base';
-import { FC, useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef } from 'react';
 import { StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { ALL_CARD_LIST } from '../../../configs/all-card-list';
 import * as vsStore from '../../../store/vs-store';
 import { TrashCheckAreaCard } from './trash-check-area-card';
 
-const DUMMY_TRASH_CHECK_CARD_LIST = new Array(15)
-  .fill(null)
-  .map((_, i) => ALL_CARD_LIST[i + 120]);
-
 export const TrashCheckAreaSheet: FC = () => {
-  const [cardList, setCardList] = useState(DUMMY_TRASH_CHECK_CARD_LIST);
+  const cardList = useSelector(vsStore.selectors.myselfTrashSelector);
   const uiState = useSelector(vsStore.selectors.uiStateSelector);
   const snapPoints = useMemo(() => ['10%', '40%', '55%'], []);
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -53,8 +48,8 @@ export const TrashCheckAreaSheet: FC = () => {
           <HStack flexWrap={'wrap'} space={2} mt={4}>
             {cardList.map((card, i) => {
               return (
-                <View key={`${card.imgFileName}-${i}`} pb={2}>
-                  <TrashCheckAreaCard card={card} />
+                <View key={`${card.data.imgFileName}-${i}`} pb={2}>
+                  <TrashCheckAreaCard card={card.data} />
                 </View>
               );
             })}

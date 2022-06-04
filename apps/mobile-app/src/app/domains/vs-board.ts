@@ -8,6 +8,7 @@ export type VsBoard = {
   deckOpen: VsCard[];
   hand: VsCard[];
   security: VsCard[];
+  trash: VsCard[];
 };
 
 export const initVsBoard: VsBoard = {
@@ -15,6 +16,7 @@ export const initVsBoard: VsBoard = {
   deckOpen: [],
   hand: [],
   security: [],
+  trash: [],
 };
 
 export const convertToVsCardListFromDeck = (deck: Deck): VsCard[] => {
