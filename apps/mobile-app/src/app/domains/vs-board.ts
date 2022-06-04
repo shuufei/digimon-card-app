@@ -5,11 +5,13 @@ import { VsCard } from './vs-card';
 
 export type VsBoard = {
   deck: VsCard[];
+  deckOpen: VsCard[];
   hand: VsCard[];
 };
 
 export const initVsBoard: VsBoard = {
   deck: [],
+  deckOpen: [],
   hand: [],
 };
 

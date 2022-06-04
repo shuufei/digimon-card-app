@@ -1,18 +1,15 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, ScrollView, Text, View } from 'native-base';
-import { FC, useState, memo, useContext } from 'react';
-import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { DeckOpenAreaCard } from './deck-open-area-card';
+import { FC, memo, useContext } from 'react';
+import { useSelector } from 'react-redux';
+import * as vsStore from '../../../store/vs-store';
 import { BoardContext } from '../context/board-context';
-
-const DUMMY_DECK_OPEN_CARD_LIST = new Array(5)
-  .fill(null)
-  .map((_, i) => ALL_CARD_LIST[i + 150]);
+import { DeckOpenAreaCard } from './deck-open-area-card';
 
 export const DeckOpenArea: FC = memo(() => {
-  const [cardList, setCardList] = useState(DUMMY_DECK_OPEN_CARD_LIST);
+  const cardList = useSelector(vsStore.selectors.myselfDeckOpenSelector);
   const boardContext = useContext(BoardContext);
-  return (
+  return cardList.length > 0 ? (
     <View p={1}>
       <HStack justifyContent={'space-between'} alignItems={'center'}>
         <Text fontSize={'xs'}>山札オープン: {cardList.length}</Text>
@@ -50,11 +47,14 @@ export const DeckOpenArea: FC = memo(() => {
         <HStack space={1} overflow={'visible'}>
           {cardList.map((card, i) => {
             return (
-              <DeckOpenAreaCard key={`${card.imgFileName}-${i}`} card={card} />
+              <DeckOpenAreaCard
+                key={`${card.data.imgFileName}-${i}`}
+                card={card.data}
+              />
             );
           })}
         </HStack>
       </ScrollView>
     </View>
-  );
+  ) : null;
 });
