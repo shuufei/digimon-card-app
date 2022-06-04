@@ -11,7 +11,7 @@ import * as authStore from '../../../store/auth-store';
 import { getCardImageSrc } from '../../../utils/get-card-image-src';
 import { CARD_HEIGHT, CARD_WIDTH } from '../configs/card-style';
 import { BoardContext } from '../context/board-context';
-import { isVsCard, VsCard } from '../domains/vs-card';
+import { isVsCard, VsCard } from '../../../domains/vs-card';
 
 export type MenuProps = {
   label: string;

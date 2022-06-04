@@ -1,5 +1,5 @@
 import { FC, memo } from 'react';
-import { VsCard } from '../domains/vs-card';
+import { VsCard } from '../../../domains/vs-card';
 import { MenuProps, VsScreenCard } from './vs-screen-card';
 
 const BATTLE_AREA_TAMER_MENU: MenuProps[] = [

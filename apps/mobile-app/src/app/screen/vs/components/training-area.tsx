@@ -1,7 +1,7 @@
 import { View } from 'native-base';
 import { FC, memo, useState } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { VsCard } from '../domains/vs-card';
+import { VsCard } from '../../../domains/vs-card';
 import { TrainingAreaCard } from './training-area-card';
 
 const DUMMY_TRAINING_CARD: VsCard = {

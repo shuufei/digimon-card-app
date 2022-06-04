@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, View, VStack } from 'native-base';
 import { FC, memo, useMemo, useState, useContext } from 'react';
 import { ALL_CARD_LIST } from '../../../configs/all-card-list';
-import { VsCard } from '../domains/vs-card';
+import { VsCard } from '../../../domains/vs-card';
 import { BattleAreaDigimonCard } from './battle-area-digimon-card';
 import { BattleAreaOptionCard } from './battle-area-option-card';
 import { BattleAreaTamerCard } from './battle-area-tamer-card';

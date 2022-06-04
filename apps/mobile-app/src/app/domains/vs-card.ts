@@ -1,4 +1,4 @@
-import { CardInfo } from '../../../domains/card';
+import { CardInfo } from './card';
 
 export type VsCard = {
   data: CardInfo;
