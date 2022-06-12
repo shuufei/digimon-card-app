@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Button, HStack, Menu, ScrollView, Text, View } from 'native-base';
-import { FC, memo, useContext } from 'react';
-import { useSelector } from 'react-redux';
+import { FC, memo, useContext, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import * as vsStore from '../../../store/vs-store';
 import { BoardContext } from '../context/board-context';
 import { DeckOpenAreaCard } from './deck-open-area-card';
@@ -9,6 +9,12 @@ import { DeckOpenAreaCard } from './deck-open-area-card';
 export const DeckOpenArea: FC = memo(() => {
   const cardList = useSelector(vsStore.selectors.myselfDeckOpenSelector);
   const boardContext = useContext(BoardContext);
+  const dispatch = useDispatch();
+
+  const trash = useCallback(() => {
+    dispatch(vsStore.actions.trashAllFromDeckOpen());
+  }, [dispatch]);
+
   return cardList.length > 0 ? (
     <View p={1}>
       <HStack justifyContent={'space-between'} alignItems={'center'}>
@@ -36,7 +42,7 @@ export const DeckOpenArea: FC = memo(() => {
               );
             }}
           >
-            <Menu.Item>全て破棄</Menu.Item>
+            <Menu.Item onPress={trash}>全て破棄</Menu.Item>
             <Menu.Item>全て手札に追加</Menu.Item>
             <Menu.Item>全て山札の下に戻す</Menu.Item>
             <Menu.Item>全て山札の上に戻す</Menu.Item>

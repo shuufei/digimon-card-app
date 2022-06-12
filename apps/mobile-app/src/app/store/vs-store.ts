@@ -84,6 +84,12 @@ const vsSlice = createSlice({
       state.board.myself.deck = cardList;
       return state;
     },
+    trashAllFromDeckOpen: (state) => {
+      const cardList = state.board.myself.deckOpen;
+      state.board.myself.deckOpen = [];
+      state.board.myself.trash = state.board.myself.trash.concat(cardList);
+      return state;
+    },
   },
 });
 
