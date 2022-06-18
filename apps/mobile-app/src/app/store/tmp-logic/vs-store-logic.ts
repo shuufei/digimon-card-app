@@ -1,20 +1,16 @@
 import { shuffle } from 'lodash';
-import { VsCardModalScreen } from '../../screen/vs-card-modal-screen';
+import { v4 } from 'uuid';
+import { VsBoard, VsCard } from './type';
 
-type VsCard = {
-  name: string;
-};
-
-type VsBoard = {
-  deck: VsCard[];
-  deckOpen: VsCard[];
-  hand: VsCard[];
-  security: VsCard[];
-  securityOpen:VsCard[],
-  trash: VsCard[];
-  eggDeck: VsCard[];
-  eggOpen: VsCard[];
-  selfCheck: VsCard[];
+const getVsCard = (name?: string): VsCard => {
+  return {
+    id: v4(),
+    data: {
+      no: v4(),
+      name: name ?? 'アグモン',
+      imgFileName: `images/${v4()}`,
+    },
+  };
 };
 
 type State = {
@@ -37,7 +33,8 @@ const initVsBoard: VsBoard = {
   trash: [],
   eggDeck: [],
   eggOpen: [],
-  selfCheck: []
+  securitySelfCheck: [],
+  trashSelfCheck: [],
 };
 
 const initialState: State = {
@@ -59,69 +56,74 @@ const trashAllFromDeckOpen = (state: State) => {
 
 const getAllToHandFromDeckOpen = (state: State) => {
   state = getAllToHand(state, 'deckOpen');
-  return state
+  return state;
 };
 
-const returnAllToUnderDeckFromDeckOpen = (state: State) => {
-  state = returnToDeck(state, 'deckOpen', 'Under')
-  return state
+const moveAllToUnderDeckFromDeckOpen = (state: State) => {
+  state = moveToDeck(state, 'deckOpen', 'Under');
+  return state;
 };
 
-const returnAllToTopDeckFromDeckOpen = (state: State) => {
-  state = returnToDeck(state, 'deckOpen', 'Top')
-  return state
+const moveAllToTopDeckFromDeckOpen = (state: State) => {
+  state = moveToDeck(state, 'deckOpen', 'Top');
+  return state;
 };
 
 /*------------------ トラッシュ------------------*/
-const selfCheckFromTrash = (state: State) => {
+const securitySelfCheckFromTrash = (state: State) => {
   const cardList = state.board.myself.trash;
-  state.board.myself.trash = []
-  state.board.myself.selfCheck = state.board.myself.selfCheck.concat(cardList);
-  return state
+  state.board.myself.trash = [];
+  state.board.myself.trashSelfCheck =
+    state.board.myself.trashSelfCheck.concat(cardList);
+  return state;
 };
 
 /*------------------ セキュリティ------------------*/
 const shuffleSecurity = (state: State) => {
   state.board.myself.security = shuffle(state.board.myself.security);
-  return state
+  return state;
 };
 
 const securityOpen = (state: State) => {
-  state.board.myself.securityOpen = [state.board.myself.security[0]];
-  state.board.myself.security.pop();
-  return state
+  const card = state.board.myself.security.pop();
+  if (card == null) {
+    return state;
+  }
+  state.board.myself.securityOpen = [...state.board.myself.securityOpen, card];
+  return state;
 };
 
 const securitySelfCheck = (state: State) => {
   const cardList = state.board.myself.security;
-  state.board.myself.security = []
-  state.board.myself.selfCheck = state.board.myself.selfCheck.concat(cardList);
-  return
-}
+  state.board.myself.security = [];
+  state.board.myself.securitySelfCheck =
+    state.board.myself.securitySelfCheck.concat(cardList);
+  return;
+};
 
 /*------------------ セキュリティオープン------------------*/
 const trashAllFromSecurity = (state: State) => {
   state = trashAll(state, 'security');
-  return state
+  return state;
 };
 
 const getAllToHandFromSecurity = (state: State) => {
   state = getAllToHand(state, 'security');
-  return state
+  return state;
 };
 
 /*------------------ セキュリティ確認------------------*/
-const selfCheckReturnSecurity = (state: State) => {
-  const cardList = state.board.myself.selfCheck;
-  state.board.myself.selfCheck = [];
+const securitySelfCheckReturnSecurity = (state: State) => {
+  const cardList = state.board.myself.securitySelfCheck;
+  state.board.myself.securitySelfCheck = [];
   state.board.myself.security = state.board.myself.security.concat(cardList);
-  return state
-}
+  return state;
+};
 
 /*------------------ デジタマ------------------*/
 const shuffleEgg = (state: State) => {
   state.board.myself.eggDeck = shuffle(state.board.myself.eggDeck);
-  return state
+  return state;
 };
 
 /* eggDeck should be VsCard but if so, function defined below won't work.
@@ -130,11 +132,11 @@ const shuffleEgg = (state: State) => {
 const hatchEgg = (state: State) => {
   state.board.myself.eggOpen = [state.board.myself.eggDeck[0]];
   state.board.myself.eggDeck.pop();
-  return state
+  return state;
 };
 
 /*------------------ 関数 ------------------ */
-const trashAll = (state: State, from: keyof VsBoard) =>  {
+const trashAll = (state: State, from: keyof VsBoard) => {
   const cardList = state.board.myself[from];
   state.board.myself[from] = [];
   state.board.myself.trash = state.board.myself.trash.concat(cardList);
@@ -144,48 +146,32 @@ const trashAll = (state: State, from: keyof VsBoard) =>  {
 const getAllToHand = (state: State, from: keyof VsBoard) => {
   const cardList = state.board.myself[from];
   state.board.myself[from] = [];
-  state.board.myself.hand = state.board.myself.trash.concat(cardList);
-  return state
+  state.board.myself.hand = state.board.myself.hand.concat(cardList);
+  return state;
 };
 
-const returnToDeck =  (state: State, from: keyof VsBoard, to: 'Top'|'Under') => {
-  const cardList = state.board.myself.deckOpen;
-  state.board.myself.deckOpen = [];
-  if(to === 'Top'){
-    state.board.myself.deck = cardList.concat(state.board.myself.deck);
-  }else{
-    state.board.myself.deck = state.board.myself.deck.concat(cardList);
-  };
-  return state
-}; 
-
+const moveToDeck = (state: State, from: keyof VsBoard, to: 'Top' | 'Under') => {
+  const cardList = state.board.myself[from];
+  state.board.myself[from] = [];
+  state.board.myself.deck =
+    to === 'Top'
+      ? cardList.concat(state.board.myself.deck)
+      : state.board.myself.deck.concat(cardList);
+  return state;
+};
 
 const state = initialState;
 
 const dispatch = () => {
   const currenState = state;
-  currenState.board.myself.eggDeck = [
-    {
-      name: 'コロモン'
-    }
-  ];
+  currenState.board.myself.eggDeck = [getVsCard()];
 
   currenState.board.myself.security = [
-    {
-      name: 'ホゲモン'
-    },
-    {
-      name: 'フガモン'
-    },
-    {
-      name: 'ホゲフガモン'
-    }
+    getVsCard('ボコモン'),
+    getVsCard('オーガモン'),
+    getVsCard('グレイモン'),
   ];
-  currenState.board.myself.deckOpen = [
-    {
-      name: 'ベルゼブモン',
-    },
-  ];
+  currenState.board.myself.deckOpen = [getVsCard('ベルゼブモン')];
   console.log('--- currentState: ', currenState);
   const newState = hatchEgg(state);
   console.log('--- newState: ', newState.board.myself.eggOpen.pop());
