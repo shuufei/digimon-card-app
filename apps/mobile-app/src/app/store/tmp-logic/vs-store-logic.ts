@@ -135,7 +135,28 @@ const hatchEgg = (state: State) => {
   return state;
 };
 
-/*------------------ 関数 ------------------ */
+/**
+ * カードに対する操作
+ */
+const moveCardFromHandToTrash = (
+  state: State,
+  props: {
+    vsCardId: VsCard['id'];
+  }
+) => {
+  const index = state.board.myself.hand.findIndex((card) => {
+    return card.id === props.vsCardId;
+  });
+  if (index === -1) {
+    return state;
+  }
+  const card = state.board.myself.hand[index];
+  state.board.myself.hand.splice(index, 1);
+  state.board.myself.trash.push(card);
+  return state;
+};
+
+/*------------------ 共通処理 ------------------ */
 const trashAll = (state: State, from: keyof VsBoard) => {
   const cardList = state.board.myself[from];
   state.board.myself[from] = [];
@@ -164,17 +185,22 @@ const state = initialState;
 
 const dispatch = () => {
   const currenState = state;
-  currenState.board.myself.eggDeck = [getVsCard()];
+  currenState.board.myself.trash = [];
 
-  currenState.board.myself.security = [
+  const target = getVsCard('オーガモン');
+  currenState.board.myself.hand = [
     getVsCard('ボコモン'),
-    getVsCard('オーガモン'),
+    target,
     getVsCard('グレイモン'),
   ];
   currenState.board.myself.deckOpen = [getVsCard('ベルゼブモン')];
   console.log('--- currentState: ', currenState);
-  const newState = hatchEgg(state);
-  console.log('--- newState: ', newState.board.myself.eggOpen.pop());
+  const newState = moveCardFromHandToTrash(state, { vsCardId: target.id });
+  console.log(
+    '--- newState: ',
+    newState.board.myself.trash,
+    newState.board.myself.hand
+  );
 };
 
 dispatch();
