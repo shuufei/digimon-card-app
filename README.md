@@ -69,6 +69,5 @@ npx nx run api-get-credentials:serve
    - spotted-seal/apps/mobile-app/src/app/configs/all-card-list.ts
 1. カテゴリの定義に新しいカテゴリを追加する
    - apps/mobile-app/src/app/domains/card.ts
-   - apps/mobile-app/assets/cardInfo
      - 定数 CATEGORY に追加
      - convertToDisplayCategoryFromCategory 関数の switch 文に新しい category の case を追加
