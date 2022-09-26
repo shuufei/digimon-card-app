@@ -41,6 +41,10 @@ export class SecurityOpenAreaComponent implements OnInit {
       action: 'draw',
       displayText: '手札に加える',
     },
+    {
+      action: 'recovery',
+      displayText: 'セキュリティに戻す',
+    },
   ];
 
   /**
@@ -57,6 +61,7 @@ export class SecurityOpenAreaComponent implements OnInit {
    */
   readonly onAction$ = new Subject<CardActionEvent>();
   readonly onBulkTrash$ = new Subject<void>();
+  readonly onBulkRecovery$ = new Subject<void>();
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,
@@ -88,6 +93,21 @@ export class SecurityOpenAreaComponent implements OnInit {
             .cardList.forEach((card) => {
               this.dispatchCardActionService.dispatch({
                 type: 'trash',
+                area: 'securityOpenArea',
+                card,
+              });
+            });
+        })
+      )
+    );
+    this.state.hold(
+      this.onBulkRecovery$.pipe(
+        tap(() => {
+          this.globalState
+            .get('playState', 'securityOpenArea')
+            .cardList.forEach((card) => {
+              this.dispatchCardActionService.dispatch({
+                type: 'recovery',
                 area: 'securityOpenArea',
                 card,
               });
