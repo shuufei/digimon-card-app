@@ -1,0 +1,12 @@
+<ng-container *ngIf="saveArea$ | async as saveArea">
+  <div class="flex flex-wrap justify-center">
+    <ng-container *ngFor="let card of saveArea.cardList">
+      <digimon-card-app-card
+        [card]="card"
+        [actionList]="saveAreaCardActionList"
+        (action)="onAction$.next($event)"
+        class="w-14 m-1"
+      ></digimon-card-app-card>
+    </ng-container>
+  </div>
+</ng-container>

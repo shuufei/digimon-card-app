@@ -72,17 +72,19 @@ export class BattleAreaComponent implements OnInit {
    */
   readonly onSelectDigimonCard$ = new Subject<Digimon>();
   readonly onAction$ = new Subject<CardActionEvent>();
-  private readonly onSubmitEvolutionFromHandToBattleArea$ = this.onSelectDigimonCard$.pipe(
-    withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
-    filter(
-      ([, modeState]) =>
-        modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
-    )
-  );
-  private readonly onSelectAddToEvolutionOrigin$ = this.onSelectDigimonCard$.pipe(
-    withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
-    filter(([, modeState]) => modeState?.mode === 'addToEvolutionOrigin')
-  );
+  private readonly onSubmitEvolutionFromHandToBattleArea$ =
+    this.onSelectDigimonCard$.pipe(
+      withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
+      filter(
+        ([, modeState]) =>
+          modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
+      )
+    );
+  private readonly onSelectAddToEvolutionOrigin$ =
+    this.onSelectDigimonCard$.pipe(
+      withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
+      filter(([, modeState]) => modeState?.mode === 'addToEvolutionOrigin')
+    );
 
   constructor(
     @Inject(GLOBAL_RX_STATE) private globalState: RxState<GlobalState>,

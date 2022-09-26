@@ -13,6 +13,7 @@ import { createStateForDigitamaStackCardAction } from './create-state-for-digita
 import { createStateForEvolutionOriginCardAction } from './create-state-for-evolution-origin-card-action';
 import { createStateForHandCardAction } from './create-state-for-hand-card-action';
 import { createStateForOptionAreaCardAction } from './create-state-for-option-area-card-action';
+import { createStateForSaveAreaCardAction } from './create-state-for-save-area-card-action';
 import { createStateForSecurityAreaCardAction } from './create-state-for-security-area-card-action';
 import { createStateForSecurityCheckAreaCardAction } from './create-state-for-security-check-area-card-action';
 import { createStateForSecurityOpenAreaCardAction } from './create-state-for-security-open-area-card-action';
@@ -78,6 +79,8 @@ export class DispatchCardActionService {
         return createStateForTamerAreaCardAction(action, currentState);
       case 'evolutionOrigin':
         return createStateForEvolutionOriginCardAction(action, currentState);
+      case 'saveArea':
+        return createStateForSaveAreaCardAction(action, currentState);
       default:
         return this.globalState.get();
     }
