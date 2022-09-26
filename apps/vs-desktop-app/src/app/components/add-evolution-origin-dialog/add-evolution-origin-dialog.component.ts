@@ -51,6 +51,7 @@ export class AddEvolutionOriginDialogComponent implements OnInit {
           this.dispatchCardActionService.dispatch({
             type: 'addToEvolutionOrigin',
             card: ui.modeState?.trigger?.card,
+            digimon: ui.modeState?.trigger?.digimon,
             area: ui.modeState?.trigger?.area,
             target: {
               area: 'battleArea',

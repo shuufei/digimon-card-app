@@ -91,6 +91,7 @@ export type StateAction = {
   type: CardAction;
   area: Area;
   card?: Card;
+  digimon?: Digimon;
   target?: {
     area: Area;
     digimon: Digimon;

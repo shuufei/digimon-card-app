@@ -45,6 +45,7 @@ export type GlobalState = {
       trigger?: {
         card: Card;
         area: Area;
+        digimon?: Digimon;
       };
     };
   };
