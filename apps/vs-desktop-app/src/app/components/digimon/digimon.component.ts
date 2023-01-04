@@ -8,7 +8,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { RxState } from '@rx-angular/state';
 import { Digimon } from '../../domain/digimon';
 import { GlobalState, GLOBAL_RX_STATE } from '../../global-state';
