@@ -8,8 +8,12 @@ import BT07 from '../../../assets/cardInfo/BT07.json';
 import BT08 from '../../../assets/cardInfo/BT08.json';
 import BT09 from '../../../assets/cardInfo/BT09.json';
 import BT10 from '../../../assets/cardInfo/BT10.json';
+import BT11 from '../../../assets/cardInfo/BT11.json';
+import BT12 from '../../../assets/cardInfo/BT12.json';
 import EX01 from '../../../assets/cardInfo/EX01.json';
 import EX02 from '../../../assets/cardInfo/EX02.json';
+import EX03 from '../../../assets/cardInfo/EX03.json';
+import EX04 from '../../../assets/cardInfo/EX04.json';
 import PRO from '../../../assets/cardInfo/PRO.json';
 import ST01 from '../../../assets/cardInfo/ST01.json';
 import ST02 from '../../../assets/cardInfo/ST02.json';
@@ -24,6 +28,7 @@ import ST10 from '../../../assets/cardInfo/ST10.json';
 import ST11 from '../../../assets/cardInfo/ST11.json';
 import ST12 from '../../../assets/cardInfo/ST12.json';
 import ST13 from '../../../assets/cardInfo/ST13.json';
+import ST14 from '../../../assets/cardInfo/ST14.json';
 import { CardInfo, COLOR, Color, CardType, Lv } from '../domains/card';
 
 export const convertFromApiColorToColor = (color: string): Color => {
@@ -90,8 +95,12 @@ export const ALL_CARD_LIST: CardInfo[] = [
   ...BT08.cardInfoList.map((v) => ({ ...v, category: 'BT08' })),
   ...BT09.cardInfoList.map((v) => ({ ...v, category: 'BT09' })),
   ...BT10.cardInfoList.map((v) => ({ ...v, category: 'BT10' })),
+  ...BT11.cardInfoList.map((v) => ({ ...v, category: 'BT11' })),
+  ...BT12.cardInfoList.map((v) => ({ ...v, category: 'BT12' })),
   ...EX01.cardInfoList.map((v) => ({ ...v, category: 'EX01' })),
   ...EX02.cardInfoList.map((v) => ({ ...v, category: 'EX02' })),
+  ...EX03.cardInfoList.map((v) => ({ ...v, category: 'EX03' })),
+  ...EX04.cardInfoList.map((v) => ({ ...v, category: 'EX04' })),
   ...PRO.cardInfoList.map((v) => ({ ...v, category: 'PRO' })),
   ...ST01.cardInfoList.map((v) => ({ ...v, category: 'ST01' })),
   ...ST02.cardInfoList.map((v) => ({ ...v, category: 'ST02' })),
@@ -106,6 +115,7 @@ export const ALL_CARD_LIST: CardInfo[] = [
   ...ST11.cardInfoList.map((v) => ({ ...v, category: 'ST11' })),
   ...ST12.cardInfoList.map((v) => ({ ...v, category: 'ST12' })),
   ...ST13.cardInfoList.map((v) => ({ ...v, category: 'ST13' })),
+  ...ST14.cardInfoList.map((v) => ({ ...v, category: 'ST14' })),
 ].map((v) => ({
   ...v,
   color: convertFromApiColorToColor(v.color),
