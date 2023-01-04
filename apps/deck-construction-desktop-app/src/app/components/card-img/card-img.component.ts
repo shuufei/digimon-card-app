@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { CardInfo } from '../../types';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog, MatLegacyDialogConfig as MatDialogConfig } from '@angular/material/legacy-dialog';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { ExpandCardViewDialogComponent } from '../expand-card-view-dialog/expand-card-view-dialog.component';
 

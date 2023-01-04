@@ -53,7 +53,7 @@ import { DeckImportDialogComponent } from './components/deck-import-dialog/deck-
   imports: [
     AngularMaterialModule,
     BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
   ],
   providers: [
     {

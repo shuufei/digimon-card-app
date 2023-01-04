@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA } from '@angular/material/legacy-dialog';
 import { RxState } from '@rx-angular/state';
 import { merge, Subject } from 'rxjs';
 import { filter, map, startWith, tap } from 'rxjs/operators';
