@@ -1,6 +1,7 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'mobile-app',
-  preset: '../../jest.preset.ts',
+  preset: '../../jest.preset.js',
   transform: {
     '^.+\\.[tj]sx?$': 'babel-jest',
   },

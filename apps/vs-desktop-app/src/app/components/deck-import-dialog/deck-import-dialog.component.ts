@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { RxState } from '@rx-angular/state';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';

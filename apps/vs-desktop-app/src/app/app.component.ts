@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { RxState } from '@rx-angular/state';
 import { merge, Subject } from 'rxjs';
 import { tag } from 'rxjs-spy/operators/tag';

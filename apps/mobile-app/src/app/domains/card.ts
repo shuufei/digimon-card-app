@@ -144,9 +144,11 @@ export const CATEGORY = {
   BT09: 'BT09',
   BT10: 'BT10',
   BT11: 'BT11',
+  BT12: 'BT12',
   EX01: 'EX01',
   EX02: 'EX02',
   EX03: 'EX03',
+  EX04: 'EX04',
   ST01: 'ST01',
   ST02: 'ST02',
   ST03: 'ST03',
@@ -160,6 +162,7 @@ export const CATEGORY = {
   ST11: 'ST11',
   ST12: 'ST12',
   ST13: 'ST13',
+  ST14: 'ST14',
   PRO: 'PRO',
 } as const;
 
@@ -191,12 +194,16 @@ export const convertToDisplayCategoryFromCategory = (
       return 'BT-10 クロスエンカウンター';
     case 'BT11':
       return 'BT-11 ディメンショナルフェイズ';
+    case 'BT12':
+      return 'BT-12 アクロス・タイム';
     case 'EX01':
       return 'EX-01 クラシックコレクション';
     case 'EX02':
       return 'EX-02 デジタルハザード';
     case 'EX03':
       return 'EX-03 ドラゴンズロア';
+    case 'EX04':
+      return 'EX-04 オルタナティブビーイング';
     case 'ST01':
       return 'ST-01 ガイアレッド';
     case 'ST02':
@@ -223,6 +230,8 @@ export const convertToDisplayCategoryFromCategory = (
       return 'ST-12 ジエスモン';
     case 'ST13':
       return 'ST-13 ラグナロードモン';
+    case 'ST14':
+      return 'ST-14 ベルゼブモン';
     case 'PRO':
       return 'PRO プロモーション';
     default:

@@ -55,7 +55,7 @@ import { SaveAreaComponent } from './components/area/save-area/save-area.compone
   imports: [
     AngularMaterialModule,
     BrowserModule,
-    RouterModule.forRoot([], { initialNavigation: 'enabled' }),
+    RouterModule.forRoot([], { initialNavigation: 'enabledBlocking' }),
   ],
   providers: [
     {

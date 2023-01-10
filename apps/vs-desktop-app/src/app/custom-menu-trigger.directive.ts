@@ -1,5 +1,5 @@
 import { Directive, Input } from '@angular/core';
-import { MatMenuPanel, MatMenuTrigger } from '@angular/material/menu';
+import { MatLegacyMenuPanel as MatMenuPanel, MatLegacyMenuTrigger as MatMenuTrigger } from '@angular/material/legacy-menu';
 
 @Directive({
   selector: `[digimonCardAppMenuTrigger]`,
