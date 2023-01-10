@@ -20,6 +20,7 @@
 
 ## VS App
 
+1. `vs-desktop-app` ブランチをcheckout
 1. apps/vs-desktop-app/.env ファイルを作成
    ```
    NX_PEER_SERVER_KEY=${値は別途共有}
