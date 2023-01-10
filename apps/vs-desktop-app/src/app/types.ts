@@ -99,6 +99,7 @@ export const CARD_ACTION = {
   return: 'return',
   degeneration: 'degeneration',
   addToEvolutionOrigin: 'addToEvolutionOrigin',
+  save: 'save',
 } as const;
 
 export type CardAction = keyof typeof CARD_ACTION;
@@ -117,7 +118,8 @@ export type Area =
   | 'securityCheckArea'
   | 'trashArea'
   | 'evolutionOrigin'
-  | 'whole';
+  | 'whole'
+  | 'saveArea';
 
 export const MODE = {
   evolution: 'evolution',

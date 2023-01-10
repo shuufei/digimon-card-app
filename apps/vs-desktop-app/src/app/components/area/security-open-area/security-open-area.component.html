@@ -2,6 +2,9 @@
   <div *ngIf="securityOpenArea.cardList.length > 0" class="">
     <div class="flex justify-start">
       <button mat-stroked-button (click)="onBulkTrash$.next()">全て破棄</button>
+      <button mat-stroked-button (click)="onBulkRecovery$.next()">
+        全てセキュリティに戻す
+      </button>
     </div>
     <div class="flex flex-wrap mt-1">
       <ng-container *ngFor="let card of securityOpenArea.cardList">

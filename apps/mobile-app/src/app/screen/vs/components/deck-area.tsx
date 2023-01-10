@@ -1,20 +1,39 @@
 import { Menu, Pressable, View } from 'native-base';
-import { FC, useState, memo, useContext } from 'react';
-import { ALL_CARD_LIST } from '../../../configs/all-card-list';
+import { FC, memo, useCallback, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useCustomMenuProps } from '../../../hooks/use-custom-menu-props';
+import * as vsStore from '../../../store/vs-store';
+import { BoardContext } from '../context/board-context';
 import { CountLabel } from './presentation/count-label';
 import { VsAssetsImage } from './vs-assets-image';
-import { BoardContext } from '../context/board-context';
-
-const DUMMY_DECK_CARD_LIST = new Array(50)
-  .fill(null)
-  .map((_, i) => ALL_CARD_LIST[i]);
 
 export const DeckArea: FC = memo(() => {
   const [menuProps, triggerStyleProps] = useCustomMenuProps();
-  const [cardList, setCardList] = useState(DUMMY_DECK_CARD_LIST);
+  const cardList = useSelector(vsStore.selectors.myselfDeckSelector);
 
   const boardContext = useContext(BoardContext);
+
+  const dispatch = useDispatch();
+
+  const draw = useCallback(() => {
+    dispatch(vsStore.actions.draw());
+  }, [dispatch]);
+
+  const open = useCallback(() => {
+    dispatch(vsStore.actions.deckOpen());
+  }, [dispatch]);
+
+  const recovery = useCallback(() => {
+    dispatch(vsStore.actions.recovery());
+  }, [dispatch]);
+
+  const trash = useCallback(() => {
+    dispatch(vsStore.actions.trashFromDeck());
+  }, [dispatch]);
+
+  const shuffle = useCallback(() => {
+    dispatch(vsStore.actions.shuffleDeck());
+  }, [dispatch]);
 
   return (
     <View>
@@ -35,11 +54,11 @@ export const DeckArea: FC = memo(() => {
         }}
         {...menuProps}
       >
-        <Menu.Item>ドロー</Menu.Item>
-        <Menu.Item>オープン</Menu.Item>
-        <Menu.Item>リカバリー</Menu.Item>
-        <Menu.Item>上から1枚破棄</Menu.Item>
-        <Menu.Item>シャッフル</Menu.Item>
+        <Menu.Item onPress={draw}>ドロー</Menu.Item>
+        <Menu.Item onPress={open}>オープン</Menu.Item>
+        <Menu.Item onPress={recovery}>リカバリー</Menu.Item>
+        <Menu.Item onPress={trash}>上から1枚破棄</Menu.Item>
+        <Menu.Item onPress={shuffle}>シャッフル</Menu.Item>
       </Menu>
     </View>
   );

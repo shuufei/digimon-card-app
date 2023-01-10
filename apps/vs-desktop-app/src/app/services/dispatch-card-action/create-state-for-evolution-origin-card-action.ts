@@ -11,6 +11,8 @@ export const createStateForEvolutionOriginCardAction = (
       return onDraw(action, currentState);
     case 'trash':
       return onTrash(action, currentState);
+    case 'save':
+      return onSave(action, currentState);
     default:
       return currentState;
   }
@@ -20,7 +22,9 @@ const onDraw = (
   action: StateAction,
   currentState: GlobalState
 ): GlobalState => {
-  if (action.card == null) return currentState;
+  if (action.card == null) {
+    return currentState;
+  }
   const card = action.card;
   return produce(currentState, (draft) => {
     const digimon = draft.playState.battleArea.digimonList.find(
@@ -35,7 +39,9 @@ const onTrash = (
   action: StateAction,
   currentState: GlobalState
 ): GlobalState => {
-  if (action.card == null) return currentState;
+  if (action.card == null) {
+    return currentState;
+  }
   const card = action.card;
   return produce(currentState, (draft) => {
     const digimon = draft.playState.battleArea.digimonList.find(
@@ -43,5 +49,22 @@ const onTrash = (
     );
     digimon?.removeEvolutionOrigin(card.id);
     draft.playState.trashArea.cardList.push(card);
+  });
+};
+
+const onSave = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null) {
+    return currentState;
+  }
+  const card = action.card;
+  return produce(currentState, (draft) => {
+    const digimon = draft.playState.battleArea.digimonList.find(
+      (d) => !!d.evolutionOiriginCardList.find((v) => v.id === card.id)
+    );
+    digimon?.removeEvolutionOrigin(card.id);
+    draft.playState.saveArea.cardList.push(card);
   });
 };

@@ -25,6 +25,7 @@ import { TrashConfirmDialogComponent } from './components/trash-confirm-dialog/t
 import { AddEvolutionOriginDialogComponent } from './components/add-evolution-origin-dialog/add-evolution-origin-dialog.component';
 import { MemoryComponent } from './components/memory/memory.component';
 import { DeckImportDialogComponent } from './components/deck-import-dialog/deck-import-dialog.component';
+import { SaveAreaComponent } from './components/area/save-area/save-area.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { DeckImportDialogComponent } from './components/deck-import-dialog/deck-
     AddEvolutionOriginDialogComponent,
     MemoryComponent,
     DeckImportDialogComponent,
+    SaveAreaComponent,
   ],
   imports: [
     AngularMaterialModule,

@@ -43,7 +43,7 @@
 npx nx run api-get-credentials:serve
 ```
 
-## カテゴリ追加方法
+## 新弾対応方法(mobile-app)
 
 ### 1. カード情報と画像を取得
 
@@ -69,6 +69,13 @@ npx nx run api-get-credentials:serve
    - spotted-seal/apps/mobile-app/src/app/configs/all-card-list.ts
 1. カテゴリの定義に新しいカテゴリを追加する
    - apps/mobile-app/src/app/domains/card.ts
-   - apps/mobile-app/assets/cardInfo
      - 定数 CATEGORY に追加
      - convertToDisplayCategoryFromCategory 関数の switch 文に新しい category の case を追加
+
+## expo publish
+
+npx expo publish
+
+## 新弾対応方法(vs-desktop-app)
+
+1. vs-desktop-app の assets の cardInfo と images 配下に、必要なファイルを配置する

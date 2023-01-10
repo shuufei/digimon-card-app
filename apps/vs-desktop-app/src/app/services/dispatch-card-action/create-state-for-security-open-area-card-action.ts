@@ -17,6 +17,8 @@ export const createStateForSecurityOpenAreaCardAction = (
       return onTrash(action, currentState);
     case 'entry':
       return onEntry(action, currentState);
+    case 'recovery':
+      return onRecovery(action, currentState);
     default:
       return currentState;
   }
@@ -94,4 +96,21 @@ const onEntry = (
     default:
       return state;
   }
+};
+
+const onRecovery = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null) {
+    return currentState;
+  }
+  const card = action.card;
+  return produce(currentState, (draft) => {
+    _.remove(
+      draft.playState.securityOpenArea.cardList,
+      (v) => v.id === card.id
+    );
+    draft.playState.securityArea.cardList.push(card);
+  });
 };

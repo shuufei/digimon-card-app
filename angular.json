@@ -385,6 +385,29 @@
       "tags": [],
       "implicitDependencies": ["mobile-app"]
     },
+    "tmp-store-logic": {
+      "root": "libs/tmp/store-logic",
+      "sourceRoot": "libs/tmp/store-logic/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["libs/tmp/store-logic/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/tmp/store-logic"],
+          "options": {
+            "jestConfig": "libs/tmp/store-logic/jest.config.ts",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
     "vs-desktop-app": {
       "projectType": "application",
       "root": "apps/vs-desktop-app",

@@ -1,16 +1,13 @@
 import BottomSheet from '@gorhom/bottom-sheet';
-import { HStack, View, Text, ScrollView } from 'native-base';
-import { FC, useMemo, useState } from 'react';
+import { HStack, ScrollView, Text, View } from 'native-base';
+import { FC, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
-import { ALL_CARD_LIST } from '../../../configs/all-card-list';
+import { useSelector } from 'react-redux';
+import * as vsStore from '../../../store/vs-store';
 import { HandAreaCard } from './hand-area-card';
 
-const DUMMY_HAND_CARD_LIST = new Array(30)
-  .fill(null)
-  .map((_, i) => ALL_CARD_LIST[i + 120]);
-
 export const HandAreaSheet: FC = () => {
-  const [cardList, setCardList] = useState(DUMMY_HAND_CARD_LIST);
+  const cardList = useSelector(vsStore.selectors.myselfHandSelector);
   const snapPoints = useMemo(() => ['20%', '50%', '75%'], []);
 
   return (
@@ -23,8 +20,8 @@ export const HandAreaSheet: FC = () => {
           <HStack flexWrap={'wrap'} space={2} mt={4}>
             {cardList.map((card, i) => {
               return (
-                <View key={`${card.imgFileName}-${i}`} pb={2}>
-                  <HandAreaCard card={card} />
+                <View key={`${card.data.imgFileName}-${i}`} pb={2}>
+                  <HandAreaCard card={card.data} />
                 </View>
               );
             })}

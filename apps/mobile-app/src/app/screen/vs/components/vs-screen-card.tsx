@@ -11,7 +11,7 @@ import * as authStore from '../../../store/auth-store';
 import { getCardImageSrc } from '../../../utils/get-card-image-src';
 import { CARD_HEIGHT, CARD_WIDTH } from '../configs/card-style';
 import { BoardContext } from '../context/board-context';
-import { isVsCard, VsCard } from '../domains/vs-card';
+import { isVsBattleCard, VsBattleCard } from '../../../domains/vs-card';
 
 export type MenuProps = {
   label: string;
@@ -19,7 +19,7 @@ export type MenuProps = {
 };
 
 export const VsScreenCard: FC<{
-  card: VsCard | CardInfo;
+  card: VsBattleCard | CardInfo;
   menuList: MenuProps[];
   menuPlacement?: IMenuProps['placement'];
 }> = memo(({ card, menuList, menuPlacement = 'bottom left' }) => {
@@ -30,7 +30,7 @@ export const VsScreenCard: FC<{
   const { navigate } = useNavigation<NavigationProp<RootParamList>>();
 
   const cardViewWidth = useMemo(
-    () => (isVsCard(card) && card.isRest ? CARD_HEIGHT : CARD_WIDTH),
+    () => (isVsBattleCard(card) && card.isRest ? CARD_HEIGHT : CARD_WIDTH),
     [card]
   );
 
@@ -41,7 +41,7 @@ export const VsScreenCard: FC<{
       {...menuProps}
       placement={menuPlacement}
       trigger={(triggerProps) => {
-        return isVsCard(card) ? (
+        return isVsBattleCard(card) ? (
           <Pressable
             {...(boardContext.side === 'myself' ? triggerProps : {})}
             onLongPress={() => {
@@ -66,10 +66,10 @@ export const VsScreenCard: FC<{
                     (evolutionarySource, i) => {
                       return (
                         <Image
-                          key={`${evolutionarySource.imgFileName}-${i}`}
+                          key={`${evolutionarySource.id}-${i}`}
                           source={{
                             uri: getCardImageSrc(
-                              evolutionarySource,
+                              evolutionarySource.data,
                               signedQueryStrings
                             ),
                             cache: 'force-cache',
@@ -77,7 +77,7 @@ export const VsScreenCard: FC<{
                           resizeMode="center"
                           height={4}
                           width={4}
-                          alt={`${evolutionarySource.name}`}
+                          alt={`${evolutionarySource.data.name}`}
                         />
                       );
                     }

@@ -26,6 +26,7 @@ export type PlayState = {
   securityOpenArea: AreaState;
   securityCheckArea: AreaState;
   stackOpenArea: AreaState;
+  saveArea: AreaState;
 };
 
 export type GlobalState = {
@@ -44,6 +45,7 @@ export type GlobalState = {
       trigger?: {
         card: Card;
         area: Area;
+        digimon?: Digimon;
       };
     };
   };
@@ -96,6 +98,9 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
     stackOpenArea: {
       cardList: [],
     },
+    saveArea: {
+      cardList: [],
+    },
   },
   otherSidePlayState: {
     stack: {
@@ -132,6 +137,9 @@ export const INITIAL_GLOBAL_STATE: GlobalState = {
     stackOpenArea: {
       cardList: [],
     },
+    saveArea: {
+      cardList: [],
+    },
   },
   ui: {},
 };
@@ -147,6 +155,7 @@ export type SerializedPlayState = Pick<
   | 'stack'
   | 'stackOpenArea'
   | 'trashArea'
+  | 'saveArea'
 > & {
   battleArea: {
     digimonList: SerializedDigimon[];

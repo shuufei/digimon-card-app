@@ -22,6 +22,8 @@ export const createStateForBattleAreaCardAction = (
       return onTrash(action, currentState);
     case 'degeneration':
       return onDegeneration(action, currentState);
+    case 'addToEvolutionOrigin':
+      return onAddToEvolutionOrigin(action, currentState);
     default:
       return currentState;
   }
@@ -164,5 +166,32 @@ const onDegeneration = (
       degenerationDigimon
     );
     draft.playState.trashArea.cardList.push(card);
+  });
+};
+
+const onAddToEvolutionOrigin = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.digimon == null || action.target?.addIndex == null) {
+    return currentState;
+  }
+  const srcDigimon: Digimon = action.digimon;
+  const addIndex: number = action.target.addIndex;
+  return produce(currentState, (draft) => {
+    const digimon = draft.playState.battleArea.digimonList.find(
+      (v) => v.id === action.target?.digimon.id
+    );
+    if (digimon == null) {
+      return;
+    }
+    digimon.addEvolutionOrigin(srcDigimon.card, addIndex);
+    _.reverse(srcDigimon.evolutionOiriginCardList).forEach((card) => {
+      digimon.addEvolutionOrigin(card, addIndex);
+    });
+    _.remove(
+      draft.playState.battleArea.digimonList,
+      (v) => v.id === srcDigimon.id
+    );
   });
 };

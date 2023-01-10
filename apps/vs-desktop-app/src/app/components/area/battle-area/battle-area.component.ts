@@ -57,6 +57,10 @@ export class BattleAreaComponent implements OnInit {
       action: 'addToBottomOfStack',
       displayText: '山札の一番下に加える',
     },
+    {
+      action: 'addToEvolutionOrigin',
+      displayText: '進化元に追加',
+    },
   ];
 
   /**
@@ -72,16 +76,32 @@ export class BattleAreaComponent implements OnInit {
    */
   readonly onSelectDigimonCard$ = new Subject<Digimon>();
   readonly onAction$ = new Subject<CardActionEvent>();
-  private readonly onSubmitEvolutionFromHandToBattleArea$ = this.onSelectDigimonCard$.pipe(
-    withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
+  private readonly onSubmitEvolutionFromHandToBattleArea$ =
+    this.onSelectDigimonCard$.pipe(
+      withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
+      filter(
+        ([, modeState]) =>
+          modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
+      )
+    );
+  private readonly onSelectAddToEvolutionOrigin$ =
+    this.onSelectDigimonCard$.pipe(
+      withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
+      filter(([, modeState]) => modeState?.mode === 'addToEvolutionOrigin')
+    );
+  private readonly onAddToEvolutionOrigin$ = this.onAction$.pipe(
+    withLatestFrom(this.gs$, this.battleArea$),
     filter(
-      ([, modeState]) =>
-        modeState?.mode === 'evolution' && modeState?.trigger?.area === 'hand'
-    )
-  );
-  private readonly onSelectAddToEvolutionOrigin$ = this.onSelectDigimonCard$.pipe(
-    withLatestFrom(this.gs$.pipe(map((v) => v.ui.modeState))),
-    filter(([, modeState]) => modeState?.mode === 'addToEvolutionOrigin')
+      ([event, gs]) =>
+        event.action === 'addToEvolutionOrigin' &&
+        gs.playState.battleArea.digimonList.length > 0
+    ),
+    map(([event, _, battleArea]) => {
+      return battleArea.digimonList.find((v) => v.card.id === event.card.id);
+    }),
+    filter((digimon): digimon is Digimon => {
+      return digimon != null;
+    })
   );
 
   constructor(
@@ -117,6 +137,9 @@ export class BattleAreaComponent implements OnInit {
     );
     this.state.hold(
       this.onAction$.pipe(
+        filter((event) => {
+          return event.action !== 'addToEvolutionOrigin';
+        }),
         tap((event) => {
           this.dispatchCardActionService.dispatch({
             type: event.action,
@@ -138,6 +161,21 @@ export class BattleAreaComponent implements OnInit {
           });
         })
       )
+    );
+    this.globalState.connect(
+      'ui',
+      this.onAddToEvolutionOrigin$,
+      (state, event) => ({
+        ...state.ui,
+        modeState: {
+          mode: 'addToEvolutionOrigin',
+          trigger: {
+            area: 'battleArea',
+            card: event.card,
+            digimon: event,
+          },
+        },
+      })
     );
   }
 

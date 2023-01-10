@@ -39,6 +39,10 @@ export class ExpandCardViewDialogComponent implements OnInit, AfterViewInit {
       action: 'draw',
       displayText: '手札に戻す',
     },
+    {
+      action: 'save',
+      displayText: 'セーブ',
+    },
   ];
 
   readonly evolutionOriginCardListSelfSide$ = this.globalState

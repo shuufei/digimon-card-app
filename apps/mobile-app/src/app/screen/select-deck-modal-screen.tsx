@@ -27,7 +27,7 @@ export const SelectDeckModalScreen: FC = () => {
 
   const selectDeck = useCallback(
     (deck: Deck) => {
-      dispatch(vsStore.actions.selectDeck({ selectedDeck: deck }));
+      dispatch(vsStore.actions.selectDeck({ deck }));
       goBack();
     },
     [dispatch, goBack]
