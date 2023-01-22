@@ -66,3 +66,4 @@ web-build/
 
 
 apps/mobile-app-e2e/artifacts
+apps/**/assets/tmp

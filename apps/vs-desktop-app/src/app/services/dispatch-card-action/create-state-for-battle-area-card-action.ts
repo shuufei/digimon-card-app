@@ -18,6 +18,8 @@ export const createStateForBattleAreaCardAction = (
       return onDraw(action, currentState);
     case 'addToBottomOfStack':
       return onAddToBottomOfStack(action, currentState);
+    case 'addToTopOfStack':
+      return onAddToTopOfStack(action, currentState);
     case 'trash':
       return onTrash(action, currentState);
     case 'degeneration':
@@ -107,6 +109,29 @@ const onAddToBottomOfStack = (
       (v) => v.card.id === card.id
     );
     draft.playState.stack.cardList.push(card);
+    digimon?.evolutionOiriginCardList.forEach((v) => {
+      draft.playState.trashArea.cardList.push(v);
+    });
+  });
+};
+
+const onAddToTopOfStack = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null) {
+    return currentState;
+  }
+  const card: Card = action.card;
+  return produce(currentState, (draft) => {
+    const digimon = draft.playState.battleArea.digimonList.find(
+      (v) => v.card.id === card.id
+    );
+    _.remove(
+      draft.playState.battleArea.digimonList,
+      (v) => v.card.id === card.id
+    );
+    draft.playState.stack.cardList = [card, ...draft.playState.stack.cardList];
     digimon?.evolutionOiriginCardList.forEach((v) => {
       draft.playState.trashArea.cardList.push(v);
     });

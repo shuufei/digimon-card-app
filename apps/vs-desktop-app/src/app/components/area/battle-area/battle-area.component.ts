@@ -58,6 +58,10 @@ export class BattleAreaComponent implements OnInit {
       displayText: '山札の一番下に加える',
     },
     {
+      action: 'addToTopOfStack',
+      displayText: '山札の一番上に加える',
+    },
+    {
       action: 'addToEvolutionOrigin',
       displayText: '進化元に追加',
     },
@@ -139,6 +143,20 @@ export class BattleAreaComponent implements OnInit {
       this.onAction$.pipe(
         filter((event) => {
           return event.action !== 'addToEvolutionOrigin';
+        }),
+        tap((event) => {
+          this.dispatchCardActionService.dispatch({
+            type: event.action,
+            area: 'battleArea',
+            card: event.card,
+          });
+        })
+      )
+    );
+    this.state.hold(
+      this.onAction$.pipe(
+        filter((event) => {
+          return event.action !== 'addToTopOfStack';
         }),
         tap((event) => {
           this.dispatchCardActionService.dispatch({

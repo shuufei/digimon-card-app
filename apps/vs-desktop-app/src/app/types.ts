@@ -95,6 +95,7 @@ export const CARD_ACTION = {
   incubation: 'incubation',
   open: 'open',
   addToBottomOfStack: 'addToBottomOfStack',
+  addToTopOfStack: 'addToTopOfStack',
   selfCheck: 'selfCheck',
   return: 'return',
   degeneration: 'degeneration',
