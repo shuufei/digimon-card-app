@@ -31,7 +31,10 @@ const onRecovery = (
     const card = action.card;
     if (card != null) {
       _.remove(draft.playState.trashArea.cardList, (v) => v.id === card.id);
-      draft.playState.securityArea.cardList.push(card);
+      draft.playState.securityArea.cardList = [
+        card,
+        ...draft.playState.securityArea.cardList,
+      ];
     }
   });
 };

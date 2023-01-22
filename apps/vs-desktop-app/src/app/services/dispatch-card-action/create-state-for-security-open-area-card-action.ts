@@ -111,6 +111,9 @@ const onRecovery = (
       draft.playState.securityOpenArea.cardList,
       (v) => v.id === card.id
     );
-    draft.playState.securityArea.cardList.push(card);
+    draft.playState.securityArea.cardList = [
+      card,
+      ...draft.playState.securityArea.cardList,
+    ];
   });
 };

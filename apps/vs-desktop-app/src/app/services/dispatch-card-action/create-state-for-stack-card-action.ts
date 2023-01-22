@@ -63,7 +63,10 @@ const onRecovery = (currentState: GlobalState): GlobalState => {
   return produce(currentState, (draft) => {
     const card = draft.playState.stack.cardList.shift();
     if (card != null) {
-      draft.playState.securityArea.cardList.push(card);
+      draft.playState.securityArea.cardList = [
+        card,
+        ...draft.playState.securityArea.cardList,
+      ];
     }
   });
 };
