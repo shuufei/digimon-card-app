@@ -38,6 +38,10 @@ export class OptionAreaComponent implements OnInit {
       action: 'trash',
       displayText: '破棄',
     },
+    {
+      action: 'addToTopOfStack',
+      displayText: 'デッキの一番上に戻す',
+    },
   ];
 
   /**

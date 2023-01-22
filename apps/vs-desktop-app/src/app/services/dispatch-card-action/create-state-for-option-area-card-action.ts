@@ -13,6 +13,8 @@ export const createStateForOptionAreaCardAction = (
       return onDraw(action, currentState);
     case 'trash':
       return onTrash(action, currentState);
+    case 'addToTopOfStack':
+      return onAddToTopOfStack(action, currentState);
     default:
       return currentState;
   }
@@ -39,5 +41,19 @@ const onTrash = (
   return produce(currentState, (draft) => {
     _.remove(draft.playState.optionArea.cardList, (v) => v.id === card.id);
     draft.playState.trashArea.cardList.push(card);
+  });
+};
+
+const onAddToTopOfStack = (
+  action: StateAction,
+  currentState: GlobalState
+): GlobalState => {
+  if (action.card == null) {
+    return currentState;
+  }
+  const card: Card = action.card;
+  return produce(currentState, (draft) => {
+    _.remove(draft.playState.optionArea.cardList, (v) => v.id === card.id);
+    draft.playState.stack.cardList = [card, ...draft.playState.stack.cardList];
   });
 };
