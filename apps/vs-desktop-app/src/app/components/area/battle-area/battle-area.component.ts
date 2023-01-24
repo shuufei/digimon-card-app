@@ -154,20 +154,6 @@ export class BattleAreaComponent implements OnInit {
       )
     );
     this.state.hold(
-      this.onAction$.pipe(
-        filter((event) => {
-          return event.action !== 'addToTopOfStack';
-        }),
-        tap((event) => {
-          this.dispatchCardActionService.dispatch({
-            type: event.action,
-            area: 'battleArea',
-            card: event.card,
-          });
-        })
-      )
-    );
-    this.state.hold(
       this.onSelectAddToEvolutionOrigin$.pipe(
         tap(([digimon]) => {
           this.dialog.open(AddEvolutionOriginDialogComponent, {
